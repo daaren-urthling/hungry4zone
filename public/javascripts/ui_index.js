@@ -9,13 +9,14 @@ app.factory('Foods', ['$resource', function($resource){
     'update': { method:'PUT' }
   });
   Foods.prototype.sourceImage = function() {
-    console.log('sourceImage', this.source);
     switch (this.source) {
       case 1 : return "images/red.png";
       case 2 : return "images/yellow.png";
       case 3 : return "images/green.png";
     }
+    return "";
   };
+
   return Foods;
 }]);
 
@@ -23,32 +24,40 @@ app.factory('Foods', ['$resource', function($resource){
 // Controllers
 //---------------
 
-app.controller('FoodsController', ['$scope', 'Foods', function ($scope, Foods) {
+app.controller('FoodsController', ['$scope', 'Foods', '$location', function ($scope, Foods, $location) {
   $scope.foods = Foods.query();
 
-  console.log($scope.foods);
+  console.log('foods:',$scope.foods);
 
-  $scope.save = function(){
-    if(!$scope.newFood || $scope.newFood.length < 1) return;
-    var food = new Foods({ name: $scope.newFood });
-
-    food.$save(function(){
-      $scope.foods.push(food);
-      $scope.newFood = ''; // clear textbox
-    });
+  $scope.add = function(){
+    $location.url('/0');
   };
-
 }]);
 
 app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$location', '$http', function ($scope, $routeParams, Foods, $location, $http) {
-  $scope.food = Foods.get({id: $routeParams.id });
+  if ($routeParams.id == "0") {
+    $scope.isNew = true;
+    $scope.food = new Foods();
+  }
+  else  {
+    $scope.isNew = false;
+    $scope.food = Foods.get({id: $routeParams.id });
+  }
 
   $scope.foodTypes = [];
   $http.get('/foodTypes/').
     success(function(data, status, headers, config) {
       $scope.foodTypes = data;
-      console.log(data);
+      console.log('foodTypes:', data);
     });
+
+  $scope.add = function(){
+    if(!$scope.food.name || $scope.food.name.length < 1) return;
+
+    $scope.food.$save(function(){
+      $location.url('/');
+    });
+  };
 
   $scope.update = function(){
     Foods.update({id: $scope.food._id}, $scope.food, function(){
@@ -62,6 +71,9 @@ app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$loc
     });
   };
 
+  $scope.onFoodSourceChanged= function(){
+    $scope.food.source = parseInt($scope.food.source);
+  };
 }]);
 
 //---------------

@@ -19,13 +19,13 @@
           <td><a href="#/{{food._id}}">{{ food.name }}</a></td><td>{{ food.type }}</td><td align='center'><image width=14 ng-src="{{food.sourceImage()}}"></td><td>{{ food.proteins }}</td><td>{{ food.fats }}</td><td>{{ food.carbohydrates }}</td>
         </tr>
       </table>
-      Nuovo Alimento <input type="text" ng-model="newFood"><button ng-click="save()">Aggiungi</button>
+      <button ng-click="add()">Nuovo Alimento</button>
     </script>
 
     <script type="text/ng-template" id="/foodDetails.html">
-      <h1>{{ food.name }}</h1>
+      Alimento: <input type="text" ng-model="food.name"></br>
       Tipo: <select ng-model="food.type" ng-options="opt.type as opt.type for opt in foodTypes"></select></br>
-      Fonte: <select ng-model="food.source">
+      Fonte: <select ng-model="food.source" ng-change="onFoodSourceChanged()">
         <option value="3">ottima</option>
         <option value="2">accettabile</option>
         <option value="1">scarsa</option>
@@ -33,8 +33,9 @@
       Proteine: <input type="text" ng-model="food.proteins"></br>
       Grassi: <input type="text" ng-model="food.fats"></br>
       Carboidrati: <input type="text" ng-model="food.carbohydrates"></br>
-      <button ng-click="update()">Aggiorna</button>
-      <button ng-click="remove()">Elimina</button>
+      <button ng-show="isNew" ng-click="add()">Aggiungi</button>
+      <button ng-show="!isNew" ng-click="update()">Aggiorna</button>
+      <button ng-show="!isNew" ng-click="remove()">Elimina</button>
       <a href="/">Cancel</a>
 
     </script>
