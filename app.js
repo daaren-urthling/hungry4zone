@@ -10,6 +10,7 @@ var users = require('./routes/users');
 
 var foods = require('./routes/rt_food');
 var foodTypes = require('./routes/rt_foodTypes');
+var uploadFoods = require('./routes/rt_uploadFoods');
 
 var app = express();
 
@@ -29,6 +30,7 @@ app.use('/', routes);
 app.use('/users', users);
 app.use('/foods', foods);
 app.use('/foodTypes', foodTypes);
+app.use('/uploadFoods', uploadFoods);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

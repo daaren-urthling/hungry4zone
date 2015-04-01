@@ -6,6 +6,8 @@
   </head>
   <body>
 
+    <a href="#">Alimenti</a> <a href="#upload">Upload</a>
+
     <ng-view></ng-view>
 
     <!-- Templates -->
@@ -23,6 +25,8 @@
     </script>
 
     <script type="text/ng-template" id="/foodDetails.html">
+    <h1><%= title %></h1>
+    <h2>Scheda Alimento</h2>
       Alimento: <input type="text" ng-model="food.name"></br>
       Tipo: <select ng-model="food.type" ng-options="opt.type as opt.type for opt in foodTypes"></select></br>
       Fonte: <select ng-model="food.source" ng-change="onFoodSourceChanged()">
@@ -37,8 +41,15 @@
       <button ng-show="!isNew" ng-click="update()">Aggiorna</button>
       <button ng-show="!isNew" ng-click="remove()">Elimina</button>
       <a href="/">Cancel</a>
-
     </script>
+
+    <script type="text/ng-template" id="/upload.html">
+      <h1><%= title %></h1>
+      <h2>Upload alimenti</h2>
+      <input type="file" onchange="angular.element(this).scope().fileChanged(this)"></br>
+      <button ng-click="upload()">upload</button>      
+    </script>
+
 
      <!-- Libraries -->
      <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>

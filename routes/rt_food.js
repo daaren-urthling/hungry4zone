@@ -22,6 +22,8 @@ router.get('/:id', function(req, res, next) {
 
 /* POST /foods */
 router.post('/', function(req, res, next) {
+  Food.adjustLocale(req.body);
+
   Food.create(req.body, function (err, food) {
     if (err) return next(err);
     res.json(food);
@@ -30,8 +32,13 @@ router.post('/', function(req, res, next) {
 
 /* PUT /foods/:id */
 router.put('/:id', function(req, res, next) {
+  Food.adjustLocale(req.body);
+
   Food.findByIdAndUpdate(req.params.id, req.body, function (err, food) {
-    if (err) return next(err);
+    if (err) {
+      console.log(err);
+      return next(err);
+    }
     if (food === null) return res.send('not found');
     res.json(food);
   });

@@ -1,0 +1,98 @@
+name;type;source;proteins;fats;carbohydrates
+albicocche;frutta;3;0,40;0,10;6,80
+Albume;uova;3;10,90;0,10;0,80
+Arrosto Maiale Affumicato (lidl);carne;2;20,00;8,00;2,00
+Avocado;frutta;3;4,40;23,00;1,80
+Baccalà ammollato;pesce;3;21,60;1,00;0,00
+Basilico;ortaggi;3;3,15;0,64;2,65
+Bietole;ortaggi;3;1,30;0,10;2,80
+Branzino (spigola);pesce;3;16,50;1,50;0,60
+Bresaola;carne;2;32,00;2,60;0,00
+Broccoli;ortaggi;3;3,00;0,40;3,10
+Calamari;pesce;3;12,60;1,70;0,60
+Carciofi freschi;ortaggi;3;2,70;0,20;2,50
+carciofini sott'olio;ortaggi;3;1,80;5,70;2,60
+Carne manzo magra;carne;2;20,70;5,10;0,00
+carote;ortaggi;3;1,20;0,20;7,60
+cavallo;carne;2;21,70;2,70;0,50
+Cavolini di Bruxelles;ortaggi;3;4,20;0,50;4,30
+Cavolo;ortaggi;3;2,10;0,10;2,50
+cavolo nero;ortaggi;3;4,30;0,90;9,00
+ceci in scatola;legumi;3;6,90;1,70;14,20
+Cetrioli;ortaggi;3;0,70;0,50;1,80
+Cipolle;ortaggi;3;1,00;0,10;5,70
+Coda di Rospo;pesce;3;12,80;1,00;0,60
+Crauti;ortaggi;3;1,80;0,09;5,41
+Fagioli;legumi;2;23,60;2,50;51,70
+Fagioli cannellini;legumi;2;7,40;0,60;14,40
+Fagiolini;legumi;2;2,10;0,00;2,40
+Farina 00;cereali;1;11,50;1,00;76,90
+Farina Manitoba;cereali;1;13,00;1,00;68,00
+Feta;latticini;1;15,60;20,20;1,50
+Finocchi;ortaggi;3;1,20;0,00;1,00
+Fragole;frutta;3;0,90;0,40;5,30
+Frutti Rossi;frutta;3;1,18;0,40;7,10
+Funghi;funghi;3;3,70;0,20;0,80
+Gallette di riso;cereali;1;8,80;1,50;82,00
+Gamberetti;pesce;3;13,60;0,60;2,90
+Germogli di Soia;soia;3;6,20;1,40;3,00
+Insalatina acetelli saclà;ortaggi;3;0,40;0,30;1,00
+Jocca;latticini;2;10,00;4,50;3,50
+Kebab Tacchino AIA;carne;3;22,00;8,50;2,00
+Lattuga;ortaggi;3;1,80;0,40;2,20
+mais in scatola;cereali;1;3,30;1,20;17,80
+Mandorle;noci;3;22,00;55,30;4,60
+Mango;frutta;3;1,00;0,20;12,60
+Marmellata Mirtilli Rigoni;frutta;3;0,70;0,00;37,50
+Mele;frutta;3;0,40;0,10;10,70
+Melone;frutta;3;0,80;0,20;7,40
+Merluzzo;pesce;3;17,00;0,30;0,00
+Minestrone Leggerezza Orogel;ortaggi;3;1,70;0,10;3,20
+Minestrone Orogel;ortaggi;2;2,40;0,50;6,50
+Nespole;frutta;3;0,40;0,40;6,10
+Nocciole;noci;3;15,00;62,40;8,20
+Noci;noci;3;14,00;66,00;12,00
+Olio di Oliva;grassi;3;0,00;100,00;0,00
+Olive Nere;ortaggi;3;1,60;25,10;0,80
+Olive Verdi;ortaggi;3;0,01;15,00;1,00
+pancetta;carne;1;8,40;69,00;1,00
+Parmigiano;latticini;1;36,00;26,00;0,00
+Passata Pomodoro Alce Nero;ortaggi;3;1,70;0,00;5,30
+Pasta di Semola;cereali;1;10,80;0,30;82,80
+Pasta Voiello;cereali;1;14,50;2,00;69,20
+Patate;ortaggi;1;2,10;1,00;18,00
+peperoni;ortaggi;3;0,90;0,30;4,20
+Pesche;frutta;3;0,80;0,10;6,10
+Pesto;ortaggi;1;6,79;35,11;1,40
+Piadella Mulino Bianco;cereali;2;7,00;12,30;49,70
+Piadina;cereali;1;7,00;14,00;50,30
+Piselli;legumi;1;7,00;0,00;12,40
+Pistacchi;noci;1;18,10;56,10;8,20
+Pollo - Coscia;carne;3;17,90;6,50;0,00
+Pollo - Petto;carne;3;22,20;0,90;0,00
+Polpo;pesce;3;10,60;1,00;1,40
+pomodori;ortaggi;3;1,20;0,20;2,80
+Prosciutto cotto;carne;2;22,20;4,40;1,00
+Prosciutto crudo;carne;2;27,50;3,90;0,00
+Purea di Mele;frutta;3;0,40;0,20;15,30
+Ricottina Santa Lucia Light;latticini;2;9,00;6,00;6,30
+Riso;cereali;1;7,00;0,60;87,60
+rucola;ortaggi;3;2,60;0,30;3,90
+Salmone affumicato;pesce;3;23,00;7,10;0,30
+Salmone fresco;pesce;3;21,00;11,00;0,00
+Salsiccia;carne;1;19,43;28,36;0,00
+Sedano;ortaggi;3;2,30;0,20;2,40
+Simmenthal;carne;2;11,50;1,50;0,20
+speck;carne;2;28,30;20,90;0,50
+Stoccafisso (ammollato);pesce;3;20,70;0,90;0,30
+Succo Red Grape Rauch;frutta;3;0,10;0,00;14,60
+Tacchino - fesa;carne;3;23,70;1,20;0,00
+Tonno Affumicato;pesce;3;33,50;1,10;0,10
+Tonno al Naturale;pesce;3;24,00;0,50;0,00
+Tortilla;cereali;1;8,50;5,90;50,60
+Wasa;cereali;3;10,00;0,30;59,00
+Wurstel Pollo;carne;1;12,90;16,70;3,10
+Yogurt Greco Mevgal 0%;latticini;2;8,00;0,00;5,00
+Yogurt Greco Mevgal Extra;latticini;2;4,80;10,00;3,50
+Yogurt Naturale Tigullio;latticini;2;3,80;3,80;4,80
+Yogurt Vaniglia Merano;latticini;2;3,60;3,50;15,70

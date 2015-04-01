@@ -76,6 +76,25 @@ app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$loc
   };
 }]);
 
+app.controller('UploadController', ['$scope', '$http', function ($scope, $http) {
+
+  $scope.fileChanged = function(element) {
+    $scope.file = element.files[0];
+  };
+
+  $scope.upload = function() {
+    var reader = new FileReader();
+    reader.onload = function(onLoadEvent) {
+      console.log('caricato ', this.result);
+      $http.post('/uploadFoods/', {data: this.result}).
+        success(function(data, status, headers, config) {
+          console.log('posted');
+        });
+		};
+    reader.readAsText($scope.file);
+  };
+}]);
+
 //---------------
 // Routes
 //---------------
@@ -86,8 +105,12 @@ app.config(['$routeProvider', function ($routeProvider) {
       templateUrl: '/foods.html',
       controller: 'FoodsController'
     })
+    .when('/upload', {
+      templateUrl: '/upload.html',
+      controller: 'UploadController'
+    })
     .when('/:id', {
       templateUrl: '/foodDetails.html',
       controller: 'FoodDetailController'
-   });
+    });
 }]);
