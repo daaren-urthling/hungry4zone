@@ -20,13 +20,28 @@ router.get('/:id', function(req, res, next) {
   });
 });
 
+/* GET /foods/name */
+router.get('/search/:name', function(req, res, next) {
+  //@@TODO la ricerca lower-case con le regexp non e` efficente
+  Food.findOne({name : { $regex : new RegExp("^" + req.params.name + "$", "i") } }, function(err, food){
+    if (err) return next(err);
+    res.send({found : food !== null});
+  });
+});
+
 /* POST /foods */
 router.post('/', function(req, res, next) {
   Food.adjustLocale(req.body);
 
-  Food.create(req.body, function (err, food) {
+  Food.findOne({name : { $regex : new RegExp("^" + req.body.name + "$", "i") } }, function(err, food){
     if (err) return next(err);
-    res.json(food);
+    if (food === null)
+      Food.create(req.body, function (err, food) {
+        if (err) return next(err);
+        res.json(food);
+      });
+    else
+      res.send({found : true});
   });
 });
 

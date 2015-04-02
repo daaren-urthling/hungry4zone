@@ -6,7 +6,8 @@ var app = angular.module("hungry4zone", ['ngRoute', 'ngResource']);
 
 app.factory('Foods', ['$resource', function($resource){
   Foods = $resource('/foods/:id', null, {
-    'update': { method:'PUT' }
+    'update': { method:'PUT' },
+    'search': { method:'GET', url: '/foods/search/:name'}
   });
   Foods.prototype.sourceImage = function() {
     switch (this.source) {
@@ -34,7 +35,7 @@ app.controller('FoodsController', ['$scope', 'Foods', '$location', function ($sc
   };
 }]);
 
-app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$location', '$http', function ($scope, $routeParams, Foods, $location, $http) {
+app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$location', '$http', '$resource', function ($scope, $routeParams, Foods, $location, $http, $resource) {
   if ($routeParams.id == "0") {
     $scope.isNew = true;
     $scope.food = new Foods();
@@ -43,6 +44,21 @@ app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$loc
     $scope.isNew = false;
     $scope.food = Foods.get({id: $routeParams.id });
   }
+
+  $scope.check = function(){
+    $scope.alertMessage ='';
+    if (!$scope.isNew) return;
+
+    Foods.search({name: $scope.food.name }, function(value, responseHeaders) {
+      console.log('done: ', value);
+      if (value.found)
+        $scope.alertMessage = 'Alimento già presente';
+      return value.found;
+    }, function(httpResponse) {
+      console.log('something wrong: ', httpResponse);
+      return false;
+    });
+  };
 
   $scope.foodTypes = [];
   $http.get('/foodTypes/').
@@ -54,8 +70,11 @@ app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$loc
   $scope.add = function(){
     if(!$scope.food.name || $scope.food.name.length < 1) return;
 
-    $scope.food.$save(function(){
-      $location.url('/');
+    $scope.food.$save(function(value, responseHeaders){
+      if (value.found && value.found === true)
+        $scope.alertMessage = 'Alimento già presente';
+      else
+        $location.url('/');
     });
   };
 

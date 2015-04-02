@@ -27,7 +27,7 @@
     <script type="text/ng-template" id="/foodDetails.html">
     <h1><%= title %></h1>
     <h2>Scheda Alimento</h2>
-      Alimento: <input type="text" ng-model="food.name"></br>
+      Alimento: <input type="text" ng-model="food.name" onchange="angular.element(this).scope().check()"> {{alertMessage}}</br>  
       Tipo: <select ng-model="food.type" ng-options="opt.type as opt.type for opt in foodTypes"></select></br>
       Fonte: <select ng-model="food.source" ng-change="onFoodSourceChanged()">
         <option value="3">ottima</option>
@@ -47,7 +47,7 @@
       <h1><%= title %></h1>
       <h2>Upload alimenti</h2>
       <input type="file" onchange="angular.element(this).scope().fileChanged(this)"></br>
-      <button ng-click="upload()">upload</button>      
+      <button ng-click="upload()">upload</button>
     </script>
 
 
