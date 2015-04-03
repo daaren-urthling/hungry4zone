@@ -1,7 +1,8 @@
 var express = require('express');
 var router = express.Router();
 
-/* GET food types listing. */
+// query          (GET /)
+//-----------------------------------------------------------------------------
 router.get('/', function(req, res, next) {
   var foodTypes = [
     { type : "carne", proteineAbsorption : 100 },

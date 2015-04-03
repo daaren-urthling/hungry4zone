@@ -14,20 +14,19 @@
     <script type="text/ng-template" id="/foods.html">
       <h1><%= title %></h1>
       <h2>Alimenti</h2>
-      Cerca: <input type="text" ng-model="search.name">
+      Cerca: <input type="text" ng-model="search.name">   <button ng-click="onAddClicked()">Nuovo Alimento</button>
       <table border=1>
         <td>Alimento</td><td>Tipo</td><td>Fonte</td><td>Proteine</td><td>Grassi</td><td>Carboidrati</td>
-        <tr ng-repeat="food in foods | filter: search">
+        <tr ng-repeat="food in foods | filter: search | orderBy: '+name' ">
           <td><a href="#/{{food._id}}">{{ food.name }}</a></td><td>{{ food.type }}</td><td align='center'><image width=14 ng-src="{{food.sourceImage()}}"></td><td>{{ food.proteins }}</td><td>{{ food.fats }}</td><td>{{ food.carbohydrates }}</td>
         </tr>
       </table>
-      <button ng-click="add()">Nuovo Alimento</button>
     </script>
 
     <script type="text/ng-template" id="/foodDetails.html">
     <h1><%= title %></h1>
     <h2>Scheda Alimento</h2>
-      Alimento: <input type="text" ng-model="food.name" onchange="angular.element(this).scope().check()"> {{alertMessage}}</br>  
+      Alimento: <input type="text" ng-model="food.name" onchange="angular.element(this).scope().onFoodNameChanged()"> {{alertMessage}}</br>
       Tipo: <select ng-model="food.type" ng-options="opt.type as opt.type for opt in foodTypes"></select></br>
       Fonte: <select ng-model="food.source" ng-change="onFoodSourceChanged()">
         <option value="3">ottima</option>
@@ -37,17 +36,17 @@
       Proteine: <input type="text" ng-model="food.proteins"></br>
       Grassi: <input type="text" ng-model="food.fats"></br>
       Carboidrati: <input type="text" ng-model="food.carbohydrates"></br>
-      <button ng-show="isNew" ng-click="add()">Aggiungi</button>
-      <button ng-show="!isNew" ng-click="update()">Aggiorna</button>
-      <button ng-show="!isNew" ng-click="remove()">Elimina</button>
+      <button ng-show="isNew" ng-click="onAddClicked()">Aggiungi</button>
+      <button ng-show="!isNew" ng-click="onUpdateClicked()">Aggiorna</button>
+      <button ng-show="!isNew" ng-click="onRemoveClicked()">Elimina</button>
       <a href="/">Cancel</a>
     </script>
 
     <script type="text/ng-template" id="/upload.html">
       <h1><%= title %></h1>
       <h2>Upload alimenti</h2>
-      <input type="file" onchange="angular.element(this).scope().fileChanged(this)"></br>
-      <button ng-click="upload()">upload</button>
+      <input type="file" onchange="angular.element(this).scope().onFileChanged(this)"></br>
+      <button ng-click="onUploadClicked()">upload</button>
     </script>
 
 

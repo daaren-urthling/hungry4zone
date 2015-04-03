@@ -10,7 +10,10 @@ var FoodSchema = new mongoose.Schema({
 });
 
 var Food = mongoose.model('Food', FoodSchema);
+//=============================================================================
+module.exports = Food;
 
+//-----------------------------------------------------------------------------
 Food.adjustLocale = function (food) {
 
   function adjustNumberLocale(literal) {
@@ -25,4 +28,16 @@ Food.adjustLocale = function (food) {
   food.carbohydrates = adjustNumberLocale(food.carbohydrates);
 };
 
-module.exports = Food;
+//-----------------------------------------------------------------------------
+function quote(regex) {
+  return regex.replace(/([()[{*+.$^\\|?])/g, '\\$1');
+}
+
+//-----------------------------------------------------------------------------
+//@@TODO la ricerca lower-case con le regexp non e` efficente
+Food.exist = function (foodName, callback) {
+  var quoted = quote(foodName);
+  this.findOne({name : { $regex : new RegExp("^" + quoted + "$", "i") } }, function(err, obj){
+    callback(err, obj !== null, obj && obj._doc._id);
+  });
+};
