@@ -31,7 +31,6 @@ router.get('/:id', function(req, res, next) {
 // search         (GET /search/:name)
 //-----------------------------------------------------------------------------
 router.get('/search/:name', function(req, res, next) {
-  var r = new RegExp("^" + req.params.name + "$", "i");
   Food.exist(req.params.name, function(err, found, foodId) {
     if (err) return next(err);
     res.send(new Result(found, foodId));
