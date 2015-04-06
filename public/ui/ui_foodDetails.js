@@ -22,21 +22,21 @@ app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$loc
       if (!result.success && result.id)
         $scope.alertMessage = 'Alimento già presente';
       else
-        $location.url('/');
+        $location.url('/foods');
     });
   };
 
   //-----------------------------------------------------------------------------
   $scope.onUpdateClicked = function(){
     Foods.update({id: $scope.food._id}, $scope.food, function(){
-      $location.url('/');
+      $location.url('/foods');
     });
   };
 
   //-----------------------------------------------------------------------------
   $scope.onRemoveClicked = function(){
     Foods.remove({id: $scope.food._id}, function(){
-      $location.url('/');
+      $location.url('/foods');
     });
   };
 

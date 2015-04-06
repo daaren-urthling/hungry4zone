@@ -1,3 +1,6 @@
-<h2>Upload alimenti</h2>
-<input type="file" onchange="angular.element(this).scope().onFileChanged(this)"></br>
-<button ng-click="onUploadClicked()">upload</button>
+<div class="container">
+  <h2>Upload alimenti</h2>
+  <input type="file" onchange="angular.element(this).scope().onFileChanged(this)"></br>
+  <button class="btn btn-primary" ng-click="onUploadClicked()">Upload</button>
+  <a href="#/foods" class="btn btn-default" role="button">Annulla</a>
+</div> <!-- /container -->

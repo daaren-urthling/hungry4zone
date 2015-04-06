@@ -1,8 +1,29 @@
+/* Move down content because we have a fixed navbar that is 50px tall */
 body {
-  padding: 50px;
-  font: 14px "Lucida Grande", Helvetica, Arial, sans-serif;
+  padding-top: 50px;
+  padding-bottom: 20px;
 }
 
-a {
-  color: #00B7FF;
+.proteins {
+  background-color:lavender;
+}
+
+.fats {
+  background-color:mistyrose;
+}
+
+.carbohydrates {
+  background-color:bisque;
+}
+
+.proteins-label {
+  background-color:lightblue;
+}
+
+.fats-label {
+  background-color:pink;
+}
+
+.carbohydrates-label {
+  background-color:LightSalmon;
 }

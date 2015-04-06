@@ -9,6 +9,6 @@ app.controller('FoodsController', ['$scope', 'Foods', '$location', function ($sc
 
   //-----------------------------------------------------------------------------
   $scope.onAddClicked = function(){
-    $location.url('/0');
+    $location.url('/foodDetail/0');
   };
 }]);
