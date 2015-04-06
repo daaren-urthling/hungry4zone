@@ -1,19 +1,70 @@
 <div class="container">
   <h2>Scheda Alimento</h2>
-  <form>
-    Alimento: <input type="text" ng-model="food.name" onchange="angular.element(this).scope().onFoodNameChanged()"> {{alertMessage}}</br>
-    Tipo: <select ng-model="food.type" ng-options="opt.type as opt.type for opt in foodTypes"></select></br>
-    Fonte: <select ng-model="food.source" ng-change="onFoodSourceChanged()">
-      <option value="3">ottima</option>
-      <option value="2">accettabile</option>
-      <option value="1">scarsa</option>
-    </select> <image width=14 ng-src="{{food.sourceImage()}}"></br>
-    Proteine: <input type="text" ng-model="food.proteins"></br>
-    Grassi: <input type="text" ng-model="food.fats"></br>
-    Carboidrati: <input type="text" ng-model="food.carbohydrates"></br>
-    <button ng-show="isNew" ng-click="onAddClicked()">Aggiungi</button>
-    <button ng-show="!isNew" ng-click="onUpdateClicked()">Aggiorna</button>
-    <button ng-show="!isNew" ng-click="onRemoveClicked()">Elimina</button>
-    <a href="#/foods">Cancel</a>
-  <form>
+  <alert ng-show="alert" type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
+  <div class="col-sm-8">
+    <form role="form" class="form-horizontal">
+      <div class="form-group">
+        <label for="name" class="col-sm-2 control-label">Alimento</label>
+        <div class="col-sm-6">
+          <input id="name" type="text" class="form-control" ng-model="food.name" onchange="angular.element(this).scope().onFoodNameChanged()">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="type" class="col-sm-2 control-label">Tipo</label>
+        <div class="col-sm-6">
+          <select id="type" class="form-control" ng-model="food.type" ng-options="opt.type as opt.type for opt in foodTypes"></select>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="source" class="col-sm-2 control-label">Fonte</label>
+        <div class="col-sm-5">
+          <select id="source" class="form-control" ng-model="food.source" ng-change="onFoodSourceChanged()">
+            <option value="3">ottima</option>
+            <option value="2">accettabile</option>
+            <option value="1">scarsa</option>
+          </select>
+        </div>
+        <div class="col-sm-1">
+          <img class="img-responsive img-circle" width=24 ng-src="{{food.sourceImage()}}">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="proteins" class="col-sm-2 control-label">Proteine</label>
+        <div class="col-sm-3">
+          <input id="proteins" class="form-control text-right" type="text" ng-model="food.proteins">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="fats" class="col-sm-2 control-label">Grassi</label>
+        <div class="col-sm-3">
+          <input id="fats" class="form-control text-right" type="text" ng-model="food.fats">
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="carbohydrates" class="col-sm-2 control-label">Carboidrati</label>
+        <div class="col-sm-3">
+          <input id="carbohydrates" class="form-control text-right" type="text" ng-model="food.carbohydrates">
+        </div>
+      </div>
+    </form>
+    <div ng-show="isNew" class="btn-group col-sm-offset-2">
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary" ng-click="onAddClicked()">Aggiungi</button>
+      </div>
+      <div class="btn-group">
+        <a role="button" class="btn btn-default" href="#/foods">Annulla</a>
+      </div>
+    </div>
+    <div ng-show="!isNew" class="btn-group col-sm-offset-2">
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary" ng-click="onUpdateClicked()">Aggiorna</button>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary" ng-click="onRemoveClicked()">Elimina</button>
+      </div>
+      <div class="btn-group">
+        <a role="button" class="btn btn-default" href="#/foods">Annulla</a>
+      </div>
+    </div>
+  </div>
 </div> <!-- /container -->
