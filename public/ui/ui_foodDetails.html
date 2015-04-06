@@ -1,0 +1,17 @@
+<h2>Scheda Alimento</h2>
+<form>
+  Alimento: <input type="text" ng-model="food.name" onchange="angular.element(this).scope().onFoodNameChanged()"> {{alertMessage}}</br>
+  Tipo: <select ng-model="food.type" ng-options="opt.type as opt.type for opt in foodTypes"></select></br>
+  Fonte: <select ng-model="food.source" ng-change="onFoodSourceChanged()">
+    <option value="3">ottima</option>
+    <option value="2">accettabile</option>
+    <option value="1">scarsa</option>
+  </select> <image width=14 ng-src="{{food.sourceImage()}}"></br>
+  Proteine: <input type="text" ng-model="food.proteins"></br>
+  Grassi: <input type="text" ng-model="food.fats"></br>
+  Carboidrati: <input type="text" ng-model="food.carbohydrates"></br>
+  <button ng-show="isNew" ng-click="onAddClicked()">Aggiungi</button>
+  <button ng-show="!isNew" ng-click="onUpdateClicked()">Aggiorna</button>
+  <button ng-show="!isNew" ng-click="onRemoveClicked()">Elimina</button>
+  <a href="/">Cancel</a>
+<form>
