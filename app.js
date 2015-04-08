@@ -6,9 +6,9 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 
 var routes = require('./routes/index');
-var users = require('./routes/users');
 
-var foods = require('./routes/rt_food');
+var users     = require('./routes/rt_users');
+var foods     = require('./routes/rt_food');
 var foodTypes = require('./routes/rt_foodTypes');
 
 var app = express();
@@ -65,13 +65,18 @@ app.use(function(err, req, res, next) {
 //var connectionString = 'mongodb://h4zTemplate:hXfvyP46YPRH79yuPVi54okRyKs8VWO9eivlTlGZ8xY-@ds062797.mongolab.com:62797/h4zTemplate';
 var connectionString = process.env.CUSTOMCONNSTR_MONGOLAB_URI;
 
+if (typeof connectionString === "undefined")
+{
+  connectionString = 'mongodb://localhost/hungry4zone';
+  console.log("Development environment, connecting to local DB");
+}
 
 var mongoose = require('mongoose');
 mongoose.connect(connectionString, function(err) {
     if(err) {
         console.log('connection error', err);
     } else {
-        console.log('connection successful');
+        console.log('successfully connected');
     }
 });
 

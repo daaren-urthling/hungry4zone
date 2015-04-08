@@ -28,6 +28,12 @@ app.factory('FoodTypes', ['$resource', function($resource){
   return FoodTypes;
 }]);
 
-//---------------
-// Controllers
-//---------------
+//=============================================================================
+// Users factory
+//=============================================================================
+app.factory('Users', ['$resource', function($resource){
+  User = $resource('/users/:id', null, {
+    'login': { method:'PUT', url: '/users/login'},
+  });
+  return User;
+}]);

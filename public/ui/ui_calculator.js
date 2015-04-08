@@ -1,6 +1,6 @@
 //=============================================================================
-// Calculator - controller for ui_calculator.html
+// CalculatorController - controller for ui_calculator.html
 //=============================================================================
 
-app.controller('Calculator', ['$scope', function ($scope) {
+app.controller('CalculatorController', ['$scope', '$rootScope', function ($scope, $rootScope) {
 }]);
