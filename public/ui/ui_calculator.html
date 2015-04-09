@@ -1,12 +1,52 @@
 <div class="container">
-<h2>Calcolatore Pasti</h2>
 <div class="row">
   <div class="col-sm-9">
+    <h2>Calcolatore Pasti</h2>
     <p class="lead">Scegli gli ingredienti, indica le quantità e componi il tuo pasto bilanciato.</p>
   </div>
-  <div class="col-sm-3">
-    <p class="text-muted text-right">Gestisci la lista degli alimenti e dei loro nutrienti.</p>
-    <a role="button" class="btn btn-primary btn-block" href="#/foods">Alimenti</a>
+  <div class="col-sm-3" align="right">
+    <br/><p class="text-muted text-right">Consulta la lista degli alimenti e dei loro nutrienti.</p>
+    <a role="button" class="btn btn-primary" href="#/foods">Alimenti</a>
+  </div>
+</div>
+<br/>
+<div class="row">
+  <table class = "table table-condensed">
+    <tr>
+      <th colspan=3/>
+      <th colspan=3 class="active text-center">per 100 g.</th>
+      <th colspan=1/>
+      <th colspan=3 class="active text-center">Reali</th>
+    </tr>
+    <tr>
+      <th class="text-left">Alimento</th>
+      <th class="text-center">Tipo</th>
+      <th class="text-center">Fonte</th>
+      <th class="proteins-label text-center">P</th>
+      <th class="fats-label text-center">G</th>
+      <th class="carbohydrates-label text-center">C</th>
+      <th class="text-center">Qtà</th>
+      <th class="proteins-label text-center">P</th>
+      <th class="fats-label text-center">G</th>
+      <th class="carbohydrates-label text-center">C</th>
+      <th></th>
+    <tr>
+    <tr ng-repeat="mealItem in meal.mealItems">
+      <td><input type="text" class="form-control" ng-model="mealItem.food" typeahead="food as food.name for food in foods | filter:{name:$viewValue} | limitTo:8" typeahead-on-select="onFoodSelected($item, $index, mealItem)"></td>
+      <td class="text-center" width=80>{{ mealItem.food.type }}</td>
+      <td class="text-center"><image width=16 ng-src="{{mealItem.food.sourceImage()}}"></td>
+      <td class="proteins text-right" width="7%">{{ mealItem.food.proteins | number:2 }}</td>
+      <td class="fats text-right" width="7%">{{ mealItem.food.fats | number:2 }}</td>
+      <td class="carbohydrates text-right" width="7%">{{ mealItem.food.carbohydrates | number:2 }}</td>
+      <td  width="10%"><input type="text" class="form-control" ng-model="mealItem.qty"></td>
+      <td class="proteins text-right" width="7%">{{ mealItem.totProteins | number:2 }}</td>
+      <td class="fats text-right" width="7%">{{ mealItem.totFats | number:2 }}</td>
+      <td class="carbohydrates text-right" width="7%">{{ mealItem.totCarbohydrates | number:2 }}</td>
+      <td class="text-muted glyphicon glyphicon-remove" ng-click="onRemoveLineClicked($index)" width=16></td>
+    </tr>
+  </table>
+  <div align="right">
+    <button class="btn btn-default" ng-click="onRemoveAllClicked()">Azzera tutto&nbsp;&nbsp;<span class="text-muted glyphicon glyphicon-remove"></span></button>
   </div>
 </div>
 </div> <!-- /container -->

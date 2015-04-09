@@ -37,3 +37,21 @@ app.factory('Users', ['$resource', function($resource){
   });
   return User;
 }]);
+
+//=============================================================================
+// Meals factory
+//=============================================================================
+app.factory('Meals', [function(){
+  function Meals() {
+    this.name = "";
+    this.totalCalories = 0;
+
+    Object.defineProperty(this, "minLength", { get: function () { return 5; } });
+
+    this.mealItems = [];
+    for (m = 0; m < this.minLength; m++)
+      this.mealItems.push({});
+  }
+
+  return Meals;
+}]);
