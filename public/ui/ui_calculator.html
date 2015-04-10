@@ -1,16 +1,22 @@
 <div class="container">
 <div class="row">
-  <div class="col-sm-9">
+  <div class="col-sm-8">
     <h2>Calcolatore Pasti</h2>
     <p class="lead">Scegli gli ingredienti, indica le quantità e componi il tuo pasto bilanciato.</p>
   </div>
   <div class="col-sm-3" align="right">
-    <br/><p class="text-muted text-right">Consulta la lista degli alimenti e dei loro nutrienti.</p>
+    <br/>
+    <p class="text-muted text-right">Consulta la lista degli alimenti e dei loro nutrienti.</p>
+  </div>
+  <div class="col-sm-1" align="right">
+    <br/>
     <a role="button" class="btn btn-primary" href="#/foods">Alimenti</a>
   </div>
 </div>
-<br/>
 <div class="row">
+  <div align="right">
+    <button class="btn btn-default btn-xs" ng-click="onRemoveAllClicked()">Azzera tutto&nbsp;&nbsp;<span class="text-muted glyphicon glyphicon-remove"></span></button>
+  </div>
   <table class = "table table-condensed">
     <tr>
       <th colspan=3/>
@@ -38,15 +44,60 @@
       <td class="proteins text-right" width="7%">{{ mealItem.food.proteins | number:2 }}</td>
       <td class="fats text-right" width="7%">{{ mealItem.food.fats | number:2 }}</td>
       <td class="carbohydrates text-right" width="7%">{{ mealItem.food.carbohydrates | number:2 }}</td>
-      <td  width="10%"><input type="text" class="form-control" ng-model="mealItem.qty"></td>
+      <td  width="10%"><input type="text" class="form-control text-right" ng-model="mealItem.qty" onchange="angular.element(this).scope().onQtyChanged(angular.element(this).scope().mealItem)"></td>
       <td class="proteins text-right" width="7%">{{ mealItem.totProteins | number:2 }}</td>
       <td class="fats text-right" width="7%">{{ mealItem.totFats | number:2 }}</td>
       <td class="carbohydrates text-right" width="7%">{{ mealItem.totCarbohydrates | number:2 }}</td>
       <td class="text-muted glyphicon glyphicon-remove" ng-click="onRemoveLineClicked($index)" width=16></td>
     </tr>
+    <tr>
+      <td colspan=6/>
+      <td class="text-right">Totali</td>
+      <td class="text-right">{{meal.totProteins | number:2}}</td>
+      <td class="text-right">{{meal.totFats | number:2}}</td>
+      <td class="text-right">{{meal.totCarbohydrates | number:2}}</td>
+    </tr>
+    <tr>
+      <td colspan=6/>
+      <td class="text-right">Blocchetti</td>
+      <td class="proteins text-right">{{meal.blockProteins | number:1}}</td>
+      <td class="fats text-right">{{meal.blockFats | number:1}}</td>
+      <td class="carbohydrates text-right">{{meal.blockCarbohydrates | number:1}}</td>
+    </tr>
   </table>
-  <div align="right">
-    <button class="btn btn-default" ng-click="onRemoveAllClicked()">Azzera tutto&nbsp;&nbsp;<span class="text-muted glyphicon glyphicon-remove"></span></button>
-  </div>
+</div>
+<div class="row">
+  <form  role="form" class="form-horizontal">
+    <div class="form-group">
+      <label class="col-sm-3 control-label text-info">Calorie</label>
+      <div  class="col-sm-1">
+        <p class="form-control-static bg-info text-center">{{meal.totCalories}}</p>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="col-sm-3 control-label text-primary">Rapporto proteine / carboidrati</label>
+      <div  class="col-sm-1">
+        <p class="form-control-static bg-primary text-center">{{meal.mealRatio}}</p>
+      </div>
+    </div>
+    <div class="form-group form-group-sm">
+      <label class="col-sm-3 control-label">minimo</label>
+      <div  class="col-sm-1">
+        <p class="form-control-static text-center">0,60</p>
+      </div>
+    </div>
+    <div class="form-group form-group-sm">
+      <label class="col-sm-3 control-label ">migliore</label>
+      <div  class="col-sm-1">
+        <p class="form-control-static text-center">0,75</p>
+      </div>
+    </div>
+    <div class="form-group form-group-sm">
+      <label class="col-sm-3 control-label">massimo</label>
+      <div  class="col-sm-1">
+        <p class="form-control-static text-center">1,00</p>
+      </div>
+    </div>
+  </form>
 </div>
 </div> <!-- /container -->
