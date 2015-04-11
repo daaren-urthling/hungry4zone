@@ -38,6 +38,8 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     $scope.meal.mealRatio = $scope.meal.totCarbohydrates !== 0.0 ?
                               Math.floor(($scope.meal.totProteins / $scope.meal.totCarbohydrates) * 100.00) / 100.00 :
                               100.00;
+
+    $scope.balanceGauge.refresh($scope.meal.mealRatio);
   }
 
   //-----------------------------------------------------------------------------
@@ -77,4 +79,25 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     $scope.meal = new Meals();
     recalculate();
   };
+
+  $scope.balanceGauge = new JustGage({
+    id: "balanceGauge",
+    value: 0,
+    min: 0,
+    max: 1.5,
+    title: "Rapporto proteine / carboidrati",
+    label: "minimo 0.6 - ottimo 0.75 - massimo 1.0",
+    levelColors: [
+      "#FF0000",
+      "#FFFF00",
+      "#00FF00",
+      "#FFFF00",
+      "#FF0000"
+    ],
+    levelColorsGradient: false,
+    gaugeWidthScale:1.5,
+    showMinMax:false,
+    labelFontColor:"#000000"
+  });
+
 }]);
