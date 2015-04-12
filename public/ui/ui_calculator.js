@@ -6,6 +6,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   $scope.meal = new Meals();
 
   $scope.foods = Foods.query();
+  $scope.hint = "";
 
   //-----------------------------------------------------------------------------
   function recalculate(mealItem){
@@ -38,6 +39,13 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     $scope.meal.mealRatio = $scope.meal.totCarbohydrates !== 0.0 ?
                               Math.floor(($scope.meal.totProteins / $scope.meal.totCarbohydrates) * 100.00) / 100.00 :
                               100.00;
+
+    if ($scope.meal.mealRatio < 0.6)
+      $scope.hint = "Troppi carboidrati";
+    else if ($scope.meal.mealRatio > 1.0)
+      $scope.hint = "Troppe proteine";
+    else
+      $scope.hint = "";
 
     $scope.balanceGauge.refresh($scope.meal.mealRatio);
   }
@@ -108,13 +116,45 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     value: 0,
     min: 0,
     max: 1.5,
-    title: "Rapporto proteine / carboidrati",
+    title: "Rapporto\n proteine / carboidrati",
     label: "minimo 0.6 - ottimo 0.75 - massimo 1.0",
     levelColors: [
       "#FF0000",
-      "#FFFF00",
+      "#FF0000",
+      "#FF0000",
+      "#FF0000",
+      "#FF0000",
+      "#FF0000",
+      "#FF0000",  // Red - < 0,59
+      "#FF0000",
+      "#FF0000",
+      "#FF0000",
+      "#FF0000",
+      "#FF0000",
+      //------------------------------------
+      "#FFA500",  // Orange - 0,59 : 0,62
+      //------------------------------------
+      "#FFFF00",  // Yellow - 0,63 : 0,67
+      //------------------------------------
       "#00FF00",
+      "#00FF00",  //  Green - 0,68 : 0,82
+      "#00FF00",
+      //------------------------------------
       "#FFFF00",
+      "#FFFF00",  // Yellow - 0,83 : 0,96
+      "#FFFF00",
+      //------------------------------------
+      "#FFA500",  // Orange - 0,97 : 1,01
+      //------------------------------------
+      "#FF0000",
+      "#FF0000",
+      "#FF0000",
+      "#FF0000",
+      "#FF0000",  // Red - > 1,01
+      "#FF0000",
+      "#FF0000",
+      "#FF0000",
+      "#FF0000",
       "#FF0000"
     ],
     levelColorsGradient: false,
