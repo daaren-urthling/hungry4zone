@@ -4,74 +4,111 @@
       <h2>Calcolatore Pasti</h2>
       <p class="lead">Scegli gli ingredienti, indica le quantità e componi il tuo pasto bilanciato.</p>
     </div>
-    <div class="col-sm-3 hidden-xs" align="right">
-      <br/>
-      <p class="text-muted text-right">Consulta la lista degli alimenti e dei loro nutrienti.</p>
-    </div>
-    <div class="col-sm-1 hidden-xs" align="right">
-      <br/>
-      <a role="button" class="btn btn-primary" href="#/foods">Alimenti</a>
+    <div class="visible-md-block visible-lg-block">
+      <div class="col-sm-3" align="right">
+        <br/>
+        <p class="text-muted text-right">Consulta la lista degli alimenti e dei loro nutrienti.</p>
+      </div>
+      <div class="col-sm-1" align="right">
+        <br/>
+        <a role="button" class="btn btn-primary" href="#/foods">Alimenti</a>
+      </div>
     </div>
   </div>
   <div class="row">
-    <div align="right">
-      <button class="btn btn-default btn-xs" ng-click="onRemoveAllClicked()">Azzera tutto&nbsp;&nbsp;<span class="text-muted glyphicon glyphicon-remove"></span></button>
+    <div>
+      <button class="btn btn-default btn-xs" ng-click="onRemoveAllClicked()"><span class="text-muted glyphicon glyphicon-remove"></span>&nbsp;&nbsp; Azzera tutto</button>
     </div>
     <div class="table-responsive">
-    <table class = "table table-condensed">
-      <tr class="hidden-xs">
-        <th colspan=4/>
-        <th colspan=3 class="active text-center">per 100 g.</th>
-        <th colspan=1/>
-        <th colspan=3 class="active text-center">Reali</th>
-      </tr>
-      <tr>
-        <th colspan=2 class="text-left">Alimento</th>
-        <th class="text-center hidden-xs">Tipo</th>
-        <th class="text-center">Fonte</th>
-        <th class="proteins-label text-center hidden-xs">P</th>
-        <th class="fats-label text-center hidden-xs">G</th>
-        <th class="carbohydrates-label text-center hidden-xs">C</th>
-        <th class="text-center">Qtà</th>
-        <th class="proteins-label text-center">P</th>
-        <th class="fats-label text-center">G</th>
-        <th class="carbohydrates-label text-center">C</th>
-        <th></th>
-      <tr>
-      <tr ng-repeat="mealItem in meal.mealItems">
-        <td colspan=2><input type="text" class="form-control" ng-model="mealItem.food" typeahead="food as food.name for food in foods | filter:{name:$viewValue} | limitTo:8" typeahead-on-select="onFoodSelected($item, $index, mealItem)"></td>
-        <td class="text-center hidden-xs" width=80>{{ mealItem.food.type }}</td>
-        <td class="text-center"><image width=16 ng-src="{{mealItem.food.sourceImage()}}"></td>
-        <td class="proteins text-right hidden-xs" width="7%">{{ mealItem.food.proteins | number:2 }}</td>
-        <td class="fats text-right hidden-xs" width="7%">{{ mealItem.food.fats | number:2 }}</td>
-        <td class="carbohydrates text-right hidden-xs" width="7%">{{ mealItem.food.carbohydrates | number:2 }}</td>
-        <td  width="10%"><input type="text" class="form-control text-right" ng-model="mealItem.qty" onchange="angular.element(this).scope().onQtyChanged(angular.element(this).scope().mealItem)"></td>
-        <td class="proteins text-right" width="7%">{{ mealItem.totProteins | number:2 }}</td>
-        <td class="fats text-right" width="7%">{{ mealItem.totFats | number:2 }}</td>
-        <td class="carbohydrates text-right" width="7%">{{ mealItem.totCarbohydrates | number:2 }}</td>
-        <td class="text-muted glyphicon glyphicon-remove" ng-click="onRemoveLineClicked($index)" width=16></td>
-      </tr>
-      <tr class="hidden-xs">
-        <td colspan=2/>
-        <td colspan=3/>
-        <td colspan=2/>
-        <td class="text-right">Totali</td>
-        <td class="text-right">{{meal.totProteins | number:2}}</td>
-        <td class="text-right">{{meal.totFats | number:2}}</td>
-        <td class="text-right">{{meal.totCarbohydrates | number:2}}</td>
-      </tr>
-      <tr>
-        <td class="text-right text-info">Calorie</td>
-        <td class="bg-info text-center">{{meal.totCalories}}</td>
-        <td colspan=1 class="hidden-xs"/>
-        <td colspan=1/>
-        <td colspan=3 class="hidden-xs"/>
-        <td class="text-right text-info">Blocchetti</td>
-        <td class="proteins text-right">{{meal.blockProteins | number:1}}</td>
-        <td class="fats text-right">{{meal.blockFats | number:1}}</td>
-        <td class="carbohydrates text-right">{{meal.blockCarbohydrates | number:1}}</td>
-      </tr>
-    </table>
+      <table class="table table-condensed">
+        <tr class="hidden-xs">
+          <th colspan=1/>
+          <th colspan=2/>
+          <th colspan=1 class="hidden-sm hidden-md"/>
+          <th colspan=3 class="active text-center hidden-sm">per 100 g.</th>
+          <th width=20 class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block"/>
+          <th colspan=1/>
+          <th width=20 class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block"/>
+          <th colspan=3 class="active text-center">Effettivi</th>
+        </tr>
+        <tr>
+          <th width=16 colspan=1/>
+          <th class="text-left">Alimento</th>
+            <th class="text-center hidden-sm hidden-md hidden-lg">F</th>
+            <th class="text-center hidden-xs">Fonte</th>
+          <th class="text-center hidden-xs hidden-sm hidden-md">Tipo</th>
+          <th class="proteins-label text-center hidden-xs hidden-sm">P</th>
+          <th class="fats-label text-center hidden-xs hidden-sm">G</th>
+          <th class="carbohydrates-label text-center hidden-xs hidden-sm">C</th>
+          <th width=20 class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block"/>
+          <th class="text-center">Qtà</th>
+          <th width=20 class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block"/>
+          <th class="proteins-label text-center hidden-xs">P</th>
+          <th class="fats-label text-center hidden-xs">G</th>
+          <th class="carbohydrates-label text-center hidden-xs">C</th>
+        </tr>
+        <tr ng-repeat="mealItem in meal.mealItems">
+          <td width=16><span class="text-center text-muted glyphicon glyphicon-remove" ng-click="onRemoveLineClicked($index)"/></td>
+            <td class="hidden-xs hidden-sm"><input type="text" class="form-control" ng-model="mealItem.food" typeahead="food as food.name for food in foods | filter:{name:$viewValue} | limitTo:8" typeahead-on-select="onFoodSelected($item, $index, mealItem)"></td>
+            <td class="hidden-md hidden-lg"><select class="form-control" ng-model="mealItem.food" ng-options="food as food.name for food in foods | orderBy:'name'" ng-change="onFoodSelected($item, $index, mealItem)" /></td>
+          <td class="text-center"><image width=20 ng-src="{{mealItem.food.sourceImage()}}"></td>
+          <td class="text-center hidden-xs hidden-sm hidden-md" width=80>{{ mealItem.food.type }}</td>
+          <td class="proteins text-right hidden-xs hidden-sm" width="80">{{ mealItem.food.proteins | number:2 }}</td>
+          <td class="fats text-right hidden-xs hidden-sm" width="80">{{ mealItem.food.fats | number:2 }}</td>
+          <td class="carbohydrates text-right hidden-xs hidden-sm" width="80">{{ mealItem.food.carbohydrates | number:2 }}</td>
+          <td width=20 class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block"><span class="text-center text-muted glyphicon glyphicon-minus" ng-click="onQtyPlusMinusClicked(mealItem,'-')"/>
+          <td width=80><input type="text" class="form-control text-right" ng-model="mealItem.qty" onchange="angular.element(this).scope().onQtyChanged(angular.element(this).scope().mealItem)"></td>
+          <td width=20 class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block"><span class="text-center text-muted glyphicon glyphicon-plus" ng-click="onQtyPlusMinusClicked(mealItem,'+')"/>
+          <td class="proteins text-right hidden-xs" width="80">{{ mealItem.totProteins | number:2 }}</td>
+          <td class="fats text-right hidden-xs" width="80">{{ mealItem.totFats | number:2 }}</td>
+          <td class="carbohydrates text-right hidden-xs" width="80">{{ mealItem.totCarbohydrates | number:2 }}</td>
+        </tr>
+        <tr class="hidden-xs">
+          <td />
+          <td colspan=2/>
+          <td colspan=1 class="hidden-sm hidden-md" />
+          <td colspan=3 class="hidden-sm"/>
+          <td class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block" width="16"/>
+          <td class="text-right">Totali</td>
+          <td class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block" width="16"/>
+          <td class="text-right">{{meal.totProteins | number:2}}</td>
+          <td class="text-right">{{meal.totFats | number:2}}</td>
+          <td class="text-right">{{meal.totCarbohydrates | number:2}}</td>
+        </tr>
+        <tr class="hidden-xs">
+          <td />
+          <td class="text-right text-info">Calorie</td>
+          <td class="bg-info text-center">{{meal.totCalories}}</td>
+          <td colspan=1 class="hidden-sm hidden-md"/>
+          <td colspan=3 class="hidden-sm"/>
+          <td class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block" width="16"/>
+          <td class="text-right text-info">Blocchetti</td>
+          <td class="visible-xs-inline-block visible-sm-inline-block visible-md-inline-block" width="16"/>
+          <td class="proteins text-right">{{meal.blockProteins | number:1}}</td>
+          <td class="fats text-right">{{meal.blockFats | number:1}}</td>
+          <td class="carbohydrates text-right">{{meal.blockCarbohydrates | number:1}}</td>
+        </tr>
+      </table>
+    </div>
+    <div class="table-responsive visible-xs-block" >
+      <table class = "table table-condensed">
+        <tr>
+          <th/>
+          <th colspan=3 class="active text-center">Blocchetti</th>
+        </tr>
+        <tr>
+          <th class="text-center text-info">Calorie</th>
+          <th class="proteins-label text-center">Prot.</th>
+          <th class="fats-label text-center">Grassi</th>
+          <th class="carbohydrates-label text-center">Carb.</th>
+        </tr>
+        <tr>
+          <td width=80 class="text-info text-center">{{meal.totCalories}}</td>
+          <td width=80 class="proteins text-right">{{meal.blockProteins | number:1}}</td>
+          <td width=80 class="fats text-right">{{meal.blockFats | number:1}}</td>
+          <td width=80 class="carbohydrates text-right">{{meal.blockCarbohydrates | number:1}}</td>
+        </tr>
+      </table>
     </div>
     <div id="balanceGauge" style="  width:300px; height:160px; display: inline-block; margin: 1em;"></div>
   </div>

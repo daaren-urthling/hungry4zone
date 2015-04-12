@@ -67,6 +67,29 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   };
 
   //-----------------------------------------------------------------------------
+  $scope.onQtyPlusMinusClicked = function(mealItem, sign){
+    if (!mealItem)
+      return;
+
+    if (sign == '+')
+      factor = 1;
+    else
+      factor = -1;
+
+    if (mealItem.qty < 100)
+      augment = 5;
+    else
+      augment = 10;
+
+    mealItem.qty = parseInt(mealItem.qty) + augment * factor;
+    if (mealItem.qty < 0.0)
+      mealItem.qty =0.0;
+
+    recalculate(mealItem);
+
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.onRemoveLineClicked = function($index){
     $scope.meal.mealItems.splice($index,1);
     recalculate();

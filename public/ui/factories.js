@@ -48,9 +48,10 @@ app.factory('Meals', [function(){
 
     Object.defineProperty(this, "minLength", { get: function () { return 5; } });
 
+    emptyMeal = { qty: 0.0, totProteins: 0.0, totFats: 0.0, totCarbohydrates: 0.0 };
     this.mealItems = [];
     for (m = 0; m < this.minLength; m++)
-      this.mealItems.push({});
+      this.mealItems.push({ qty: 0.0, totProteins: 0.0, totFats: 0.0, totCarbohydrates: 0.0 });
   }
 
   return Meals;
