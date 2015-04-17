@@ -34,6 +34,7 @@ app.factory('FoodTypes', ['$resource', function($resource){
 app.factory('Users', ['$resource', function($resource){
   User = $resource('/users/:id', null, {
     'login': { method:'PUT', url: '/users/login'},
+    'loggedUser': { method:'GET', url: '/users/loggedUser'},
   });
   return User;
 }]);
@@ -41,7 +42,7 @@ app.factory('Users', ['$resource', function($resource){
 //=============================================================================
 // Meals factory
 //=============================================================================
-app.factory('Meals', [function(){
+app.factory('Meals', ['$http', function($http){
   function Meals() {
     this.name = "";
     this.totalCalories = 0;
@@ -52,7 +53,22 @@ app.factory('Meals', [function(){
     this.mealItems = [];
     for (m = 0; m < this.minLength; m++)
       this.mealItems.push({ qty: 0.0, totProteins: 0.0, totFats: 0.0, totCarbohydrates: 0.0 });
+
   }
+
+  Meals.cacheRetrieve = function(callback) {
+    $http.get('/mealCache').success(function(result) {
+                if (result.data) {
+                  for (m = result.data.mealItems.length; m < 5; m++ )
+                    result.data.mealItems.push({ qty: 0.0, totProteins: 0.0, totFats: 0.0, totCarbohydrates: 0.0 });
+                }
+                callback(result);
+            });
+  };
+
+  Meals.cacheItem = function(mealItem) {
+    $http.put('/mealCache/cacheItem', mealItem);
+  };
 
   return Meals;
 }]);

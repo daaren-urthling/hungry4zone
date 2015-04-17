@@ -5,6 +5,12 @@
 app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', function ($scope, $rootScope, Meals, Foods, FoodTypes) {
   $scope.meal = new Meals();
 
+  Meals.cacheRetrieve(function(result) {
+    if (result.success) {
+      $scope.meal.mealItems = result.data.mealItems;
+    }
+  });
+
   $scope.foods = Foods.query();
   $scope.hint = "";
 
@@ -61,6 +67,8 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     });
     if ($index == $scope.meal.mealItems.length - 1)
       $scope.meal.mealItems.push({});
+
+    Meals.cacheItem(mealItem);
   };
 
   //-----------------------------------------------------------------------------

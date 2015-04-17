@@ -4,7 +4,16 @@
 
 app.controller('NavbarController', ['$scope', 'Users', '$rootScope',function ($scope, Users, $rootScope) {
 
+  $rootScope.isAdmin = false;
   $scope.user = {};
+
+  Users.loggedUser({}, function(result){
+    if (result.success)
+    {
+      $scope.user = result.data;
+      $rootScope.isAdmin = result.data.isAdmin;
+    }
+  });
 
   //-----------------------------------------------------------------------------
   $scope.onLoginClicked = function(){

@@ -4,12 +4,14 @@ var favicon = require('serve-favicon');
 var logger = require('morgan');
 var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
+var session = require('express-session');
 
 var routes = require('./routes/index');
 
 var users     = require('./routes/rt_users');
 var foods     = require('./routes/rt_food');
 var foodTypes = require('./routes/rt_foodTypes');
+var mealCache = require('./routes/rt_mealCache');
 
 var app = express();
 
@@ -23,12 +25,21 @@ app.use(logger('dev'));
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(cookieParser());
+//app.use(express.session({secret: '557C486AE8374CC48EE6E802394ADF54'}));
 app.use(express.static(path.join(__dirname, 'public')));
+
+app.use(session({
+  secret: '557C486AE8374CC48EE6E802394ADF54',
+  resave: false,
+  saveUninitialized: true
+}));
+
 
 app.use('/', routes);
 app.use('/users', users);
 app.use('/foods', foods);
 app.use('/foodTypes', foodTypes);
+app.use('/mealCache', mealCache);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
