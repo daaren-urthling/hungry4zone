@@ -2,12 +2,25 @@
 // CalculatorController - controller for ui_calculator.html
 //=============================================================================
 
-app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', function ($scope, $rootScope, Meals, Foods, FoodTypes) {
+app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', 'MealItems', function ($scope, $rootScope, Meals, Foods, FoodTypes, MealItems) {
   $scope.meal = new Meals();
 
   Meals.cacheRetrieve(function(result) {
     if (result.success) {
-      $scope.meal.mealItems = result.data.mealItems;
+      $scope.meal.mealItems = [];
+      result.data.mealItems.forEach(function(mealItem, idx) {
+          $scope.meal.mealItems.push(new MealItems());
+          angular.merge($scope.meal.mealItems[idx], mealItem);
+      });
+      // add an empty slot if already full
+      if ($scope.meal.mealItems.length >= $scope.meal.minLength)
+        $scope.meal.mealItems.push(new MealItems());
+      // add as many slot to arrive up to the minimum
+      else
+        for (i = $scope.meal.mealItems.length; i < $scope.meal.minLength; i++)
+          $scope.meal.mealItems.push(new MealItems());
+
+      recalculate();
     }
   });
 
@@ -63,27 +76,28 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
       {
         mealItem.foodType = result.data;
         recalculate(mealItem);
+        Meals.cacheItem({item: mealItem, idx: $index});
       }
     });
     if ($index == $scope.meal.mealItems.length - 1)
       $scope.meal.mealItems.push({});
 
-    Meals.cacheItem(mealItem);
   };
 
   //-----------------------------------------------------------------------------
-  $scope.onQtyChanged = function(mealItem){
+  $scope.onQtyChanged = function(mealItem, $index){
     if (!mealItem)
       return;
 
     recalculate(mealItem);
+    Meals.cacheItem({item: mealItem, idx: $index});
 
     // need to call manually $apply as called via onchange (not ng-change)
     $scope.$apply();
   };
 
   //-----------------------------------------------------------------------------
-  $scope.onQtyPlusMinusClicked = function(mealItem, sign){
+  $scope.onQtyPlusMinusClicked = function(mealItem, sign, $index){
     if (!mealItem)
       return;
 
@@ -102,6 +116,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
       mealItem.qty =0.0;
 
     recalculate(mealItem);
+    Meals.cacheItem({item: mealItem, idx: $index});
 
   };
 
@@ -109,6 +124,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   $scope.onRemoveLineClicked = function($index){
     $scope.meal.mealItems.splice($index,1);
     recalculate();
+    Meals.removeItem({idx: $index});
     if ($scope.meal.mealItems.length < $scope.meal.minLength)
       $scope.meal.mealItems.push({});
   };
@@ -117,6 +133,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   $scope.onRemoveAllClicked = function(){
     $scope.meal = new Meals();
     recalculate();
+    Meals.removeAll();
   };
 
   $scope.balanceGauge = new JustGage({

@@ -56,9 +56,9 @@
           <td class="proteins text-right hidden-xs hidden-sm" width="80">{{ mealItem.food.proteins | number:2 }}</td>
           <td class="fats text-right hidden-xs hidden-sm" width="80">{{ mealItem.food.fats | number:2 }}</td>
           <td class="carbohydrates text-right hidden-xs hidden-sm" width="80">{{ mealItem.food.carbohydrates | number:2 }}</td>
-          <td style="padding-left: 10px;" class="visible-xs-block visible-sm-block visible-md-block"><span class="text-center text-muted glyphicon glyphicon-minus" ng-click="onQtyPlusMinusClicked(mealItem,'-')"/>
-          <td width=80><input type="text" class="form-control text-right" ng-model="mealItem.qty" onchange="angular.element(this).scope().onQtyChanged(angular.element(this).scope().mealItem)"></td>
-          <td style="padding-right: 10px;" class="visible-xs-block visible-sm-block visible-md-block"><span class="text-center text-muted glyphicon glyphicon-plus" ng-click="onQtyPlusMinusClicked(mealItem,'+')"/>
+          <td style="padding-left: 10px;" class="visible-xs-block visible-sm-block visible-md-block"><span class="text-center text-muted glyphicon glyphicon-minus" ng-click="onQtyPlusMinusClicked(mealItem,'-', $index)"/>
+          <td width=80><input type="text" class="form-control text-right" ng-model="mealItem.qty" onchange="angular.element(this).scope().onQtyChanged(angular.element(this).scope().mealItem, angular.element(this).scope().$index)"></td>
+          <td style="padding-right: 10px;" class="visible-xs-block visible-sm-block visible-md-block"><span class="text-center text-muted glyphicon glyphicon-plus" ng-click="onQtyPlusMinusClicked(mealItem,'+', $index)"/>
           <td class="proteins text-right hidden-xs" width="80">{{ mealItem.totProteins | number:2 }}</td>
           <td class="fats text-right hidden-xs" width="80">{{ mealItem.totFats | number:2 }}</td>
           <td class="carbohydrates text-right hidden-xs" width="80">{{ mealItem.totCarbohydrates | number:2 }}</td>
