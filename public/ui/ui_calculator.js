@@ -5,6 +5,8 @@
 app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', 'MealItems', function ($scope, $rootScope, Meals, Foods, FoodTypes, MealItems) {
   $scope.meal = new Meals();
 
+  $scope.hint = "";
+
   Meals.cacheRetrieve(function(result) {
     if (result.success) {
       $scope.meal.mealItems = [];
@@ -22,10 +24,18 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
 
       recalculate();
     }
+    // Query the foods in any case to fill up the list.
+    // On success reconnect the meal items "food" objects with those of the array,
+    // missing that the dropdown selected items will remain empty
+    $scope.foods = Foods.query({}, function success(foods){
+      $scope.meal.mealItems.forEach(function(mealItem, idx){
+        food = Foods.find(foods, mealItem.food.name);
+        if (food)
+          $scope.meal.mealItems[idx].food = food;
+      });
+    });
   });
 
-  $scope.foods = Foods.query();
-  $scope.hint = "";
 
   //-----------------------------------------------------------------------------
   function recalculate(mealItem){
@@ -80,7 +90,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
       }
     });
     if ($index == $scope.meal.mealItems.length - 1)
-      $scope.meal.mealItems.push({});
+      $scope.meal.mealItems.push(new MealItems());
 
   };
 
@@ -88,6 +98,8 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   $scope.onQtyChanged = function(mealItem, $index){
     if (!mealItem)
       return;
+
+    mealItem.adjustLocale();
 
     recalculate(mealItem);
     Meals.cacheItem({item: mealItem, idx: $index});
@@ -126,7 +138,9 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     recalculate();
     Meals.removeItem({idx: $index});
     if ($scope.meal.mealItems.length < $scope.meal.minLength)
-      $scope.meal.mealItems.push({});
+      $scope.meal.mealItems.push(new MealItems());
+    else if ($index == $scope.meal.mealItems.length)
+      $scope.meal.mealItems.push(new MealItems());
   };
 
   //-----------------------------------------------------------------------------
@@ -134,6 +148,17 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     $scope.meal = new Meals();
     recalculate();
     Meals.removeAll();
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.contains = function(name, viewValue) {
+    words = name.split(" ");
+    for (w = 0; w < words.length; w++)
+    {
+      if (words[w].substr(0, viewValue.length).toLowerCase() == viewValue.toLowerCase())
+        return true;
+    }
+    return false;
   };
 
   $scope.balanceGauge = new JustGage({
