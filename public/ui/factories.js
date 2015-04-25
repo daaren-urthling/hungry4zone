@@ -19,6 +19,14 @@ app.factory('Foods', ['$resource', function($resource){
     return "";
   };
 
+  //-----------------------------------------------------------------------------
+  Foods.find = function (foods, name) {
+    for (i = 0; i < foods.length; i++) {
+      if (foods[i].name == name)
+        return foods[i];
+    }
+  };
+
   return Foods;
 }]);
 
@@ -57,6 +65,20 @@ app.factory('MealItems', ['Foods', function(Foods){
     this.food             = new Foods();
     this.food.name = "";
   }
+
+  //-----------------------------------------------------------------------------
+  MealItems.prototype.adjustLocale = function () {
+
+    function adjustNumberLocale(literal) {
+      if (!literal) return 0.0;
+      if (typeof(literal) == "number") return literal;
+      if (typeof(literal) != "string") return 0.0;
+      return literal.replace(',','.');
+    }
+
+    this.qty = adjustNumberLocale(this.qty);
+  };
+
 
   return MealItems;
 }]);

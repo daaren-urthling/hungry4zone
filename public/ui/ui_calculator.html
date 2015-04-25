@@ -27,7 +27,7 @@
           <th colspan=1 class="hidden-sm hidden-md"/>
           <th colspan=3 class="active text-center hidden-sm">per 100 g.</th>
           <th class="visible-xs-block visible-sm-block visible-md-block"/>
-          <th colspan=1/>
+          <th width=80 colspan=1/>
           <th class="visible-xs-block visible-sm-block visible-md-block"/>
           <th colspan=3 class="active text-center">Effettivi</th>
         </tr>
@@ -41,7 +41,7 @@
           <th class="fats-label text-center hidden-xs hidden-sm">G</th>
           <th class="carbohydrates-label text-center hidden-xs hidden-sm">C</th>
           <th class="visible-xs-block visible-sm-block visible-md-block"/>
-          <th class="text-center">Qtà</th>
+          <th width=80 class="text-center">Qtà</th>
           <th class="visible-xs-block visible-sm-block visible-md-block"/>
           <th class="proteins-label text-center hidden-xs">P</th>
           <th class="fats-label text-center hidden-xs">G</th>
@@ -49,16 +49,16 @@
         </tr>
         <tr ng-repeat="mealItem in meal.mealItems">
           <td width=16><span class="text-center text-muted glyphicon glyphicon-remove" ng-click="onRemoveLineClicked($index)"/></td>
-            <td class="hidden-xs hidden-sm"><input type="text" class="form-control" ng-model="mealItem.food" typeahead="food as food.name for food in foods | filter:{name:$viewValue} | limitTo:8" typeahead-on-select="onFoodSelected($item, $index, mealItem)"></td>
+            <td class="hidden-xs hidden-sm"><input type="text" class="form-control" ng-model="mealItem.food" typeahead="food as food.name for food in foods | filter:{name:$viewValue}:contains | limitTo:8" typeahead-on-select="onFoodSelected($item, $index, mealItem)"></td>
             <td class="hidden-md hidden-lg"><select class="form-control" ng-model="mealItem.food" ng-options="food as food.name for food in foods | orderBy:'name'" ng-change="onFoodSelected($item, $index, mealItem)" /></td>
           <td class="text-center"><image width=20 ng-src="{{mealItem.food.sourceImage()}}"></td>
           <td class="text-center hidden-xs hidden-sm hidden-md" width=80>{{ mealItem.food.type }}</td>
           <td class="proteins text-right hidden-xs hidden-sm" width="80">{{ mealItem.food.proteins | number:2 }}</td>
           <td class="fats text-right hidden-xs hidden-sm" width="80">{{ mealItem.food.fats | number:2 }}</td>
           <td class="carbohydrates text-right hidden-xs hidden-sm" width="80">{{ mealItem.food.carbohydrates | number:2 }}</td>
-          <td style="padding-left: 10px;" class="visible-xs-block visible-sm-block visible-md-block"><span class="text-center text-muted glyphicon glyphicon-minus" ng-click="onQtyPlusMinusClicked(mealItem,'-', $index)"/>
-          <td width=80><input type="text" class="form-control text-right" ng-model="mealItem.qty" onchange="angular.element(this).scope().onQtyChanged(angular.element(this).scope().mealItem, angular.element(this).scope().$index)"></td>
-          <td style="padding-right: 10px;" class="visible-xs-block visible-sm-block visible-md-block"><span class="text-center text-muted glyphicon glyphicon-plus" ng-click="onQtyPlusMinusClicked(mealItem,'+', $index)"/>
+          <td align="center" style="text-align:center;" class="visible-xs-block visible-sm-block visible-md-block"><button class="btn btn-default" ng-click="onQtyPlusMinusClicked(mealItem,'-', $index)"><span class="text-center text-muted glyphicon glyphicon-minus" /></button></td>
+          <td width=80 ><input type="text" class="form-control text-right" ng-model="mealItem.qty" onchange="angular.element(this).scope().onQtyChanged(angular.element(this).scope().mealItem, angular.element(this).scope().$index)"></td>
+          <td align="center" style="text-align:center;" class="visible-xs-block visible-sm-block visible-md-block"><button class="btn btn-default" ng-click="onQtyPlusMinusClicked(mealItem,'+', $index)"><span class="text-center text-muted glyphicon glyphicon-plus"/></button></td>
           <td class="proteins text-right hidden-xs" width="80">{{ mealItem.totProteins | number:2 }}</td>
           <td class="fats text-right hidden-xs" width="80">{{ mealItem.totFats | number:2 }}</td>
           <td class="carbohydrates text-right hidden-xs" width="80">{{ mealItem.totCarbohydrates | number:2 }}</td>
@@ -69,7 +69,7 @@
           <td colspan=1 class="hidden-sm hidden-md" />
           <td colspan=3 class="hidden-sm"/>
           <td class="visible-xs-block visible-sm-block visible-md-block"/>
-          <td class="text-right">Totali</td>
+          <td width=80 class="text-right">Totali</td>
           <td class="visible-xs-block visible-sm-block visible-md-block"/>
           <td class="text-right">{{meal.totProteins | number:2}}</td>
           <td class="text-right">{{meal.totFats | number:2}}</td>
@@ -82,7 +82,7 @@
           <td colspan=1 class="hidden-sm hidden-md"/>
           <td colspan=3 class="hidden-sm"/>
           <td class="visible-xs-block visible-sm-block visible-md-block"/>
-          <td class="text-right text-info">Blocchetti</td>
+          <td width=80 class="text-right text-info">Blocchetti</td>
           <td class="visible-xs-block visible-sm-block visible-md-block"/>
           <td class="proteins text-right">{{meal.blockProteins | number:1}}</td>
           <td class="fats text-right">{{meal.blockFats | number:1}}</td>
