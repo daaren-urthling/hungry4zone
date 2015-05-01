@@ -1,0 +1,10 @@
+<div class="container" ng-show="signupOk">
+  <p>Benvenuto {{message}}!</p>
+  <p>La tua registrazione è stata completata con successo.</p>
+  <p>Che ne dici di iniziare a scoprire le nostre ricette?</p>
+  <p><a class="btn btn-default" href="#/" role="button">Vai &raquo;</a></p>
+</div>
+<div class="container" ng-show="!signupOk">
+  <p>Non è stato possibile completare la tua registrazione:</p>
+  <p>{{message}}</p>
+</div> <!-- /container -->

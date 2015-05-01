@@ -1,0 +1,35 @@
+<div class="container">
+  <p/>
+  <div class="col-lg-offset-4 col-lg-4 col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+    <div class="panel panel-default">
+      <div class="panel-heading text-center">Registrati</div>
+      <div class="panel-body">
+        <form name="form" class="" method="post" novalidate="" ng-submit="onSignupClicked()">
+          <div class="form-group" >
+            <label class="control-label" for="name">Nome</label>
+            <input name="name" class="form-control" id="mane" ng-model="formData.name">
+          </div>
+          <div class="form-group" ng-class="{ 'has-error': form.email.$dirty &amp;&amp; form.email.$error.email }">
+            <label class="control-label" for="email">e-mail</label>
+            <input name="email" class="form-control" id="email" required="" type="email" placeholder="Email" ng-model="formData.email" ng-model-options="{ updateOn: 'blur' }">
+            <span class="help-block small" ng-show="!form.email.$error.email">La tua e-mail serve per accedere ad Hungry4Zone, e verrà usata solo per la gestione del tuo account.<br/><strong>Non ti invieremo spam.</strong></span>
+            <span class="help-block" ng-show="form.email.$dirty &amp;&amp; form.email.$error.email">L'indirizzo e-mail non è valido.</span>
+            <span class="help-block" ng-show="form.email.$dirty &amp;&amp; form.email.$error.isTaken">Esiste già un utente associato a questa e-mail.</span>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error': form.password.$dirty &amp;&amp; form.password.$error.required }">
+            <label class="control-label" for="password">Password</label>
+            <input name="password" class="form-control" id="password" required="" type="password" ng-model="formData.password" match="formData.verification">
+            <span class="help-block" ng-show="form.password.$dirty &amp;&amp; form.password.$error.required">Inserire una password.</span>
+          </div>
+          <div class="form-group" ng-class="{ 'has-error': form.verification.$dirty &amp;&amp; form.verification.$error.match &amp;&amp; !form.verification.$error.required }">
+            <label class="control-label" for="verification">Ripeti password</label>
+            <input name="verification" class="form-control" id="verification" required="" type="password" ng-model="formData.verification" ng-model-options="{ updateOn: 'blur' }" match="formData.password">
+            <span class="help-block" ng-show="form.verification.$dirty &amp;&amp; form.verification.$error.required">Inserire nuovamente la password.</span>
+            <span class="help-block" ng-show="form.verification.$dirty &amp;&amp; form.verification.$error.match &amp;&amp; !form.verification.$error.required">Le due password non corrispondono.</span>
+          </div>
+          <input type="submit" class="btn btn-primary" value="Registrati" ng-disabled="form.$invalid">
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
