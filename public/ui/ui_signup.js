@@ -43,3 +43,32 @@ app.directive('match', [function () {
     }
   };
 }]);
+
+//=============================================================================
+app.directive('uniqueEmail', ['$http', function($http) {
+  return {
+    require: 'ngModel',
+    link: function(scope, elem, attrs, ctrl) {
+      scope.busy = false;
+      scope.$watch(attrs.ngModel, function(value) {
+
+        // hide old error messages
+        ctrl.$setValidity('isTaken', true);
+
+        if (!value) {
+          // don't send undefined to the server during dirty check
+          // empty username is caught by required directive
+          return;
+        }
+
+        scope.busy = true;
+        $http.post('/signup/checkEmail', {email: value}).success(function(result) {
+          if (!result.success)
+            ctrl.$setValidity('isTaken', false);
+          // everything is fine -> do nothing
+          scope.busy = false;
+        });
+      });
+    }
+  };
+}]);
