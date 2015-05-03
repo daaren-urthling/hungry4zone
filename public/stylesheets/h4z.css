@@ -27,3 +27,25 @@ body {
 .carbohydrates-label {
   background-color:LightSalmon;
 }
+
+#login-container .btm-links {
+  text-align: center;
+  margin-top: 10px;
+}
+
+#login-container #create-account {
+  float: right;
+}
+
+#login-container #forgot-password {
+  float: left;
+}
+
+#login-container #login-alert  {
+  margin-top: 10px;
+}
+
+.text-white{
+  padding-left: 20px;
+  color:white;
+}

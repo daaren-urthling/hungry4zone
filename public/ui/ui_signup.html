@@ -7,7 +7,7 @@
         <form name="form" class="" method="post" novalidate="" ng-submit="onSignupClicked()">
           <div class="form-group" >
             <label class="control-label" for="name">Nome</label>
-            <input name="name" class="form-control" id="mane" ng-model="formData.name">
+            <input name="name" class="form-control" id="name" ng-model="formData.name">
           </div>
           <div class="form-group" ng-class="{ 'has-error': form.email.$dirty &amp;&amp; (form.email.$error.email || form.email.$error.isTaken)}">
             <label class="control-label" for="email">e-mail</label>

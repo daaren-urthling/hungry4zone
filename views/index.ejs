@@ -41,18 +41,17 @@
             <li><a href="#">Planner Pasti</a></li>
             <li><a href="#/calculator">Calcolatore</a></li>
           </ul>
-          <form class="navbar-form navbar-right">
-            <div class="form-group">
-              <input type="text" placeholder="Email" class="form-control" ng-model="user.username">
+          <form ng-show="loggedUser" class="navbar-form navbar-right">
+            <div class="form-group text-white">
+              Utente: {{loggedUser.name}}&nbsp;&nbsp;&nbsp;
             </div>
-            <div class="form-group">
-              <input type="password" placeholder="Password" class="form-control" ng-model="user.password">
+            <a role="button" class="btn btn-success" href="#/logout">Esci</a>
+          </form>
+          <form ng-show="!loggedUser" class="navbar-form navbar-right">
+            <a role="button" class="btn btn-success" href="#/login">Entra</a>
+            <div class="form-group text-white">
+              &nbsp;&nbsp;&nbsp;oppure&nbsp;<a href="#/signup">Registrati</a>
             </div>
-            <button type="submit" class="btn btn-success" ng-click="onLoginClicked()">Entra</button>
-            <div class="form-group text-muted">
-                oppure <a href="#/signup">Registrati</a>
-            </div>
-            <alert ng-show="loginAlert" type="{{loginAlert.type}}" close="onCloseAlert()">{{loginAlert.msg}}</alert>
           </form>
         </div><!--/.navbar-collapse -->
       </div>
@@ -98,6 +97,8 @@
     <script src="/ui/ui_foodDetails.js"></script>
     <script src="/ui/ui_upload.js"></script>
     <script src="/ui/ui_signup.js"></script>
+    <script src="/ui/ui_login.js"></script>
+    <script src="/ui/ui_logout.js"></script>
 
     <script>
       //---------------
@@ -138,6 +139,18 @@
           .when('/signupResult', {
             templateUrl: '/ui/ui_signupResult.html',
             controller: 'SignupController'
+          })
+          .when('/login', {
+            templateUrl: '/ui/ui_login.html',
+            controller: 'LoginController'
+          })
+          .when('/logout', {
+            templateUrl: '/ui/ui_logout.html',
+            controller: 'LogoutController'
+          })
+          .when('/resetPassword', {
+            templateUrl: '/ui/ui_resetPassword.html',
+            controller: 'LoginController'
           });
       }]);
     </script>

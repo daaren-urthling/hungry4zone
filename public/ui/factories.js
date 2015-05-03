@@ -45,7 +45,7 @@ app.factory('FoodTypes', ['$resource', function($resource){
 app.factory('Users', ['$resource', function($resource){
   User = $resource('/users/:id', null, {
     'login': { method:'PUT', url: '/users/login'},
-    'loggedUser': { method:'GET', url: '/users/loggedUser'},
+    'loggedUser': { method:'PUT', url: '/users/loggedUser'},
   });
 
   return User;
