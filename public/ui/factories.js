@@ -46,6 +46,8 @@ app.factory('Users', ['$resource', function($resource){
   User = $resource('/users/:id', null, {
     'login': { method:'PUT', url: '/users/login'},
     'loggedUser': { method:'PUT', url: '/users/loggedUser'},
+    'forgotPassword': { method:'PUT', url: '/users/forgotPassword'},
+    'validatePin': { method:'PUT', url: '/users/validatePin'},
   });
 
   return User;

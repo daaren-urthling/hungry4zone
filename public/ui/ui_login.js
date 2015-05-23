@@ -4,6 +4,9 @@
 
 app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location', function ($scope, Users, $rootScope, $location) {
 
+  $scope.badPin = false;
+  $scope.acceptedPin = false;
+
   //-----------------------------------------------------------------------------
   $scope.onLoginClicked = function(){
 
@@ -13,8 +16,7 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
     Users.login($scope.loginData, function(result){
       $rootScope.loggedUser = null;
       $scope.loginError = null;
-      if (result.success)
-      {
+      if (result.success) {
         $rootScope.loggedUser = result.data;
         $location.url("/");
       }
@@ -29,12 +31,33 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
   };
 
   //-----------------------------------------------------------------------------
-  $scope.onResetPasswordClicked = function(){
+  $scope.onForgotPasswordClicked = function(){
 
-    if(!$scope.resetData.email || $scope.resetData.email.length < 1)
+    if(!$scope.forgotPasswordData.email || $scope.forgotPasswordData.email.length < 1)
       return;
 
-      $scope.sentEmail = true;
+      Users.forgotPassword($scope.forgotPasswordData, function(result){
+        if (result.success) {
+          $scope.sentEmail = true;
+        }
+    });
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onConfirmPinClicked = function(){
+    if(!$scope.resetPasswordData.pin || $scope.resetPasswordData.pin.length < 1)
+      return;
+
+      Users.validatePin($scope.resetPasswordData, function(result){
+        $scope.badPin = false;
+        if (result.success) {
+          $scope.acceptedPin = true;
+          $scope.userName = result.data.name;
+        }
+        else {
+          $scope.badPin = true;
+        }
+      });
   };
 
 }]);

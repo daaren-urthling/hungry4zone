@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var Result = require('../models/result.js');
+var Result = require('../utils/result.js');
 var pass = require('pwd');
 var User = require('../models/md_user.js');
+var MailSender = require('../utils/mailSender.js');
 
 //=============================================================================
 module.exports = router;
@@ -56,6 +57,7 @@ router.post('/', function(req, res, next) {
           };
           User.create(user, function (err, obj) {
             if (err) return next(err);
+            MailSender.Welcome(name, email);
             req.session.loggedUser = name;
             res.send(new Result(true, 0, req.session.loggedUser));
           });
@@ -78,7 +80,7 @@ router.post('/checkEmail', function(req, res, next) {
         res.send(new Result(true, 0));
     }
     else {
-      res.send(new Result(false, userId));      
+      res.send(new Result(false, userId));
     }
   });
 });

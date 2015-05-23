@@ -19,10 +19,12 @@ app.controller('SignupController', ['$scope', '$http', '$location', 'SignupResul
 
   $scope.signupOk = SignupResult.get().success;
   $scope.message = SignupResult.get().data;
+  $scope.email = SignupResult.get().email;
 
   //-----------------------------------------------------------------------------
   $scope.onSignupClicked = function(obj){
     $http.post('/signup', $scope.formData).success(function(result) {
+                result.email = $scope.formData.email;
                 SignupResult.set(result);
                 $location.url('/signupResult/');
             });

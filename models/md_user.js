@@ -6,7 +6,8 @@ var UserSchema = new mongoose.Schema({
   salt      : String,
   hash      : String,
   created   : { type: Date, default: Date.now },
-  isAdmin   : { type: Boolean, default: false }
+  isAdmin   : { type: Boolean, default: false },
+  resetPin  : String
 });
 
 var User = mongoose.model('User', UserSchema);

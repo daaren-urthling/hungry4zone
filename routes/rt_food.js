@@ -2,7 +2,7 @@ var express = require('express');
 var promise = require('promise');
 var mongoose = require('mongoose');
 var Food = require('../models/md_food.js');
-var Result = require('../models/result.js');
+var Result = require('../utils/result.js');
 
 var router = express.Router();
 

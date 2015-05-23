@@ -1,6 +1,6 @@
 var express = require('express');
 var router = express.Router();
-var Result = require('../models/result.js');
+var Result = require('../utils/result.js');
 
 //=============================================================================
 module.exports = router;

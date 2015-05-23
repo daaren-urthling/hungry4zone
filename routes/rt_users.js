@@ -1,8 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var Result = require('../models/result.js');
+var Result = require('../utils/result.js');
 var pass = require('pwd');
 var User = require('../models/md_user.js');
+var MailSender = require('../utils/mailSender.js');
 
 //=============================================================================
 module.exports = router;
@@ -14,7 +15,7 @@ router.get('/', function(req, res, next) {
   res.send(new Result(false, 0));
 });
 
-// loggedUser          (GET /loggedUser)
+// loggedUser          (PUT /loggedUser)
 //-----------------------------------------------------------------------------
 router.put('/loggedUser', function(req, res, next) {
   if (req.body.logout) {
@@ -29,7 +30,7 @@ router.put('/loggedUser', function(req, res, next) {
   }
 });
 
-// login         (GET /login)
+// login         (PUT /login)
 //-----------------------------------------------------------------------------
 router.put('/login', function(req, res, next) {
     var email = req.body.email.toLowerCase();
@@ -55,6 +56,8 @@ router.put('/login', function(req, res, next) {
           pass.hash(password, obj._doc.salt, function(err, hash) {
             if (obj._doc.hash === hash) {
               if (err) return next(err);
+              // reset any attempt of password recovery
+              User.findByIdAndUpdate(obj._doc._id, {resetPin : ""}, function (err, obj) {});
               loggedUser = { id : obj._doc._id, name : obj._doc.name, isAdmin: obj._doc.isAdmin, email : obj._doc.email};
               req.session.loggedUser = loggedUser;
               res.send(new Result(true, loggedUser.id, loggedUser));
@@ -66,5 +69,62 @@ router.put('/login', function(req, res, next) {
         else
           res.send(new Result(false, 0));
       });
+
+});
+
+//-----------------------------------------------------------------------------
+function generatePin() {
+  var pin = '' + Math.floor((Math.random() * 1000000) + 1);
+  while (pin.length < 6) pin = '0' + pin;
+  return pin;
+}
+
+// forgotPassword          (PUT /forgotPassword)
+//-----------------------------------------------------------------------------
+router.put('/forgotPassword', function(req, res, next) {
+  if (!req.body.email) {
+    res.send(new Result(false, 0));
+  }
+
+  User.findOne({ email : req.body.email }, function(err, obj) {
+    if (obj !== null) {
+      var pin = generatePin();
+      User.findByIdAndUpdate(obj._doc._id, {resetPin : pin}, function (err, obj) {
+        if (err) return next(err);
+        if (obj === null)
+          return res.send(new Result(false, 0));
+
+        MailSender.ResetPassword(req.body.email, pin, function(err, info) {
+          if (err)
+            res.send(err);
+          else
+            res.send(new Result(true, 0));
+        });
+      });
+    }
+    else
+    {
+      MailSender.UnknownResetRequest(req.body.email);
+      res.send(new Result(false, 0));
+    }
+  });
+
+});
+
+// validatePin          (PUT /validatePin)
+//-----------------------------------------------------------------------------
+router.put('/validatePin', function(req, res, next) {
+  if (!req.body.pin) {
+    res.send(new Result(false, 0));
+    return;
+  }
+
+  User.findOne({ resetPin : req.body.pin }, function(err, obj) {
+    if (obj !== null)
+      res.send(new Result(true, obj._doc._id, {name : obj._doc.name}));
+    else
+      res.send(new Result(false, 0));
+
+  });
 
 });
