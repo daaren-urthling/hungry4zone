@@ -2,7 +2,7 @@
 // ForgotPasswordController - controller for ui_forgotPassword.html
 //=============================================================================
 
-app.controller('ForgotPasswordController', ['$scope', 'Users', '$rootScope', '$location','SharedInfo', function ($scope, Users, $rootScope, $location, SharedInfo) {
+app.controller('ForgotPasswordController', ['$scope', 'Users', 'SharedInfo', function ($scope, Users, SharedInfo) {
 
   if (SharedInfo.get().email)  {
     $scope.formData = { email : SharedInfo.get().email };

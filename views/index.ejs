@@ -100,6 +100,7 @@
     <script src="/ui/ui_signup.js"></script>
     <script src="/ui/ui_login.js"></script>
     <script src="/ui/ui_forgotPassword.js"></script>
+    <script src="/ui/ui_resetPassword.js"></script>
     <script src="/ui/ui_logout.js"></script>
 
     <script>
@@ -156,7 +157,7 @@
           })
           .when('/resetPassword', {
             templateUrl: '/ui/ui_resetPassword.html',
-            controller: 'LoginController'
+            controller: 'ResetPasswordController'
           });
       }]);
     </script>
