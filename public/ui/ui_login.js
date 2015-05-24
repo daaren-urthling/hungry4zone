@@ -8,7 +8,6 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
   $scope.acceptedPin = false;
 
   if (SharedInfo.get().email)  {
-    $scope.forgotPasswordData = { email : SharedInfo.get().email };
     $scope.loginData = { email : SharedInfo.get().email };
   }
 
@@ -33,19 +32,6 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
   //-----------------------------------------------------------------------------
   $scope.onCloseAlert = function(){
     $scope.loginError = null;
-  };
-
-  //-----------------------------------------------------------------------------
-  $scope.onForgotPasswordClicked = function(){
-
-    if(!$scope.forgotPasswordData.email || $scope.forgotPasswordData.email.length < 1)
-      return;
-
-      Users.forgotPassword($scope.forgotPasswordData, function(result){
-        if (result.success) {
-          $scope.sentEmail = true;
-        }
-    });
   };
 
   //-----------------------------------------------------------------------------
