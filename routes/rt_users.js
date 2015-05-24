@@ -51,14 +51,18 @@ router.put('/login', function(req, res, next) {
     if (error.data)
       res.send(error);
     else
-      User.findOne({ email : email }, function(err, obj) {
-        if (obj !== null) {
-          pass.hash(password, obj._doc.salt, function(err, hash) {
-            if (obj._doc.hash === hash) {
+      User.findOne({ email : email }, function(err, doc) {
+        if (doc !== null) {
+          pass.hash(password, doc.salt, function(err, hash) {
+            if (doc.hash === hash) {
               if (err) return next(err);
+
               // reset any attempt of password recovery
-              User.findByIdAndUpdate(obj._doc._id, {resetPin : ""}, function (err, obj) {});
-              loggedUser = { id : obj._doc._id, name : obj._doc.name, isAdmin: obj._doc.isAdmin, email : obj._doc.email};
+              //User.findByIdAndUpdate(obj._doc._id, {resetPin : ""}, function (err, obj) {});
+              doc.resetPin = "";
+              doc.save(function (err, obj) {});
+
+              loggedUser = { id : doc._id, name : doc.name, isAdmin: doc.isAdmin, email : doc.email};
               req.session.loggedUser = loggedUser;
               res.send(new Result(true, loggedUser.id, loggedUser));
             }
@@ -119,12 +123,35 @@ router.put('/validatePin', function(req, res, next) {
     return;
   }
 
-  User.findOne({ resetPin : req.body.pin }, function(err, obj) {
-    if (obj !== null)
-      res.send(new Result(true, obj._doc._id, {name : obj._doc.name}));
+  User.findOne({ resetPin : req.body.pin }, function(err, doc) {
+    if (doc !== null)
+      res.send(new Result(true, doc._id, {name : doc.name}));
     else
       res.send(new Result(false, 0));
 
   });
 
+});
+
+// changePassword          (PUT /changePassword)
+//-----------------------------------------------------------------------------
+router.put('/changePassword', function(req, res, next) {
+  User.findById(req.body.id, function (err, doc) {
+    if (err) return next(err);
+    pass.hash(req.body.password, function(err, salt, hash){
+      if (err) return next(err);
+      doc.salt      = salt;
+      doc.hash      = hash;
+      doc.resetPin  = ""; // reset pin is no longer valid
+      doc.save(function (err, obj) {
+        if (err)
+          res.send(new Result(false, 0));
+        else
+        {
+          MailSender.ChangedPassword(doc.email, doc.name);         
+          res.send(new Result(true, 0));
+        }
+      });
+    });
+  });
 });

@@ -48,6 +48,7 @@ app.factory('Users', ['$resource', function($resource){
     'loggedUser': { method:'PUT', url: '/users/loggedUser'},
     'forgotPassword': { method:'PUT', url: '/users/forgotPassword'},
     'validatePin': { method:'PUT', url: '/users/validatePin'},
+    'changePassword': { method:'PUT', url: '/users/changePassword'},
   });
 
   return User;

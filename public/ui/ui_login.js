@@ -52,12 +52,29 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
         $scope.badPin = false;
         if (result.success) {
           $scope.acceptedPin = true;
-          $scope.userName = result.data.name;
+          $scope.resetPasswordData.name = result.data.name;
+          $scope.resetPasswordData.id = result.id;
         }
         else {
           $scope.badPin = true;
         }
       });
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onChangePasswordClicked = function(){
+
+    if(!$scope.resetPasswordData.password || $scope.resetPasswordData.password.length < 1)
+      return;
+
+      Users.changePassword($scope.resetPasswordData, function(result){
+        if (result.success) {
+          $scope.sentEmail = true;
+        }
+        else {
+          $scope.errors = true;          
+        }
+    });
   };
 
 }]);

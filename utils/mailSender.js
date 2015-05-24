@@ -18,7 +18,7 @@ function createTransport() {
 }
 
 //-----------------------------------------------------------------------------
-MailSender.Welcome = function (name, email) {
+MailSender.Welcome = function (email, name) {
     var transporter = createTransport();
     transporter.sendMail({
         from: 'accounts@hungry4zone.com',
@@ -42,6 +42,19 @@ MailSender.ResetPassword = function (email, pin, callback) {
               "<li>Usa il seguente Codice di Sicurezza temporaneo: <b>" + pin + "</b></li>" +
               "<li>Segui le istruzioni per impostare una nuova password</li>"
     }, callback);
+};
+
+//-----------------------------------------------------------------------------
+MailSender.ChangedPassword = function (email, name) {
+  var transporter = createTransport();
+    transporter.sendMail({
+        from: 'accounts@hungry4zone.com',
+        to: email,
+        subject: 'Conferma modifica password',
+        html: '<b>Buongiorno ' + name + '!</b><br/>' +
+              'Ti confermiamo che la tua nuova password è stata memorizzata correttamente.<br/>' +
+              'Torna spesso a guardare le nostre ricette!'
+    });
 };
 
 //-----------------------------------------------------------------------------

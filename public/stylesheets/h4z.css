@@ -41,7 +41,7 @@ body {
   float: left;
 }
 
-#login-container #login-alert  {
+#resetPassword-container #resetPassword-alert, #login-container #login-alert  {
   margin-top: 10px;
 }
 

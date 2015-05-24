@@ -57,7 +57,7 @@ router.post('/', function(req, res, next) {
           };
           User.create(user, function (err, obj) {
             if (err) return next(err);
-            MailSender.Welcome(name, email);
+            MailSender.Welcome(email, name);
             req.session.loggedUser = name;
             res.send(new Result(true, 0, req.session.loggedUser));
           });
