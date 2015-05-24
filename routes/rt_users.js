@@ -96,16 +96,10 @@ router.put('/checkEmail', function(req, res, next) {
 // loggedUser          (PUT /loggedUser)
 //-----------------------------------------------------------------------------
 router.put('/loggedUser', function(req, res, next) {
-  if (req.body.logout) {
-    req.session.loggedUser = null;
-    res.send(new Result(true, 0));
-  }
-  else {
-    if (req.session.loggedUser)
-      res.send(new Result(true, 0, req.session.loggedUser));
-    else
-      res.send(new Result(false, 0));
-  }
+  if (req.session.loggedUser)
+    res.send(new Result(true, 0, req.session.loggedUser));
+  else
+    res.send(new Result(false, 0));
 });
 
 // login         (PUT /login)
@@ -152,6 +146,13 @@ router.put('/login', function(req, res, next) {
           res.send(new Result(false, 0));
       });
 
+});
+
+// logout          (PUT /logout)
+//-----------------------------------------------------------------------------
+router.put('/logout', function(req, res, next) {
+    req.session.loggedUser = null;
+    res.send(new Result(true, 0));
 });
 
 //-----------------------------------------------------------------------------

@@ -2,7 +2,7 @@
 // NavbarController - controller for index.ejs (navbar)
 //=============================================================================
 
-app.controller('NavbarController', ['$scope', 'Users', '$rootScope',function ($scope, Users, $rootScope) {
+app.controller('NavbarController', ['$scope', 'Users', '$rootScope', '$location', function ($scope, Users, $rootScope, $location) {
 
   $rootScope.loggedUser = null;
 
@@ -11,5 +11,15 @@ app.controller('NavbarController', ['$scope', 'Users', '$rootScope',function ($s
       $rootScope.loggedUser = result.data;
     }
   });
+
+  //-----------------------------------------------------------------------------
+  $scope.OnLogoutClicked = function(){
+    Users.logout({}, function(result){
+      if (result.success) {
+        $rootScope.loggedUser = null;
+        $location.url('/');
+      }
+    });
+  };
 
 }]);
