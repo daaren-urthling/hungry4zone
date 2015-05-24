@@ -21,7 +21,7 @@ function createTransport() {
 MailSender.Welcome = function (email, name, callback) {
     var transporter = createTransport();
     transporter.sendMail({
-        from: 'accounts@hungry4zone.com',
+        from: 'Hungry4Zone@outlook.com',
         to: email,
         subject: 'Benvenuto in Hungry 4 Zone!',
         html: '<b>Benvenuto ' + name + '!</b><br/>' +

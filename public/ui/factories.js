@@ -44,8 +44,10 @@ app.factory('FoodTypes', ['$resource', function($resource){
 //=============================================================================
 app.factory('Users', ['$resource', function($resource){
   User = $resource('/users/:id', null, {
-    'login': { method:'PUT', url: '/users/login'},
+    'signup': { method:'PUT', url: '/users/signup'},
+    'checkEmail': { method:'PUT', url: '/users/checkEmail'},
     'loggedUser': { method:'PUT', url: '/users/loggedUser'},
+    'login': { method:'PUT', url: '/users/login'},
     'forgotPassword': { method:'PUT', url: '/users/forgotPassword'},
     'validatePin': { method:'PUT', url: '/users/validatePin'},
     'changePassword': { method:'PUT', url: '/users/changePassword'},

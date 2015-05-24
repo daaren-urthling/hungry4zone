@@ -3,7 +3,7 @@
 //=============================================================================
 
 //=============================================================================
-app.controller('SignupController', ['$scope', '$http', '$location', 'SharedInfo', '$rootScope', function ($scope, $http, $location, SharedInfo, $rootScope) {
+app.controller('SignupController', ['$scope', 'Users', '$location', 'SharedInfo', '$rootScope', function ($scope, Users, $location, SharedInfo, $rootScope) {
 
   var info = SharedInfo.get();
   $scope.signupOk = SharedInfo.get().signupResult && SharedInfo.get().signupResult.success;
@@ -17,7 +17,7 @@ app.controller('SignupController', ['$scope', '$http', '$location', 'SharedInfo'
 
   //-----------------------------------------------------------------------------
   $scope.onSignupClicked = function(obj){
-    $http.post('/signup', $scope.formData).success(function(result) {
+    Users.signup($scope.formData, function(result){
                 $rootScope.loggedUser = result.data;
                 $scope.formData.signupResult = result;
                 $location.url('/signupResult/');
@@ -47,7 +47,7 @@ app.directive('match', [function () {
 }]);
 
 //=============================================================================
-app.directive('uniqueEmail', ['$http', function($http) {
+app.directive('uniqueEmail', ['Users', function(Users) {
   return {
     require: 'ngModel',
     link: function(scope, elem, attrs, ctrl) {
@@ -64,7 +64,7 @@ app.directive('uniqueEmail', ['$http', function($http) {
         }
 
         scope.busy = true;
-        $http.post('/signup/checkEmail', {email: value}).success(function(result) {
+        Users.checkEmail({email: value}, function(result){
           if (!result.success)
             ctrl.$setValidity('isTaken', false);
           // everything is fine -> do nothing

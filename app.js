@@ -9,7 +9,6 @@ var session = require('express-session');
 var routes = require('./routes/index');
 
 var users     = require('./routes/rt_users');
-var signup    = require('./routes/rt_signup');
 var foods     = require('./routes/rt_food');
 var foodTypes = require('./routes/rt_foodTypes');
 var mealCache = require('./routes/rt_mealCache');
@@ -38,7 +37,6 @@ app.use(session({
 
 app.use('/', routes);
 app.use('/users', users);
-app.use('/signup', signup);
 app.use('/foods', foods);
 app.use('/foodTypes', foodTypes);
 app.use('/mealCache', mealCache);
