@@ -55,10 +55,11 @@ router.post('/', function(req, res, next) {
             salt: salt,
             hash: hash
           };
-          User.create(user, function (err, obj) {
+          User.create(user, function (err, doc) {
             if (err) return next(err);
             MailSender.Welcome(email, name);
-            req.session.loggedUser = name;
+            loggedUser = { id : doc._id, name : doc.name, isAdmin: doc.isAdmin, email : doc.email};
+            req.session.loggedUser = loggedUser;
             res.send(new Result(true, 0, req.session.loggedUser));
           });
         });

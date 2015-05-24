@@ -4,7 +4,11 @@
 
 app.controller('LogoutController', ['$scope', '$rootScope', 'Users' ,function ($scope, $rootScope, Users) {
 
-  $scope.message = $rootScope.loggedUser.name;
+  if ($rootScope.loggedUser) {
+    $scope.message = $rootScope.loggedUser.name;
+  } else {
+    $scope.message = "";
+  }
 
   Users.loggedUser({logout : true}, function(result){
     if (result.success) {

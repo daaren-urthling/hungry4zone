@@ -125,7 +125,7 @@ router.put('/validatePin', function(req, res, next) {
 
   User.findOne({ resetPin : req.body.pin }, function(err, doc) {
     if (doc !== null)
-      res.send(new Result(true, doc._id, {name : doc.name}));
+      res.send(new Result(true, doc._id, { name : doc.name, email : doc.email }));
     else
       res.send(new Result(false, 0));
 
@@ -148,7 +148,7 @@ router.put('/changePassword', function(req, res, next) {
           res.send(new Result(false, 0));
         else
         {
-          MailSender.ChangedPassword(doc.email, doc.name);         
+          MailSender.ChangedPassword(doc.email, doc.name);
           res.send(new Result(true, 0));
         }
       });

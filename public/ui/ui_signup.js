@@ -3,32 +3,30 @@
 //=============================================================================
 
 //=============================================================================
-app.service('SignupResult', function() {
-  var result = {};
+app.controller('SignupController', ['$scope', '$http', '$location', 'SharedInfo', '$rootScope', function ($scope, $http, $location, SharedInfo, $rootScope) {
 
-  var set = function(res) { result = res; };
-  var get = function()    { return result;};
-
-  return { set: set,  get: get  };
-});
-
-//=============================================================================
-app.controller('SignupController', ['$scope', '$http', '$location', 'SignupResult', function ($scope, $http, $location, SignupResult) {
-
-  // $scope.form = {};
-
-  $scope.signupOk = SignupResult.get().success;
-  $scope.message = SignupResult.get().data;
-  $scope.email = SignupResult.get().email;
+  $scope.signupOk = SharedInfo.get().success;
+  if ($scope.signupOk)  {
+    $scope.name = SharedInfo.get().data.name;
+    $scope.email = SharedInfo.get().data.email;
+  }
+  else
+    $scope.message = SharedInfo.get().data;
 
   //-----------------------------------------------------------------------------
   $scope.onSignupClicked = function(obj){
     $http.post('/signup', $scope.formData).success(function(result) {
-                result.email = $scope.formData.email;
-                SignupResult.set(result);
+                $rootScope.loggedUser = result.data;
+                SharedInfo.set(result);
                 $location.url('/signupResult/');
             });
   };
+
+  //-----------------------------------------------------------------------------
+  $scope.$on("$destroy", function(){
+    if ($scope.formData)
+      SharedInfo.set($scope.formData);
+  });
 
 }]);
 

@@ -2,10 +2,15 @@
 // LoginController - controller for ui_login.html
 //=============================================================================
 
-app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location', function ($scope, Users, $rootScope, $location) {
+app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location','SharedInfo', function ($scope, Users, $rootScope, $location, SharedInfo) {
 
   $scope.badPin = false;
   $scope.acceptedPin = false;
+
+  if (SharedInfo.get().email)  {
+    $scope.forgotPasswordData = { email : SharedInfo.get().email };
+    $scope.loginData = { email : SharedInfo.get().email };
+  }
 
   //-----------------------------------------------------------------------------
   $scope.onLoginClicked = function(){
@@ -54,6 +59,7 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
           $scope.acceptedPin = true;
           $scope.resetPasswordData.name = result.data.name;
           $scope.resetPasswordData.id = result.id;
+          $scope.resetPasswordData.email = result.data.email;
         }
         else {
           $scope.badPin = true;
@@ -72,9 +78,17 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
           $scope.sentEmail = true;
         }
         else {
-          $scope.errors = true;          
+          $scope.errors = true;
         }
     });
   };
+
+  //-----------------------------------------------------------------------------
+  $scope.$on("$destroy", function(){
+    if ($scope.loginData)
+      SharedInfo.set($scope.loginData);
+    if ($scope.resetPasswordData)
+      SharedInfo.set($scope.resetPasswordData);
+  });
 
 }]);
