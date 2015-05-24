@@ -45,7 +45,7 @@ MailSender.ResetPassword = function (email, pin, callback) {
 };
 
 //-----------------------------------------------------------------------------
-MailSender.ChangedPassword = function (email, name) {
+MailSender.ChangedPassword = function (email, name, callback) {
   var transporter = createTransport();
     transporter.sendMail({
         from: 'accounts@hungry4zone.com',
@@ -54,7 +54,7 @@ MailSender.ChangedPassword = function (email, name) {
         html: '<b>Buongiorno ' + name + '!</b><br/>' +
               'Ti confermiamo che la tua nuova password è stata memorizzata correttamente.<br/>' +
               'Torna spesso a guardare le nostre ricette!'
-    });
+    }, callback);
 };
 
 //-----------------------------------------------------------------------------

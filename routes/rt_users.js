@@ -224,10 +224,15 @@ router.put('/changePassword', function(req, res, next) {
       doc.save(function (err, obj) {
         if (err)
           res.send(new Result(false, 0));
-        else
-        {
-          MailSender.ChangedPassword(doc.email, doc.name);
-          res.send(new Result(true, 0));
+        else {
+          MailSender.ChangedPassword(doc.email, doc.name, function(err, info){
+            result = new Result(true, 0);
+            if (err){
+                console.log(err);
+                result.mailError = true;
+            }
+            res.send(result);
+          });
         }
       });
     });

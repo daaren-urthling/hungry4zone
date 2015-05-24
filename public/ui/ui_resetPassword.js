@@ -6,6 +6,9 @@ app.controller('ResetPasswordController', ['$scope', 'Users', 'SharedInfo', func
 
   $scope.badPin = false;
   $scope.acceptedPin = false;
+  $scope.changedPassword = false;
+  $scope.errors = false;
+  $scope.sentEmail = true;
 
   if (SharedInfo.get().email)  {
     $scope.formData = { email : SharedInfo.get().email };
@@ -37,11 +40,14 @@ app.controller('ResetPasswordController', ['$scope', 'Users', 'SharedInfo', func
       return;
 
       Users.changePassword($scope.formData, function(result){
+        $scope.changedPassword = true;
         if (result.success) {
-          $scope.sentEmail = true;
+          $scope.errors = false;
+          $scope.sentEmail = !result.mailError;
         }
         else {
           $scope.errors = true;
+          $scope.sentEmail = false;
         }
     });
   };
