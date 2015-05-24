@@ -57,10 +57,16 @@ router.post('/', function(req, res, next) {
           };
           User.create(user, function (err, doc) {
             if (err) return next(err);
-            MailSender.Welcome(email, name);
-            loggedUser = { id : doc._id, name : doc.name, isAdmin: doc.isAdmin, email : doc.email};
-            req.session.loggedUser = loggedUser;
-            res.send(new Result(true, 0, req.session.loggedUser));
+            MailSender.Welcome(email, name, function(err, info){
+              loggedUser = { id : doc._id, name : doc.name, isAdmin: doc.isAdmin, email : doc.email};
+              req.session.loggedUser = loggedUser;
+              result = new Result(true, 0, req.session.loggedUser);
+              if (err){
+                  console.log(err);
+                  result.mailError = true;
+              }
+              res.send(result);
+            });
           });
         });
       }

@@ -18,7 +18,7 @@ function createTransport() {
 }
 
 //-----------------------------------------------------------------------------
-MailSender.Welcome = function (email, name) {
+MailSender.Welcome = function (email, name, callback) {
     var transporter = createTransport();
     transporter.sendMail({
         from: 'accounts@hungry4zone.com',
@@ -27,7 +27,7 @@ MailSender.Welcome = function (email, name) {
         html: '<b>Benvenuto ' + name + '!</b><br/>' +
               'La tua registrazione è stata completata correttamente. Il tuo indirizzo e-mail ci sarà utile in caso dimenticassi la tua password.<br/>' +
               'Inizia subito a scoprire le nostre ricette!'
-    });
+    }, callback);
 };
 
 //-----------------------------------------------------------------------------
@@ -38,7 +38,7 @@ MailSender.ResetPassword = function (email, pin, callback) {
         to: email,
         subject: 'Ripristino password dimenticata',
         html: "Ecco come sostituire la password che hai dimenticato con una nuova:<br/>" +
-              "<ol><li>Segui questo link: <a href='http://localhost:3000/#/resetPassword'>http://www.Hungry4Zone.com/resetPassword</a></li>" +
+              "<ol><li>Segui questo link: <a href='http://" + global.H4ZURL + "/#/resetPassword'>http://www.Hungry4Zone.com/resetPassword</a></li>" +
               "<li>Usa il seguente Codice di Sicurezza temporaneo: <b>" + pin + "</b></li>" +
               "<li>Segui le istruzioni per impostare una nuova password</li>"
     }, callback);

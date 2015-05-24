@@ -5,10 +5,12 @@
 //=============================================================================
 app.controller('SignupController', ['$scope', '$http', '$location', 'SharedInfo', '$rootScope', function ($scope, $http, $location, SharedInfo, $rootScope) {
 
-  $scope.signupOk = SharedInfo.get().success;
+  var info = SharedInfo.get();
+  $scope.signupOk = SharedInfo.get().signupResult && SharedInfo.get().signupResult.success;
   if ($scope.signupOk)  {
-    $scope.name = SharedInfo.get().data.name;
-    $scope.email = SharedInfo.get().data.email;
+    $scope.name = SharedInfo.get().signupResult.data.name;
+    $scope.email = SharedInfo.get().signupResult.data.email;
+    $scope.emailError = SharedInfo.get().signupResult.emailError;
   }
   else
     $scope.message = SharedInfo.get().data;
@@ -17,7 +19,7 @@ app.controller('SignupController', ['$scope', '$http', '$location', 'SharedInfo'
   $scope.onSignupClicked = function(obj){
     $http.post('/signup', $scope.formData).success(function(result) {
                 $rootScope.loggedUser = result.data;
-                SharedInfo.set(result);
+                $scope.formData.signupResult = result;
                 $location.url('/signupResult/');
             });
   };
