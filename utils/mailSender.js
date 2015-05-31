@@ -34,7 +34,7 @@ MailSender.Welcome = function (email, name, callback) {
 MailSender.ResetPassword = function (email, pin, callback) {
   var transporter = createTransport();
     transporter.sendMail({
-        from: 'accounts@hungry4zone.com',
+        from: 'Hungry4Zone@outlook.com',
         to: email,
         subject: 'Ripristino password dimenticata',
         html: "Ecco come sostituire la password che hai dimenticato con una nuova:<br/>" +
@@ -48,7 +48,7 @@ MailSender.ResetPassword = function (email, pin, callback) {
 MailSender.ChangedPassword = function (email, name, callback) {
   var transporter = createTransport();
     transporter.sendMail({
-        from: 'accounts@hungry4zone.com',
+        from: 'Hungry4Zone@outlook.com',
         to: email,
         subject: 'Conferma modifica password',
         html: '<b>Buongiorno ' + name + '!</b><br/>' +
@@ -61,7 +61,7 @@ MailSender.ChangedPassword = function (email, name, callback) {
 MailSender.UnknownResetRequest = function (email, callback) {
   var transporter = createTransport();
     transporter.sendMail({
-        from: 'accounts@hungry4zone.com',
+        from: 'Hungry4Zone@outlook.com',
         to: email,
         subject: 'Utente sconosciuto su Hungry 4 Zone',
         html: 'Ciao. Hai chiesto di recuperare la tua password su <b>Hungry 4 Zone</b>, ma non ci risulta alcun utente associato a questa e-mail.<br/>' +
