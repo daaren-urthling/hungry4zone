@@ -45,7 +45,6 @@
             <div class="form-group text-white">
               Utente: {{loggedUser.name}}&nbsp;&nbsp;&nbsp;
             </div>
-            <!-- <a role="button" class="btn btn-success" href="#/logout">Esci</a> -->
             <button type="button" class="btn btn-success" ng-click="OnLogoutClicked()">Esci</button>
           </form>
           <form ng-show="!loggedUser" class="navbar-form navbar-right">
@@ -102,7 +101,6 @@
     <script src="/ui/ui_login.js"></script>
     <script src="/ui/ui_forgotPassword.js"></script>
     <script src="/ui/ui_resetPassword.js"></script>
-    <script src="/ui/ui_logout.js"></script>
 
     <script>
       //---------------
@@ -140,17 +138,9 @@
             templateUrl: '/ui/ui_signup.html',
             controller: 'SignupController'
           })
-          .when('/signupResult', {
-            templateUrl: '/ui/ui_signupResult.html',
-            controller: 'SignupController'
-          })
           .when('/login', {
             templateUrl: '/ui/ui_login.html',
             controller: 'LoginController'
-          })
-          .when('/logout', {
-            templateUrl: '/ui/ui_logout.html',
-            controller: 'LogoutController'
           })
           .when('/forgotPassword', {
             templateUrl: '/ui/ui_forgotPassword.html',

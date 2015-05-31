@@ -3,32 +3,27 @@
 //=============================================================================
 
 //=============================================================================
-app.controller('SignupController', ['$scope', 'Users', '$location', 'SharedInfo', '$rootScope', function ($scope, Users, $location, SharedInfo, $rootScope) {
+app.controller('SignupController', ['$scope', 'Users', '$location', '$rootScope', function ($scope, Users, $location, $rootScope) {
 
-  var info = SharedInfo.get();
-  $scope.signupOk = SharedInfo.get().signupResult && SharedInfo.get().signupResult.success;
-  if ($scope.signupOk)  {
-    $scope.name = SharedInfo.get().signupResult.data.name;
-    $scope.email = SharedInfo.get().signupResult.data.email;
-    $scope.emailError = SharedInfo.get().signupResult.emailError;
-  }
-  else
-    $scope.message = SharedInfo.get().data;
+  $scope.signupOk = false;
+  $scope.signupDone = false;
 
   //-----------------------------------------------------------------------------
   $scope.onSignupClicked = function(obj){
     Users.signup($scope.formData, function(result){
-                $rootScope.loggedUser = result.data;
-                $scope.formData.signupResult = result;
-                $location.url('/signupResult/');
-            });
+        if (result.success) {
+          $rootScope.loggedUser = result.data;
+          $scope.name = result.data.name;
+          $scope.email = result.data.email;
+          $scope.emailError = result.mailError;
+          $scope.signupOk = true;
+        } else {
+          $rootScope.loggedUser = null;
+          $scope.message = result.data;
+        }
+        $scope.signupDone = true;
+    });
   };
-
-  //-----------------------------------------------------------------------------
-  $scope.$on("$destroy", function(){
-    if ($scope.formData)
-      SharedInfo.set($scope.formData);
-  });
 
 }]);
 
