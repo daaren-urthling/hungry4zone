@@ -2,7 +2,7 @@
 // CalculatorController - controller for ui_calculator.html
 //=============================================================================
 
-app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', 'MealItems', function ($scope, $rootScope, Meals, Foods, FoodTypes, MealItems) {
+app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', 'MealItems', '$location', 'SharedInfo', function ($scope, $rootScope, Meals, Foods, FoodTypes, MealItems, $location, SharedInfo) {
   $scope.meal = new Meals();
 
   $scope.hint = "";
@@ -148,6 +148,12 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     $scope.meal = new Meals();
     recalculate();
     Meals.removeAll();
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onMealSaveClicked = function(){
+    SharedInfo.set($scope.meal);
+    $location.url('/meal');
   };
 
   //-----------------------------------------------------------------------------

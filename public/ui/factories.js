@@ -97,7 +97,7 @@ app.factory('Meals', ['$http', 'MealItems', function($http, MealItems){
   //-----------------------------------------------------------------------------
   function Meals() {
     this.name = "";
-    this.totalCalories = 0;
+    this.totCalories = 0;
 
     Object.defineProperty(this, "minLength", { get: function () { return 5; } });
 
@@ -133,8 +133,8 @@ app.factory('Meals', ['$http', 'MealItems', function($http, MealItems){
 }]);
 
 // Merge function, if angular < 1.4 is used
-// //-----------------------------------------------------------------------------
-// function merge(obj1,obj2){ // Our merge function
+//-----------------------------------------------------------------------------
+// function angular_merge(obj1,obj2){ // Our merge function
 //     var result = {}; // return result
 //     for(var i in obj1){      // for every property in obj1
 //         if((i in obj2) && (typeof obj1[i] === "object") && (i !== null)){

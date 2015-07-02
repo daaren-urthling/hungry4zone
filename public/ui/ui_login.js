@@ -7,6 +7,9 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
   if (SharedInfo.get().email)  {
     $scope.formData = { email : SharedInfo.get().email };
   }
+  // } else if (SharedInfo.get().forwardAddress) {
+  //   $scope.forwardAddress = SharedInfo.get().forwardAddress;
+  // }
 
   //-----------------------------------------------------------------------------
   $scope.onLoginClicked = function(){
@@ -19,7 +22,12 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
       $scope.loginError = null;
       if (result.success) {
         $rootScope.loggedUser = result.data;
-        $location.url("/");
+        if ($rootScope.forwardAddress) {
+          $location.url($rootScope.forwardAddress);
+          $rootScope.forwardAddress = null;
+        }
+        else
+          $location.url("/");
       }
       else
         $scope.loginError = "L'indirizzo e-mail e la password non corrispondono.";

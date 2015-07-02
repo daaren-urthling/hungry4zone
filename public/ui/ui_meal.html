@@ -1,0 +1,23 @@
+<div class="container">
+  <div class="row">
+    <div class="col-sm-8">
+      <h2>Pasto</h2>
+    </div>
+  </div>
+  <div class="row col-sm-6">
+    <div class="table-responsive">
+      <table class="table table-condensed">
+        <tr>
+          <th class="text-left">Alimento</th>
+          <th class="text-center">Fonte</th>
+          <th width=80 class="text-center">Qtà</th>
+        </tr>
+        <tr ng-repeat="mealItem in meal.mealItems">
+          <td class="text-left">{{ mealItem.food.name }}</td>
+          <td class="text-center"><image width=20 ng-src="{{mealItem.food.sourceImage()}}"></td>
+          <td width=80 class="text-right">{{ mealItem.qty }} gr.</td>
+        </tr>
+      </table>
+    </div>
+  </div>
+</div> <!-- /container -->

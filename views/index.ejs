@@ -68,12 +68,20 @@
     </div>
 
     <!-- Libraries -->
-    <!-- // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
-    // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
-    // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script> -->
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.min.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.min.js"></script> -->
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.6/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.6/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.6/angular-resource.min.js"></script>
+
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-route.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.2.25/angular-resource.js"></script> -->
+    <!-- // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.6/angular.js"></script>
+    // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.6/angular-route.js"></script>
+    // <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.0-beta.6/angular-resource.js"></script> -->
+
     <script src="/javascripts/ui-bootstrap-tpls-0.12.1.min.js"></script>
     <script src="/javascripts/raphael.2.1.0.min.js"></script>
     <script src="/javascripts/justgage.1.0.1.min.js"></script>
@@ -101,6 +109,7 @@
     <script src="/ui/ui_login.js"></script>
     <script src="/ui/ui_forgotPassword.js"></script>
     <script src="/ui/ui_resetPassword.js"></script>
+    <script src="/ui/ui_meal.js"></script>
 
     <script>
       //---------------
@@ -108,7 +117,7 @@
       //---------------
 
       //=============================================================================
-      app.config(['$routeProvider', function ($routeProvider) {
+      app.config(['$routeProvider', function ($routeProvider, $rootScope, $location) {
         $routeProvider
           .when('/', {
             templateUrl: '/ui/ui_home.html',
@@ -149,8 +158,24 @@
           .when('/resetPassword', {
             templateUrl: '/ui/ui_resetPassword.html',
             controller: 'ResetPasswordController'
-          });
-      }]);
+          })
+          .when('/meal', {
+            templateUrl: '/ui/ui_meal.html',
+            controller: 'MealController'
+          })
+      }]).
+      run(function($rootScope, $location, SharedInfo) {
+        $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+          if ($rootScope.loggedUser == null) {
+            // no logged user, redirect to /login
+            if ( next.templateUrl === "/ui/ui_meal.html") {
+              //SharedInfo.set({ forwardAddress : next.templateUrl })
+              $rootScope.forwardAddress = next.templateUrl;
+              $location.path("/login");
+            }
+          }
+        })
+      });
     </script>
 
     <!-- Bootstrap core JavaScript
