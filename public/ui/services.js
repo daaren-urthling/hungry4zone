@@ -1,11 +1,41 @@
 //=============================================================================
-// SharedInfo service
+// SharedInfos service
 //=============================================================================
-app.service('SharedInfo', function() {
-  var info = {};
+app.service('SharedInfos', function() {
+  var shared = {};
 
-  var set = function(obj) { info = obj; };
-  var get = function()    { return info;};
+  shared.infos = [];
 
-  return { set: set,  get: get  };
+  function find(name) {
+    for (i = 0; i < shared.infos.length; i++) {
+      if (shared.infos[i].name == name)
+        return i;
+    }
+    return -1;
+  }
+
+  shared.set = function(name, obj) {
+    pos = find(name);
+    if (pos >= 0)
+      shared.infos[pos].obj = obj;
+    else
+      shared.infos.push({name: name, obj: obj});
+  };
+
+  shared.has = function(name) {
+    return find(name) >= 0;
+  };
+
+  shared.get = function(name) {
+    pos = find(name);
+    if (pos >= 0)
+    {
+      ret = shared.infos[pos].obj;
+      shared.infos.splice(pos, 1);
+      return ret;
+    }
+    return null;
+  };
+
+  return shared;
 });

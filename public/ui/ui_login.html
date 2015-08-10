@@ -1,6 +1,9 @@
 <div class="container">
   <p/>
   <div id="login-container" class="col-lg-offset-4 col-lg-4 col-xs-offset-1 col-xs-10 col-sm-offset-2 col-sm-8 col-md-offset-3 col-md-6">
+    <br/>
+    <alert ng-show="alert" type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
+    <br/>
     <div class="panel panel-default">
       <div class="panel-heading text-center">Accedi a Hungry4Zone</div>
       <div class="panel-body">
@@ -17,10 +20,10 @@
           <button type="submit" class="btn btn-primary btn-block" ng-disabled="form.$invalid">
             <span class="glyphicon glyphicon-ok" aria-hidden="true"></span>&nbsp;&nbsp;&nbsp;Entra
           </button>
-          <alert id="user-alert" ng-show="loginError" type="danger" close="onCloseAlert()">{{loginError}}</alert>
+          <alert id="user-alert" ng-show="loginError" type="danger" close="onCloseLoginError()">{{loginError}}</alert>
           <div class="btm-links">
-            <a id="forgot-password" href="#/forgotPassword">Password dimenticata?</a>
-            <a id="create-account" href="#/signup">Registrati</a>
+            <a id="forgot-password" ng-click="onForgotPasswordClicked()" class="h4z-hyperlink">Password dimenticata?</a>
+            <a id="create-account" ng-click="onSignupClicked()" class="h4z-hyperlink">Registrati</a>
           </div>
         </form>
       </div>

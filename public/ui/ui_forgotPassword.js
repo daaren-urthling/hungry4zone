@@ -2,10 +2,14 @@
 // ForgotPasswordController - controller for ui_forgotPassword.html
 //=============================================================================
 
-app.controller('ForgotPasswordController', ['$scope', 'Users', 'SharedInfo', function ($scope, Users, SharedInfo) {
+app.controller('ForgotPasswordController', ['$scope', 'Users', 'SharedInfos', function ($scope, Users, SharedInfos) {
 
-  if (SharedInfo.get().email)  {
-    $scope.formData = { email : SharedInfo.get().email };
+  if (SharedInfos.has("email"))  {
+    $scope.formData = { email : SharedInfos.get("email") };
+  }
+
+  if (SharedInfos.has("forwardAddress")) {
+    $scope.forwardAddress = SharedInfos.get("forwardAddress");
   }
 
   //-----------------------------------------------------------------------------
@@ -23,8 +27,10 @@ app.controller('ForgotPasswordController', ['$scope', 'Users', 'SharedInfo', fun
 
   //-----------------------------------------------------------------------------
   $scope.$on("$destroy", function(){
-    if ($scope.formData)
-      SharedInfo.set($scope.formData);
+    if ($scope.formData && $scope.formData.email)
+      SharedInfos.set("email", $scope.formData.email);
+    if ($scope.forwardAddress)
+      SharedInfos.set("forwardAddress", $scope.forwardAddress);
   });
 
 }]);

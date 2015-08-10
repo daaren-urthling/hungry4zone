@@ -42,8 +42,9 @@
         <p ng-show="!emailError">Ti abbiamo inviato una e-mail all'indirizzo {{email}}. Verifica di averla ricevuta, ti sarà utile per ripristinare la tua password nel caso la dimenticassi.</p>
         <p ng-show="emailError">Non siamo riusciti ad inviarti una e-mail di conferma per un problema tecnico, la tua registrazione è comunque valida.</p>
         <p/>
-        <p>Che ne dici di iniziare a scoprire le nostre ricette?</p>
-        <p><a class="btn btn-default" href="#/" role="button">Vai &raquo;</a></p>
+        <p ng-show="!forwardAddress">Che ne dici di iniziare a scoprire le nostre ricette?</p>
+        <p ng-show="forwardAddress">Inizia da subito a gestire il tuo ricettario!</p>
+        <p><a class="btn btn-default" ng-click="onContinueClicked()" role="button">Vai &raquo;</a></p>
       </div>
       <div class="container" ng-show="!signupOk">
         <p>Non è stato possibile completare la tua registrazione:</p>

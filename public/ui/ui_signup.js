@@ -3,7 +3,15 @@
 //=============================================================================
 
 //=============================================================================
-app.controller('SignupController', ['$scope', 'Users', '$location', '$rootScope', function ($scope, Users, $location, $rootScope) {
+app.controller('SignupController', ['$scope', 'Users', '$location', '$rootScope', 'SharedInfos', function ($scope, Users, $location, $rootScope, SharedInfos) {
+
+  if (SharedInfos.has("email"))  {
+    $scope.formData = { email : SharedInfos.get("email") };
+  }
+
+  if (SharedInfos.has("forwardAddress")) {
+    $scope.forwardAddress = SharedInfos.get("forwardAddress");
+  }
 
   $scope.signupOk = false;
   $scope.signupDone = false;
@@ -23,6 +31,14 @@ app.controller('SignupController', ['$scope', 'Users', '$location', '$rootScope'
         }
         $scope.signupDone = true;
     });
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onContinueClicked = function(){
+    if ($scope.forwardAddress)
+      $location.url($scope.forwardAddress);
+    else
+      $location.url("/");
   };
 
 }]);

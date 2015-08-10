@@ -2,14 +2,16 @@
 // FoodsController - controller for ui_foods.html
 //=============================================================================
 
-app.controller('FoodsController', ['$scope', 'Foods', '$location', '$routeParams', function ($scope, Foods, $location, $routeParams) {
+app.controller('FoodsController', ['$scope', 'Foods', '$location', 'SharedInfos', function ($scope, Foods, $location, SharedInfos) {
   $scope.foods = Foods.query();
 
   console.log('foods:',$scope.foods);
 
   $scope.alert = null;
-  if ($routeParams.alert)
-    $scope.alert = angular.fromJson($routeParams.alert);
+
+  if (SharedInfos.has("alert"))  {
+    $scope.alert = SharedInfos.get("alert");
+  }
 
   //-----------------------------------------------------------------------------
   $scope.onAddClicked = function(){

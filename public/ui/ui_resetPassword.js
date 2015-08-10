@@ -2,7 +2,7 @@
 // ResetPasswordController - controller for ui_resetPassword.html
 //=============================================================================
 
-app.controller('ResetPasswordController', ['$scope', 'Users', 'SharedInfo', function ($scope, Users, SharedInfo) {
+app.controller('ResetPasswordController', ['$scope', 'Users', 'SharedInfos', function ($scope, Users, SharedInfos) {
 
   $scope.badPin = false;
   $scope.acceptedPin = false;
@@ -10,8 +10,12 @@ app.controller('ResetPasswordController', ['$scope', 'Users', 'SharedInfo', func
   $scope.errors = false;
   $scope.sentEmail = true;
 
-  if (SharedInfo.get().email)  {
-    $scope.formData = { email : SharedInfo.get().email };
+  if (SharedInfos.has("email"))  {
+    $scope.formData = { email : SharedInfos.get("email") };
+  }
+
+  if (SharedInfos.has("forwardAddress")) {
+    $scope.forwardAddress = SharedInfos.get("forwardAddress");
   }
 
   //-----------------------------------------------------------------------------
@@ -53,9 +57,17 @@ app.controller('ResetPasswordController', ['$scope', 'Users', 'SharedInfo', func
   };
 
   //-----------------------------------------------------------------------------
+  $scope.onLoginClicked = function(){
+    if ($scope.forwardAddress)
+      SharedInfos.set("forwardAddress", $scope.forwardAddress);
+
+    $location.url("/login");
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.$on("$destroy", function(){
-    if ($scope.formData)
-      SharedInfo.set($scope.formData);
+    if ($scope.formData && $scope.formData.email)
+      SharedInfos.set("email", $scope.formData.email);
   });
 
 }]);

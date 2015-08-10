@@ -131,10 +131,6 @@
             templateUrl: '/ui/ui_foods.html',
             controller: 'FoodsController'
           })
-          .when('/foods/:alert', {
-            templateUrl: '/ui/ui_foods.html',
-            controller: 'FoodsController'
-          })
           .when('/upload', {
             templateUrl: '/ui/ui_upload.html',
             controller: 'UploadController'
@@ -164,13 +160,13 @@
             controller: 'MealController'
           })
       }]).
-      run(function($rootScope, $location, SharedInfo) {
+      run(function($rootScope, $location, SharedInfos) {
         $rootScope.$on( "$routeChangeStart", function(event, next, current) {
           if ($rootScope.loggedUser == null) {
             // no logged user, redirect to /login
-            if ( next.templateUrl === "/ui/ui_meal.html") {
-              //SharedInfo.set({ forwardAddress : next.templateUrl })
-              $rootScope.forwardAddress = next.templateUrl;
+            if ( next.originalPath === "/meal") {
+              SharedInfos.set("alert", { "type" : "warning", "msg" : "Per aprire questa pagina devi prima effettuare l'accesso"});
+              SharedInfos.set("forwardAddress", next.originalPath)
               $location.path("/login");
             }
           }

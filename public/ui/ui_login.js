@@ -2,14 +2,20 @@
 // LoginController - controller for ui_login.html
 //=============================================================================
 
-app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location','SharedInfo', function ($scope, Users, $rootScope, $location, SharedInfo) {
+app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location','SharedInfos', function ($scope, Users, $rootScope, $location, SharedInfos) {
 
-  if (SharedInfo.get().email)  {
-    $scope.formData = { email : SharedInfo.get().email };
+  if (SharedInfos.has("email"))  {
+    $scope.formData = { email : SharedInfos.get("email") };
   }
-  // } else if (SharedInfo.get().forwardAddress) {
-  //   $scope.forwardAddress = SharedInfo.get().forwardAddress;
-  // }
+
+  if (SharedInfos.has("forwardAddress")) {
+    $scope.forwardAddress = SharedInfos.get("forwardAddress");
+  }
+
+  $scope.alert = null;
+  if (SharedInfos.has("alert"))  {
+    $scope.alert = SharedInfos.get("alert");
+  }
 
   //-----------------------------------------------------------------------------
   $scope.onLoginClicked = function(){
@@ -22,9 +28,8 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
       $scope.loginError = null;
       if (result.success) {
         $rootScope.loggedUser = result.data;
-        if ($rootScope.forwardAddress) {
-          $location.url($rootScope.forwardAddress);
-          $rootScope.forwardAddress = null;
+        if ($scope.forwardAddress) {
+          $location.url($scope.forwardAddress);
         }
         else
           $location.url("/");
@@ -35,14 +40,35 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
   };
 
   //-----------------------------------------------------------------------------
-  $scope.onCloseAlert = function(){
-    $scope.loginError = null;
+  $scope.onForgotPasswordClicked = function(){
+    if ($scope.formData && $scope.formData.email)
+      SharedInfos.set("email", $scope.formData.email);
+
+    if ($scope.forwardAddress)
+      SharedInfos.set("forwardAddress", $scope.forwardAddress);
+
+    $location.url("/forgotPassword");
   };
 
   //-----------------------------------------------------------------------------
-  $scope.$on("$destroy", function(){
-    if ($scope.formData)
-      SharedInfo.set($scope.formData);
-  });
+  $scope.onSignupClicked = function(){
+    if ($scope.formData && $scope.formData.email)
+      SharedInfos.set("email", $scope.formData.email);
+
+    if ($scope.forwardAddress)
+      SharedInfos.set("forwardAddress", $scope.forwardAddress);
+
+    $location.url("/signup");
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onCloseAlert = function(){
+    $scope.alert = null;
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onCloseLoginError = function(){
+    $scope.loginError = null;
+  };
 
 }]);

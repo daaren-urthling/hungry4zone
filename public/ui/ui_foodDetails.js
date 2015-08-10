@@ -2,7 +2,7 @@
 // FoodDetailController - controller for ui_foodDetails.html
 //=============================================================================
 
-app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$location', 'FoodTypes', '$resource', function ($scope, $routeParams, Foods, $location, FoodTypes, $resource) {
+app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$location', 'FoodTypes', '$resource', 'SharedInfos', function ($scope, $routeParams, Foods, $location, FoodTypes, $resource, SharedInfos) {
   if ($routeParams.id == "0") {
     $scope.isNew = true;
     $scope.food = new Foods();
@@ -28,7 +28,10 @@ app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$loc
       if (!result.success && result.id)
         $scope.alert = { type : "danger", msg : 'Alimento già presente'};
       else
-        $location.url('/foods/'+ angular.toJson({ "type" : "success", "msg" : "Inserito un nuovo alimento: " + newFood}));
+      {
+        SharedInfos.set("alert", { "type" : "success", "msg" : "Inserito un nuovo alimento: " + newFood});
+        $location.url('/foods/');
+      }
     });
   };
 
@@ -37,7 +40,8 @@ app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$loc
     var changedFood = $scope.food.name;
 
     Foods.update({id: $scope.food._id}, $scope.food, function(){
-      $location.url('/foods/'+ angular.toJson({ "type" : "success", "msg" : "Alimento modificato: " + changedFood}));
+      SharedInfos.set("alert", { "type" : "success", "msg" : "Alimento modificato: " + changedFood});
+      $location.url('/foods/');
     });
   };
 
@@ -47,7 +51,8 @@ app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$loc
     var removedFood = $scope.food.name;
 
     Foods.remove({id: $scope.food._id}, function(){
-      $location.url('/foods/'+ angular.toJson({ "type" : "warning", "msg" : "Alimento eliminato: " + removedFood}));
+      SharedInfos.set("alert", { "type" : "warning", "msg" : "Alimento eliminato: " + removedFood});
+      $location.url('/foods/');
     });
   };
 
