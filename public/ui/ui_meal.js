@@ -2,10 +2,11 @@
 // MealController - controller for ui_meal.html
 //=============================================================================
 
-app.controller('MealController', ['$scope', 'SharedInfos', function ($scope, SharedInfos) {
+app.controller('MealController', ['$scope', 'SharedInfos', '$location', '$rootScope', 'Meals', function ($scope, SharedInfos, $location, $rootScope, Meals) {
 
   if (SharedInfos.has("meal"))  {
     $scope.meal = SharedInfos.get("meal");
+    $scope.meal.userId = $rootScope.loggedUser.id;
   }
 
   $scope.isNew = true;
@@ -18,43 +19,44 @@ app.controller('MealController', ['$scope', 'SharedInfos', function ($scope, Sha
       return;
     }
 
-    var newMeal = $scope.meal.name;
-
-    $scope.meal.$save(function(result){
-      if (!result.success && result.id)
-        $scope.alert = { type : "danger", msg : 'Pasto già presente'};
-      else
-      {
-        // SharedInfos.set("alert", { "type" : "success", "msg" : "inserito un nuovo pasto: " + newMeal});
-        $location.url('/');
-      }
+    $scope.meal.$save(function(result) { // success
+        SharedInfos.set("alert", { "type" : "success", "msg" : "inserito un nuovo pasto: " + $scope.meal.name});
+        $location.url('/mealsGallery');
+    }, function(httpResponse) { // failure
+        $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
   };
 
   //-----------------------------------------------------------------------------
   $scope.onUpdateClicked = function(){
-    var changedFood = $scope.food.name;
 
-    Foods.update({id: $scope.food._id}, $scope.food, function(){
-      SharedInfos.set("alert", { "type" : "success", "msg" : "Alimento modificato: " + changedFood});
-      $location.url('/foods/');
+    $scope.meal.$update({id: $scope.meal._id}, $scope.meal, function(){
+      SharedInfos.set("alert", { "type" : "success", "msg" : "Pasto modificato: " + $scope.meal.name});
+      $location.url('/mealsGallery/');
+    }, function(httpResponse) { // failure
+        $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
   };
 
   //-----------------------------------------------------------------------------
   $scope.onRemoveClicked = function(){
-
-    var removedFood = $scope.food.name;
-
-    Foods.remove({id: $scope.food._id}, function(){
-      SharedInfos.set("alert", { "type" : "warning", "msg" : "Alimento eliminato: " + removedFood});
-      $location.url('/foods/');
+    $scope.meal.$remove({id: $scope.meal._id}, function(){
+      SharedInfos.set("alert", { "type" : "warning", "msg" : "Pasto eliminato: " + $scope.meal.name});
+      $location.url('/mealsGallery/');
     });
   };
 
   //-----------------------------------------------------------------------------
   $scope.onMealNameChanged = function(){
     $scope.alert = null;
+    if (!$scope.isNew) return;
+
+    Meals.search({name: $scope.meal.name }, function(result) { // success
+        if (result._id)
+          $scope.alert = { type : "danger", msg : 'Pasto già presente'};
+      }, function(httpResponse) { // failure
+        $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
+      });
   };
 
   //-----------------------------------------------------------------------------

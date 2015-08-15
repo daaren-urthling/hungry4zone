@@ -2,7 +2,7 @@ var mongoose = require('mongoose');
 
 var MealSchema = new mongoose.Schema({
   name          : String,
-  mealItems     : [ { foodId : mongoose.Schema.Types.ObjectId, qty : Number } ],
+  mealItems     : [ { qty : Number, totProteins: Number, totFats : Number, totCarbohydrates: Number, food : { type: mongoose.Schema.Types.ObjectId, ref: 'Food' } } ],
   totCalories   : Number,
   userId        : mongoose.Schema.Types.ObjectId
 });
@@ -21,6 +21,6 @@ function quote(regex) {
 Meal.exist = function (mealName, callback) {
   var quoted = quote(mealName);
   this.findOne({name : { $regex : new RegExp("^" + quoted + "$", "i") } }, function(err, obj){
-    callback(err, obj !== null, obj && obj._doc._id);
+    callback(err, obj !== null, obj && obj._doc);
   });
 };

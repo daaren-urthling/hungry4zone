@@ -95,6 +95,8 @@ app.factory('MealItems', ['Foods', function(Foods){
 app.factory('Meals', ['$resource', 'MealItems', function($resource, MealItems){
 
   Meals = $resource('/meals/:id', null, {
+    'update': { method:'PUT' },
+    'search': { method:'GET', url: '/meals/search/:name'},
     'cacheRetrieve': { method:'GET', url: '/meals/cacheRetrieve'},
     'cacheItem': { method:'PUT', url: '/meals/cacheItem'},
     'removeCachedItem': { method:'PUT', url: '/meals/removeCachedItem'},

@@ -12,14 +12,25 @@ module.exports = router;
 //-----------------------------------------------------------------------------
 router.post('/', function(req, res, next) {
   Meal.exist(req.body.name, function(err, found, meal) {
+    if (err)    return next(err);
+    if (found)  return next(new ApplicationError("Pasto già presente: " + req.body.name));
+
+    Meal.create(req.body, function (err, newMeal) {
+      if (err) return next(err);
+      res.json(newMeal._doc);
+    });
+  });
+});
+
+// search         (GET /search/:name)
+//-----------------------------------------------------------------------------
+router.get('/search/:name', function(req, res, next) {
+  Meal.exist(req.params.name, function(err, found, meal) {
     if (err) return next(err);
-    if (!found)
-      Meal.create(req.body, function (err, newMeal) {
-        if (err) return next(err);
-        res.json(newMeal._doc);
-      });
+    if (found)
+      res.json(meal);
     else
-      res.send(new ApplicationError("Pasto già presente: " + req.body.name));
+      res.json({});
   });
 });
 

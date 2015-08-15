@@ -113,6 +113,7 @@
     <script src="/ui/ui_forgotPassword.js"></script>
     <script src="/ui/ui_resetPassword.js"></script>
     <script src="/ui/ui_meal.js"></script>
+    <script src="/ui/ui_mealsGallery.js"></script>
 
     <script>
       //---------------
@@ -161,6 +162,10 @@
           .when('/meal', {
             templateUrl: '/ui/ui_meal.html',
             controller: 'MealController'
+          })
+          .when('/mealsGallery', {
+            templateUrl: '/ui/ui_mealsGallery.html',
+            controller: 'MealsGalleryController'
           })
       }]).
       run(function($rootScope, $location, SharedInfos) {

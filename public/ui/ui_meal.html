@@ -4,7 +4,7 @@
     <form role="form" class="form-horizontal">
       <div class="form-group">
         <div class="col-sm-6">
-          <input id="name" type="text" class="form-control input-lg" placeholder="Dai un nome al tuo pasto" ng-model="meal.name" ng-change="onMealNameChanged()">
+          <input id="name" type="text" class="form-control input-lg" placeholder="Dai un nome al tuo pasto" ng-model="meal.name" ng-change="onMealNameChanged()" ng-model-options="{ updateOn: 'blur' }">
         </div>
       </div>
     </form>
