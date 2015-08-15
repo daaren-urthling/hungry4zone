@@ -1,6 +1,5 @@
 var express = require('express');
 var router = express.Router();
-var Result = require('../utils/result.js');
 
 //=============================================================================
 module.exports = router;
@@ -40,8 +39,5 @@ router.get('/', function(req, res, next) {
 router.get('/:id', function(req, res, next) {
   var foodType = find(req.params.id);
 
-  if (foodType)
-    res.send(new Result(true, req.params.id, foodType));
-  else
-    res.send(new Result(false, req.params.id));
+  res.json(foodType);
 });

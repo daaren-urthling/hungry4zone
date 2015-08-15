@@ -38,6 +38,6 @@ function quote(regex) {
 Food.exist = function (foodName, callback) {
   var quoted = quote(foodName);
   this.findOne({name : { $regex : new RegExp("^" + quoted + "$", "i") } }, function(err, obj){
-    callback(err, obj !== null, obj && obj._doc._id);
+    callback(err, obj !== null, obj && obj._doc);
   });
 };

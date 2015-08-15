@@ -1,9 +1,9 @@
 var express = require('express');
 var router = express.Router();
-var Result = require('../utils/result.js');
 var pass = require('pwd');
 var User = require('../models/md_user.js');
 var MailSender = require('../utils/mailSender.js');
+var ApplicationError = require('../utils/applicationError.js');
 
 //=============================================================================
 module.exports = router;
@@ -12,7 +12,7 @@ module.exports = router;
 //-----------------------------------------------------------------------------
 router.get('/', function(req, res, next) {
   // not yet
-  res.send(new Result(false, 0));
+  res.send({});
 });
 
 // signup          (PUT /signup)
@@ -27,55 +27,46 @@ router.put('/signup', function(req, res, next) {
   else
     name = req.body.email;
 
-  var error = new Result(false, 0);
+  var error = null;
 
   // regexp from https://github.com/angular/angular.js/blob/master/src/ng/directive/input.js#L4
   var EMAIL_REGEXP = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
 
   // check for valid inputs
   if (!email || !password || !verification) {
-    error.data = 'Inserire tutti i campi richiesti.';
+    error = new ApplicationError('Inserire tutti i campi richiesti.');
   } else if (!email.match(EMAIL_REGEXP)) {
-    error.data = 'L\'indirizzo e-mail non è valido.';
+    error = new ApplicationError('L\'indirizzo e-mail non è valido.');
   } else if (password !== verification) {
-    error.data = 'Le due password non corrispondono.';
+    error = new ApplicationError('Le due password non corrispondono.');
   }
 
-  if (error.data)
-    res.send(error);
-  else
-    User.exist(email, function(err, found, userId) {
-      if (err) return next(err);
-      if (!found) {
-        pass.hash(password, function(err, salt, hash){
-          if (err) return next(err);
+  if (error)
+    return next (error);
 
-          var user = {
-            name: name,
-            email: email,
-            salt: salt,
-            hash: hash
-          };
-          User.create(user, function (err, doc) {
-            if (err) return next(err);
-            MailSender.Welcome(email, name, function(err, info){
-              loggedUser = { id : doc._id, name : doc.name, isAdmin: doc.isAdmin, email : doc.email};
-              req.session.loggedUser = loggedUser;
-              result = new Result(true, 0, req.session.loggedUser);
-              if (err){
-                  console.log(err);
-                  result.mailError = true;
-              }
-              res.send(result);
-            });
-          });
+  User.exist(email, function(err, found, userId) {
+    if (err)    return next(err);
+    if (found)  return next(new ApplicationError("L'utente " + email + " è già presente."));
+
+    pass.hash(password, function(err, salt, hash){
+      if (err) return next(err);
+
+      var user = {
+        name: name,
+        email: email,
+        salt: salt,
+        hash: hash
+      };
+      User.create(user, function (err, doc) {
+        if (err) return next(err);
+        MailSender.Welcome(email, name, function(err, info){
+          if (err) console.log(err); // do no stop, just inform the user
+          req.session.loggedUser = { id : doc._id, name : doc.name, isAdmin: doc.isAdmin, email : doc.email};
+          res.json({loggedUser : req.session.loggedUser, mailError : err !== null});
         });
-      }
-      else {
-        error.data = "L'utente " + email + " è già presente.";
-        res.send(error);
-      }
+      });
     });
+  });
 });
 
 // checkEmail          (PUT /checkEmail)
@@ -84,12 +75,7 @@ router.put('/checkEmail', function(req, res, next) {
   var email = req.body.email.toLowerCase();
   User.exist(email, function(err, found, userId) {
     if (err) return next(err);
-    if (!found) {
-        res.send(new Result(true, 0));
-    }
-    else {
-      res.send(new Result(false, userId));
-    }
+    res.json({isTaken : found});
   });
 });
 
@@ -97,9 +83,9 @@ router.put('/checkEmail', function(req, res, next) {
 //-----------------------------------------------------------------------------
 router.put('/loggedUser', function(req, res, next) {
   if (req.session.loggedUser)
-    res.send(new Result(true, 0, req.session.loggedUser));
+    res.json(req.session.loggedUser);
   else
-    res.send(new Result(false, 0));
+    res.json({});
 });
 
 // login         (PUT /login)
@@ -108,43 +94,37 @@ router.put('/login', function(req, res, next) {
     var email = req.body.email.toLowerCase();
     var password = req.body.password;
 
-    var error = new Result(false, 0);
+    var error = null;
 
     // regexp from https://github.com/angular/angular.js/blob/master/src/ng/directive/input.js#L4
     var EMAIL_REGEXP = /^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,6}$/;
 
     // check for valid inputs
     if (!email || !password) {
-      error.data = 'Inserire tutti i campi richiesti.';
+      error = new ApplicationError('Inserire tutti i campi richiesti.');
     } else if (!email.match(EMAIL_REGEXP)) {
-      error.data = 'L\'indirizzo e-mail non è valido.';
+      error = new ApplicationError('L\'indirizzo e-mail non è valido.');
     }
 
-    if (error.data)
-      res.send(error);
-    else
-      User.findOne({ email : email }, function(err, doc) {
-        if (doc !== null) {
-          pass.hash(password, doc.salt, function(err, hash) {
-            if (doc.hash === hash) {
-              if (err) return next(err);
+    if (error)
+      return next(error);
 
-              // reset any attempt of password recovery
-              //User.findByIdAndUpdate(obj._doc._id, {resetPin : ""}, function (err, obj) {});
-              doc.resetPin = "";
-              doc.save(function (err, obj) {});
+    User.findOne({ email : email }, function(err, doc) {
+      badData = new ApplicationError("L'indirizzo e-mail e la password non corrispondono.");
+      if (doc === null) return next(badData);
 
-              loggedUser = { id : doc._id, name : doc.name, isAdmin: doc.isAdmin, email : doc.email};
-              req.session.loggedUser = loggedUser;
-              res.send(new Result(true, loggedUser.id, loggedUser));
-            }
-            else
-              res.send(new Result(false, 0));
-          });
-        }
-        else
-          res.send(new Result(false, 0));
+      pass.hash(password, doc.salt, function(err, hash) {
+        if (err)                return next(err);
+        if (doc.hash !== hash)  return next(badData);
+
+        // reset any attempt of password recovery
+        doc.resetPin = "";
+        doc.save(function (err, obj) {});
+
+        req.session.loggedUser = { id : doc._id, name : doc.name, isAdmin: doc.isAdmin, email : doc.email};
+        res.json(req.session.loggedUser);
       });
+    });
 
 });
 
@@ -152,7 +132,7 @@ router.put('/login', function(req, res, next) {
 //-----------------------------------------------------------------------------
 router.put('/logout', function(req, res, next) {
     req.session.loggedUser = null;
-    res.send(new Result(true, 0));
+    res.json({});
 });
 
 //-----------------------------------------------------------------------------
@@ -165,30 +145,27 @@ function generatePin() {
 // forgotPassword          (PUT /forgotPassword)
 //-----------------------------------------------------------------------------
 router.put('/forgotPassword', function(req, res, next) {
-  if (!req.body.email) {
-    res.send(new Result(false, 0));
-  }
+  if (!req.body.email) return next(new ApplicationError("Indicare un indirizzo e-mail valido."));
 
   User.findOne({ email : req.body.email }, function(err, obj) {
     if (obj !== null) {
       var pin = generatePin();
       User.findByIdAndUpdate(obj._doc._id, {resetPin : pin}, function (err, obj) {
-        if (err) return next(err);
-        if (obj === null)
-          return res.send(new Result(false, 0));
+        if (err)          return next(err);
+        if (obj === null) return next(new ApplicationError("Impossibile recuperare la password ora."));
 
         MailSender.ResetPassword(req.body.email, pin, function(err, info) {
-          if (err)
-            res.send(err);
-          else
-            res.send(new Result(true, 0));
+          if (err) return next(err);
+          res.json({}); // success
         });
       });
     }
     else
     {
-      MailSender.UnknownResetRequest(req.body.email);
-      res.send(new Result(false, 0));
+      MailSender.UnknownResetRequest(req.body.email,function(err, info) {
+        if (err) return next(err);
+        res.json({}); // even if the mail was not found among the registered users, behave like it was a success
+    });
     }
   });
 
@@ -197,17 +174,12 @@ router.put('/forgotPassword', function(req, res, next) {
 // validatePin          (PUT /validatePin)
 //-----------------------------------------------------------------------------
 router.put('/validatePin', function(req, res, next) {
-  if (!req.body.pin) {
-    res.send(new Result(false, 0));
-    return;
-  }
+  if (!req.body.pin) return next(new ApplicationError("Indicare il pin ricevuto via e-mail."));
 
   User.findOne({ resetPin : req.body.pin }, function(err, doc) {
-    if (doc !== null)
-      res.send(new Result(true, doc._id, { name : doc.name, email : doc.email }));
-    else
-      res.send(new Result(false, 0));
+    if (doc === null) return next(new ApplicationError("Pin errato."));
 
+    res.json({ id : doc._id, name : doc.name, isAdmin: doc.isAdmin, email : doc.email});
   });
 
 });
@@ -223,18 +195,15 @@ router.put('/changePassword', function(req, res, next) {
       doc.hash      = hash;
       doc.resetPin  = ""; // reset pin is no longer valid
       doc.save(function (err, obj) {
-        if (err)
-          res.send(new Result(false, 0));
-        else {
-          MailSender.ChangedPassword(doc.email, doc.name, function(err, info){
-            result = new Result(true, 0);
-            if (err){
-                console.log(err);
-                result.mailError = true;
-            }
-            res.send(result);
-          });
-        }
+        if (err) return next(new ApplicationError("Errore nel tentativo di reset della password."));
+        MailSender.ChangedPassword(doc.email, doc.name, function(err, info){
+          if (err){
+              res.json({ mailError : true}); // password successfully reset even if the mail was not sent
+              console.log(err);
+          } else {
+            res.json({ mailError : false});
+          }
+        });
       });
     });
   });

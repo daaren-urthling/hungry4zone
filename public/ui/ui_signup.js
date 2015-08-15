@@ -18,18 +18,20 @@ app.controller('SignupController', ['$scope', 'Users', '$location', '$rootScope'
 
   //-----------------------------------------------------------------------------
   $scope.onSignupClicked = function(obj){
-    Users.signup($scope.formData, function(result){
-        if (result.success) {
-          $rootScope.loggedUser = result.data;
-          $scope.name = result.data.name;
-          $scope.email = result.data.email;
-          $scope.emailError = result.mailError;
-          $scope.signupOk = true;
-        } else {
-          $rootScope.loggedUser = null;
-          $scope.message = result.data;
-        }
+    Users.signup($scope.formData, function(result){ // success
+        $rootScope.loggedUser = result.loggedUser;
+        $scope.name = result.loggedUser.name;
+        $scope.email = result.loggedUser.email;
+        $scope.emailError = result.mailError;
+
+        $scope.signupOk = true;
+
         $scope.signupDone = true;
+    }, function(httpResponse) { // failure
+      $rootScope.loggedUser = null;
+      $scope.message = GetErrorMessage(httpResponse);
+
+      $scope.signupDone = true;
     });
   };
 
@@ -76,7 +78,7 @@ app.directive('uniqueEmail', ['Users', function(Users) {
 
         scope.busy = true;
         Users.checkEmail({email: value}, function(result){
-          if (!result.success)
+          if (result.isTaken)
             ctrl.$setValidity('isTaken', false);
           // everything is fine -> do nothing
           scope.busy = false;

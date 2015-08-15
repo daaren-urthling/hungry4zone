@@ -2,7 +2,7 @@ var express = require('express');
 var promise = require('promise');
 var mongoose = require('mongoose');
 var Food = require('../models/md_food.js');
-var Result = require('../utils/result.js');
+var ApplicationError = require('../utils/applicationError.js');
 
 var router = express.Router();
 
@@ -31,9 +31,12 @@ router.get('/:id', function(req, res, next) {
 // search         (GET /search/:name)
 //-----------------------------------------------------------------------------
 router.get('/search/:name', function(req, res, next) {
-  Food.exist(req.params.name, function(err, found, foodId) {
+  Food.exist(req.params.name, function(err, found, food) {
     if (err) return next(err);
-    res.send(new Result(found, foodId));
+    if (found)
+      res.json(food);
+    else
+      res.json({});
   });
 });
 
@@ -42,15 +45,15 @@ router.get('/search/:name', function(req, res, next) {
 router.post('/', function(req, res, next) {
   Food.adjustLocale(req.body);
 
-  Food.exist(req.body.name, function(err, found, foodId) {
+  Food.exist(req.body.name, function(err, found, food) {
     if (err) return next(err);
     if (!found)
-      Food.create(req.body, function (err, obj) {
+      Food.create(req.body, function (err, newFood) {
         if (err) return next(err);
-        res.send(new Result(true, obj._doc._id));
+        res.json(newFood._doc);
       });
     else
-      res.send(new Result(false, foodId));
+      return next(new ApplicationError("Alimento già presente: " + req.body.name));
   });
 });
 
@@ -59,11 +62,11 @@ router.post('/', function(req, res, next) {
 router.put('/:id', function(req, res, next) {
   Food.adjustLocale(req.body);
 
-  Food.findByIdAndUpdate(req.params.id, req.body, function (err, obj) {
+  Food.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, obj) {
     if (err) return next(err);
     if (obj === null)
-      return res.send(new Result(false, req.params.id));
-    res.send(new Result(true, obj._doc._id));
+      return next(new ApplicationError("Alimento non trovato, id: " + req.params.id));
+    res.json(obj._doc);
   });
 });
 
@@ -73,7 +76,7 @@ router.put('/:id', function(req, res, next) {
 router.delete('/:id', function(req, res, next) {
   Food.findByIdAndRemove(req.params.id, req.body, function (err, obj) {
     if (err) return next(err);
-    res.send(new Result(true, req.params.id));
+    res.send(obj._doc);
   });
 });
 
@@ -103,23 +106,23 @@ router.post('/upload', function(req, res, next) {
     return new promise(function (fulfill, reject){
       Food.adjustLocale(food);
 
-      Food.exist(food.name, function(err, found, foodId) {
+      Food.exist(food.name, function(err, found, obj) {
         if (err) reject(err);
         if (found)
-          Food.findByIdAndUpdate(foodId, food, function (err, obj) {
+          Food.findByIdAndUpdate(obj._id, food, function (err, obj) {
             if (err) reject(err);
-            fulfill(new Result(obj !== null, foodId));
+            fulfill(food.name);
         });
         else
           Food.create(food, function (err, obj) {
             if (err) reject(err);
-            fulfill(new Result(true, obj._doc._id));
+            fulfill(obj._doc.name);
           });
       });
     });
   });
   promise.all( promises ).then( function(uploadResults) {
-      res.send(uploadResults);
+      res.json({ uploaded : uploadResults });
   },
   function(err) {
       return next(err);

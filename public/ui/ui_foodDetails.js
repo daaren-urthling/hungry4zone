@@ -22,37 +22,31 @@ app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$loc
       return;
     }
 
-    var newFood = $scope.food.name;
-
-    $scope.food.$save(function(result){
-      if (!result.success && result.id)
-        $scope.alert = { type : "danger", msg : 'Alimento già presente'};
-      else
-      {
-        SharedInfos.set("alert", { "type" : "success", "msg" : "Inserito un nuovo alimento: " + newFood});
+    $scope.food.$save(function() { // success
+        SharedInfos.set("alert", { "type" : "success", "msg" : "Inserito un nuovo alimento: " + $scope.food.name});
         $location.url('/foods/');
-      }
+    }, function(httpResponse) { // failure
+        $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
   };
 
   //-----------------------------------------------------------------------------
   $scope.onUpdateClicked = function(){
-    var changedFood = $scope.food.name;
-
-    Foods.update({id: $scope.food._id}, $scope.food, function(){
-      SharedInfos.set("alert", { "type" : "success", "msg" : "Alimento modificato: " + changedFood});
+    $scope.food.$update({id: $scope.food._id}, function() {  // success
+      SharedInfos.set("alert", { "type" : "success", "msg" : "Alimento modificato: " + $scope.food.name});
       $location.url('/foods/');
+    }, function(httpResponse) { // failure
+        $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
   };
 
   //-----------------------------------------------------------------------------
   $scope.onRemoveClicked = function(){
-
-    var removedFood = $scope.food.name;
-
-    Foods.remove({id: $scope.food._id}, function(){
-      SharedInfos.set("alert", { "type" : "warning", "msg" : "Alimento eliminato: " + removedFood});
+    $scope.food.$remove({id: $scope.food._id}, function(){ // success
+      SharedInfos.set("alert", { "type" : "warning", "msg" : "Alimento eliminato: " + $scope.food.name});
       $location.url('/foods/');
+    }, function(httpResponse) { // failure
+        $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
   };
 
@@ -61,13 +55,11 @@ app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$loc
     $scope.alert = null;
     if (!$scope.isNew) return;
 
-    Foods.search({name: $scope.food.name },
-      function(result) {
-        if (result.success)
+    Foods.search({name: $scope.food.name }, function(result) { // success
+        if (result._id)
           $scope.alert = { type : "danger", msg : 'Alimento già presente'};
-      },
-      function(httpResponse) {
-        console.log('something wrong: ', httpResponse);
+      }, function(httpResponse) { // failure
+        $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
       });
   };
 

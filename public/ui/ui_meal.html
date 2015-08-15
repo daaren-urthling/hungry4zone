@@ -1,10 +1,13 @@
 <div class="container">
-  <div class="row">
-    <div class="col-sm-8">
-      <h2>Pasto</h2>
-    </div>
-  </div>
+  <br/>
   <div class="row col-sm-6">
+    <form role="form" class="form-horizontal">
+      <div class="form-group">
+        <div class="col-sm-6">
+          <input id="name" type="text" class="form-control input-lg" placeholder="Dai un nome al tuo pasto" ng-model="meal.name" ng-change="onMealNameChanged()">
+        </div>
+      </div>
+    </form>
     <div class="table-responsive">
       <table class="table table-condensed">
         <tr>
@@ -18,6 +21,29 @@
           <td width=80 class="text-right">{{ mealItem.qty }} gr.</td>
         </tr>
       </table>
+    </div>
+    <div class="row">
+      <p>Calorie totali: {{meal.totCalories}}</p>
+    </div>
+    <alert ng-show="alert" type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
+    <div ng-show="isNew" class="btn-group col-sm-offset-2">
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary" ng-click="onAddClicked()">Aggiungi</button>
+      </div>
+      <div class="btn-group">
+        <a role="button" class="btn btn-default" href="#/calculator">Annulla</a>
+      </div>
+    </div>
+    <div ng-show="!isNew" class="btn-group col-sm-offset-2">
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary" ng-click="onUpdateClicked()">Aggiorna</button>
+      </div>
+      <div class="btn-group">
+        <button type="submit" class="btn btn-primary" ng-click="onRemoveClicked()">Elimina</button>
+      </div>
+      <div class="btn-group">
+        <a role="button" class="btn btn-default" href="#/calculator">Annulla</a>
+      </div>
     </div>
   </div>
 </div> <!-- /container -->

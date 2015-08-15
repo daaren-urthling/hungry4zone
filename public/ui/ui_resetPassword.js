@@ -2,7 +2,7 @@
 // ResetPasswordController - controller for ui_resetPassword.html
 //=============================================================================
 
-app.controller('ResetPasswordController', ['$scope', 'Users', 'SharedInfos', function ($scope, Users, SharedInfos) {
+app.controller('ResetPasswordController', ['$scope', 'Users', 'SharedInfos', '$location', function ($scope, Users, SharedInfos, $location) {
 
   $scope.badPin = false;
   $scope.acceptedPin = false;
@@ -23,18 +23,15 @@ app.controller('ResetPasswordController', ['$scope', 'Users', 'SharedInfos', fun
     if(!$scope.formData.pin || $scope.formData.pin.length < 1)
       return;
 
-      Users.validatePin($scope.formData, function(result){
-        $scope.badPin = false;
-        if (result.success) {
-          $scope.acceptedPin = true;
-          $scope.formData.name = result.data.name;
-          $scope.formData.id = result.id;
-          $scope.formData.email = result.data.email;
-        }
-        else {
-          $scope.badPin = true;
-        }
-      });
+    Users.validatePin($scope.formData, function(result) { // success
+      $scope.badPin = false;
+      $scope.acceptedPin = true;
+
+      angular.merge($scope.formData, angular.fromJson((angular.toJson(result))));
+
+    }, function(httpResponse) { // failure
+      $scope.badPin = true;
+    });
   };
 
   //-----------------------------------------------------------------------------
@@ -43,16 +40,14 @@ app.controller('ResetPasswordController', ['$scope', 'Users', 'SharedInfos', fun
     if(!$scope.formData.password || $scope.formData.password.length < 1)
       return;
 
-      Users.changePassword($scope.formData, function(result){
-        $scope.changedPassword = true;
-        if (result.success) {
-          $scope.errors = false;
-          $scope.sentEmail = !result.mailError;
-        }
-        else {
-          $scope.errors = true;
-          $scope.sentEmail = false;
-        }
+    Users.changePassword($scope.formData, function(result) { // success
+      $scope.changedPassword = true;
+      $scope.errors = false;
+      $scope.sentEmail = !result.mailError;
+    }, function(httpResponse) { // failure
+      $scope.changedPassword = false;
+      $scope.errors = true;
+      $scope.sentEmail = false;
     });
   };
 

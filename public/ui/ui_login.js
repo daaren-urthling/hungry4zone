@@ -23,19 +23,17 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
     if(!$scope.formData.email || $scope.formData.email.length < 1 || !$scope.formData.password || $scope.formData.password.length < 1)
       return;
 
-    Users.login($scope.formData, function(result){
-      $rootScope.loggedUser = null;
+    Users.login($scope.formData, function(result) {
       $scope.loginError = null;
-      if (result.success) {
-        $rootScope.loggedUser = result.data;
-        if ($scope.forwardAddress) {
-          $location.url($scope.forwardAddress);
-        }
-        else
-          $location.url("/");
+      $rootScope.loggedUser = angular.fromJson(angular.toJson(result));
+      if ($scope.forwardAddress) {
+        $location.url($scope.forwardAddress);
       }
       else
-        $scope.loginError = "L'indirizzo e-mail e la password non corrispondono.";
+        $location.url("/");
+    }, function(httpResponse) { // failure
+        $rootScope.loggedUser = null;
+        $scope.loginError = GetErrorMessage(httpResponse);
     });
   };
 

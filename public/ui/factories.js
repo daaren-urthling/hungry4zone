@@ -92,42 +92,22 @@ app.factory('MealItems', ['Foods', function(Foods){
 //=============================================================================
 // Meals factory
 //=============================================================================
-app.factory('Meals', ['$http', 'MealItems', function($http, MealItems){
+app.factory('Meals', ['$resource', 'MealItems', function($resource, MealItems){
 
-  //-----------------------------------------------------------------------------
-  function Meals() {
-    this.name = "";
-    this.totCalories = 0;
+  Meals = $resource('/meals/:id', null, {
+    'cacheRetrieve': { method:'GET', url: '/meals/cacheRetrieve'},
+    'cacheItem': { method:'PUT', url: '/meals/cacheItem'},
+    'removeCachedItem': { method:'PUT', url: '/meals/removeCachedItem'},
+    'removeAllCache': { method:'PUT', url: '/meals/removeAllCache'},
+  });
 
-    Object.defineProperty(this, "minLength", { get: function () { return 5; } });
+  Meals.prototype.minLength = 5;
+  Meals.prototype.name = "";
+  Meals.prototype.totCalories = 0;
+  Meals.prototype.mealItems = [];
 
-    emptyMeal = { qty: 0.0, totProteins: 0.0, totFats: 0.0, totCarbohydrates: 0.0 };
-    this.mealItems = [];
-    for (m = 0; m < this.minLength; m++)
-      this.mealItems.push(new MealItems());
-  }
-
-  //-----------------------------------------------------------------------------
-  Meals.cacheRetrieve = function(callback) {
-    $http.get('/mealCache').success(function(result) {
-                callback(result);
-            });
-  };
-
-  //-----------------------------------------------------------------------------
-  Meals.cacheItem = function(data) {
-    $http.put('/mealCache/cacheItem', data);
-  };
-
-  //-----------------------------------------------------------------------------
-  Meals.removeItem = function(data) {
-    $http.put('/mealCache/removeItem', data);
-  };
-
-  //-----------------------------------------------------------------------------
-  Meals.removeAll = function() {
-    $http.put('/mealCache/removeAll');
-  };
+  for (m = 0; m < Meals.prototype.minLength; m++)
+      Meals.prototype.mealItems.push(new MealItems());
 
   return Meals;
 }]);

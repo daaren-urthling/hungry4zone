@@ -18,10 +18,10 @@ app.controller('ForgotPasswordController', ['$scope', 'Users', 'SharedInfos', fu
     if(!$scope.formData.email || $scope.formData.email.length < 1)
       return;
 
-      Users.forgotPassword($scope.formData, function(result){
-        if (result.success) {
-          $scope.sentEmail = true;
-        }
+      Users.forgotPassword($scope.formData, function(){ // success
+        $scope.sentEmail = true;
+    }, function(httpResponse) { // failure
+        $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
   };
 
@@ -32,5 +32,10 @@ app.controller('ForgotPasswordController', ['$scope', 'Users', 'SharedInfos', fu
     if ($scope.forwardAddress)
       SharedInfos.set("forwardAddress", $scope.forwardAddress);
   });
+
+  //-----------------------------------------------------------------------------
+  $scope.onCloseAlert = function(){
+    $scope.alert = null;
+  };
 
 }]);

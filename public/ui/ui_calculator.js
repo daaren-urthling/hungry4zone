@@ -8,12 +8,13 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   $scope.hint = "";
 
   Meals.cacheRetrieve(function(result) {
-    if (result.success) {
+    if (result.mealItems) {
       $scope.meal.mealItems = [];
-      result.data.mealItems.forEach(function(mealItem, idx) {
+      result.mealItems.forEach(function(mealItem, idx) {
           $scope.meal.mealItems.push(new MealItems());
           angular.merge($scope.meal.mealItems[idx], mealItem);
       });
+      recalculate();
       // add an empty slot if already full
       if ($scope.meal.mealItems.length >= $scope.meal.minLength)
         $scope.meal.mealItems.push(new MealItems());
@@ -21,9 +22,8 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
       else
         for (i = $scope.meal.mealItems.length; i < $scope.meal.minLength; i++)
           $scope.meal.mealItems.push(new MealItems());
-
-      recalculate();
     }
+
     // Query the foods in any case to fill up the list.
     // On success reconnect the meal items "food" objects with those of the array,
     // missing that the dropdown selected items will remain empty
@@ -82,12 +82,10 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   //-----------------------------------------------------------------------------
   $scope.onFoodSelected = function($item, $index, mealItem)  {
     FoodTypes.get({id: mealItem.food.type }, function(result) {
-      if (result.success)
-      {
-        mealItem.foodType = result.data;
-        recalculate(mealItem);
-        Meals.cacheItem({item: mealItem, idx: $index});
-      }
+      // result is a Resource object, remove the extra stuff to assign
+      mealItem.foodType = angular.fromJson(angular.toJson(result));
+      recalculate(mealItem);
+      Meals.cacheItem({item: mealItem, idx: $index});
     });
     if ($index == $scope.meal.mealItems.length - 1)
       $scope.meal.mealItems.push(new MealItems());
@@ -136,7 +134,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   $scope.onRemoveLineClicked = function($index){
     $scope.meal.mealItems.splice($index,1);
     recalculate();
-    Meals.removeItem({idx: $index});
+    Meals.removeCachedItem({idx: $index});
     if ($scope.meal.mealItems.length < $scope.meal.minLength)
       $scope.meal.mealItems.push(new MealItems());
     else if ($index == $scope.meal.mealItems.length)
@@ -147,11 +145,16 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   $scope.onRemoveAllClicked = function(){
     $scope.meal = new Meals();
     recalculate();
-    Meals.removeAll();
+    Meals.removeAllCache();
   };
 
   //-----------------------------------------------------------------------------
   $scope.onMealSaveClicked = function(){
+    // remove extra empty lines at the bottom
+    for (i = $scope.meal.mealItems.length - 1; i > 0; i--)
+      if ($scope.meal.mealItems[i].food.name === "")
+        $scope.meal.mealItems.splice(i);
+
     SharedInfos.set("meal", $scope.meal);
     $location.url('/meal');
   };

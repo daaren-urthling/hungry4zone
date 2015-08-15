@@ -7,18 +7,17 @@ app.controller('NavbarController', ['$scope', 'Users', '$rootScope', '$location'
   $rootScope.loggedUser = null;
 
   Users.loggedUser({}, function(result){
-    if (result.success) {
-      $rootScope.loggedUser = result.data;
+    if (result.id) {
+      // result is a Resource object, remove the extra stuff to assign
+      $rootScope.loggedUser = angular.fromJson(angular.toJson(result));
     }
   });
 
   //-----------------------------------------------------------------------------
   $scope.OnLogoutClicked = function(){
-    Users.logout({}, function(result){
-      if (result.success) {
-        $rootScope.loggedUser = null;
-        $location.url('/');
-      }
+    Users.logout({}, function(){
+      $rootScope.loggedUser = null;
+      $location.url('/');
     });
   };
 
