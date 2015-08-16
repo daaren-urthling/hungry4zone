@@ -23,11 +23,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     // On success reconnect the meal items "food" objects with those of the array,
     // missing that the dropdown selected items will remain empty
     $scope.foods = Foods.query({}, function success(foods){
-      $scope.meal.mealItems.forEach(function(mealItem, idx){
-        food = Foods.find(foods, mealItem.food.name);
-        if (food)
-          $scope.meal.mealItems[idx].food = food;
-      });
+      $scope.meal.reconnectFoods(foods);
     });
   });
 

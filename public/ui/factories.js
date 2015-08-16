@@ -20,9 +20,16 @@ app.factory('Foods', ['$resource', function($resource){
   };
 
   //-----------------------------------------------------------------------------
-  Foods.find = function (foods, name) {
+  Foods.find = function (foods, food) {
+    if (food._id) {
+      id = food._id;
+    } else if (typeof food === "string") {
+      id = food;
+    } else {
+      return null;
+    }
     for (i = 0; i < foods.length; i++) {
-      if (foods[i].name == name)
+      if (foods[i]._id == id)
         return foods[i];
     }
   };
@@ -100,7 +107,7 @@ app.factory('MealItems', ['Foods', function(Foods){
 //=============================================================================
 // Meals factory
 //=============================================================================
-app.factory('Meals', ['$resource', 'MealItems', '$http',function($resource, MealItems, $http){
+app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods',function($resource, MealItems, $http, Foods){
 
   mealResource = $resource('/meals/:id', null, {
     'update': { method:'PUT' },
@@ -149,6 +156,15 @@ app.factory('Meals', ['$resource', 'MealItems', '$http',function($resource, Meal
   };
 
   //-----------------------------------------------------------------------------
+  Meals.reconnectFoods = function(meal, foods) {
+    meal.mealItems.forEach(function(mealItem, idx){
+      food = Foods.find(foods, mealItem.food);
+      if (food)
+        mealItem.food = food;
+    });
+  };
+
+  //-----------------------------------------------------------------------------
   Meals.prototype.adjustTail = function() {
     // add an empty slot if already full
     if (this.mealItems.length >= this.minLength && this.mealItems[this.mealItems.length - 1].food.name !== "")
@@ -165,6 +181,11 @@ app.factory('Meals', ['$resource', 'MealItems', '$http',function($resource, Meal
     for (i = this.mealItems.length - 1; i > 0; i--)
       if (this.mealItems[i].food.name === "")
         this.mealItems.splice(i);
+  };
+
+  //-----------------------------------------------------------------------------
+  Meals.prototype.reconnectFoods = function(foods) {
+    Meals.reconnectFoods(this);
   };
 
   return Meals;
