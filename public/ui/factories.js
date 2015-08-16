@@ -27,6 +27,14 @@ app.factory('Foods', ['$resource', function($resource){
     }
   };
 
+  //-----------------------------------------------------------------------------
+  Foods.findById = function (foods, id) {
+    for (i = 0; i < foods.length; i++) {
+      if (foods[i]._id == id)
+        return foods[i];
+    }
+  };
+
   return Foods;
 }]);
 
@@ -92,27 +100,76 @@ app.factory('MealItems', ['Foods', function(Foods){
 //=============================================================================
 // Meals factory
 //=============================================================================
-app.factory('Meals', ['$resource', 'MealItems', function($resource, MealItems){
+app.factory('Meals', ['$resource', 'MealItems', '$http',function($resource, MealItems, $http){
 
-  Meals = $resource('/meals/:id', null, {
+  mealResource = $resource('/meals/:id', null, {
     'update': { method:'PUT' },
     'search': { method:'GET', url: '/meals/search/:name'},
-    'cacheRetrieve': { method:'GET', url: '/meals/cacheRetrieve'},
-    'cacheItem': { method:'PUT', url: '/meals/cacheItem'},
-    'removeCachedItem': { method:'PUT', url: '/meals/removeCachedItem'},
-    'removeAllCache': { method:'PUT', url: '/meals/removeAllCache'},
   });
 
-  Meals.prototype.minLength = 5;
-  Meals.prototype.name = "";
-  Meals.prototype.totCalories = 0;
-  Meals.prototype.mealItems = [];
+  //-----------------------------------------------------------------------------
+  Meals = function() {
+    mealResource.call(this, {
+      name : "",
+      mealItems : [],
+      totCalories : 0,
+      userId : null,
+    });
+  };
+  Meals.prototype = Object.create(mealResource.prototype);
 
-  for (m = 0; m < Meals.prototype.minLength; m++)
-      Meals.prototype.mealItems.push(new MealItems());
+  Meals.prototype.minLength = 5;
+
+  // wrap the parent resource functions to call them easily
+  //-----------------------------------------------------------------------------
+  Meals.query = mealResource.query;
+  Meals.search = mealResource.search;
+  Meals.update = mealResource.update;
+
+  //-----------------------------------------------------------------------------
+  Meals.cacheRetrieve = function(callback) {
+    $http.get('/meals/cacheRetrieve').success(function(result) {
+                callback(result);
+            });
+  };
+
+  //-----------------------------------------------------------------------------
+  Meals.cacheItem = function(data) {
+    $http.put('/meals/cacheItem', data);
+  };
+
+  //-----------------------------------------------------------------------------
+  Meals.removeCachedItem = function(data) {
+    $http.put('/meals/removeCachedItem', data);
+  };
+
+  //-----------------------------------------------------------------------------
+  Meals.removeAllCache = function() {
+    $http.put('/meals/removeAllCache');
+  };
+
+  //-----------------------------------------------------------------------------
+  Meals.prototype.adjustTail = function() {
+    // add an empty slot if already full
+    if (this.mealItems.length >= this.minLength && this.mealItems[this.mealItems.length - 1].food.name !== "")
+      this.mealItems.push(new MealItems());
+    // add as many slots to arrive up to the minimum
+    else
+      for (i = this.mealItems.length; i < this.minLength; i++)
+        this.mealItems.push(new MealItems());
+  };
+
+  //-----------------------------------------------------------------------------
+  Meals.prototype.removeTail = function() {
+    // remove extra empty lines at the bottom
+    for (i = this.mealItems.length - 1; i > 0; i--)
+      if (this.mealItems[i].food.name === "")
+        this.mealItems.splice(i);
+  };
 
   return Meals;
 }]);
+
 
 // Merge function, if angular < 1.4 is used
 //-----------------------------------------------------------------------------

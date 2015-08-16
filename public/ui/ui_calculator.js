@@ -4,6 +4,7 @@
 
 app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', 'MealItems', '$location', 'SharedInfos', function ($scope, $rootScope, Meals, Foods, FoodTypes, MealItems, $location, SharedInfos) {
   $scope.meal = new Meals();
+  $scope.meal.adjustTail();
 
   $scope.hint = "";
 
@@ -15,13 +16,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
           angular.merge($scope.meal.mealItems[idx], mealItem);
       });
       recalculate();
-      // add an empty slot if already full
-      if ($scope.meal.mealItems.length >= $scope.meal.minLength)
-        $scope.meal.mealItems.push(new MealItems());
-      // add as many slot to arrive up to the minimum
-      else
-        for (i = $scope.meal.mealItems.length; i < $scope.meal.minLength; i++)
-          $scope.meal.mealItems.push(new MealItems());
+      $scope.meal.adjustTail();
     }
 
     // Query the foods in any case to fill up the list.
@@ -87,9 +82,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
       recalculate(mealItem);
       Meals.cacheItem({item: mealItem, idx: $index});
     });
-    if ($index == $scope.meal.mealItems.length - 1)
-      $scope.meal.mealItems.push(new MealItems());
-
+    $scope.meal.adjustTail();
   };
 
   //-----------------------------------------------------------------------------
@@ -135,26 +128,20 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     $scope.meal.mealItems.splice($index,1);
     recalculate();
     Meals.removeCachedItem({idx: $index});
-    if ($scope.meal.mealItems.length < $scope.meal.minLength)
-      $scope.meal.mealItems.push(new MealItems());
-    else if ($index == $scope.meal.mealItems.length)
-      $scope.meal.mealItems.push(new MealItems());
+    $scope.meal.adjustTail();
   };
 
   //-----------------------------------------------------------------------------
   $scope.onRemoveAllClicked = function(){
     $scope.meal = new Meals();
+    $scope.meal.adjustTail();
     recalculate();
     Meals.removeAllCache();
   };
 
   //-----------------------------------------------------------------------------
   $scope.onMealSaveClicked = function(){
-    // remove extra empty lines at the bottom
-    for (i = $scope.meal.mealItems.length - 1; i > 0; i--)
-      if ($scope.meal.mealItems[i].food.name === "")
-        $scope.meal.mealItems.splice(i);
-
+    $scope.meal.removeTail();
     SharedInfos.set("meal", $scope.meal);
     $location.url('/meal');
   };
