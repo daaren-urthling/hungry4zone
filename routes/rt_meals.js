@@ -56,6 +56,15 @@ router.get('/cacheRetrieve', function(req, res, next) {
     res.json(req.session.meal);
 });
 
+// cacheMeal         (PUT /cacheMeal)
+//-----------------------------------------------------------------------------
+router.put('/cacheMeal', function(req, res, next) {
+  req.session.meal = req.body;
+
+  // send anyway an empty response to let the client store the cookie
+  res.json({});
+});
+
 // cacheItem         (PUT /cacheItem)
 //-----------------------------------------------------------------------------
 router.put('/cacheItem', function(req, res, next) {

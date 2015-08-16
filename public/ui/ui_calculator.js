@@ -138,7 +138,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   //-----------------------------------------------------------------------------
   $scope.onMealSaveClicked = function(){
     $scope.meal.removeTail();
-    SharedInfos.set("meal", $scope.meal);
+    //SharedInfos.set("meal", $scope.meal);
     $location.url('/meal');
   };
 

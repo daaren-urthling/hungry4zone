@@ -2,12 +2,18 @@
 // MealController - controller for ui_meal.html
 //=============================================================================
 
-app.controller('MealController', ['$scope', 'SharedInfos', '$location', '$rootScope', 'Meals', function ($scope, SharedInfos, $location, $rootScope, Meals) {
+app.controller('MealController', ['$scope', 'SharedInfos', '$location', '$rootScope', 'Meals', 'MealItems', function ($scope, SharedInfos, $location, $rootScope, Meals, MealItems) {
 
-  if (SharedInfos.has("meal"))  {
-    $scope.meal = SharedInfos.get("meal");
-    $scope.meal.userId = $rootScope.loggedUser.id;
-  }
+  $scope.meal = new Meals();
+  Meals.cacheRetrieve(function(result) {
+    if (result.mealItems) {
+      $scope.meal.mealItems = [];
+      result.mealItems.forEach(function(mealItem, idx) {
+          $scope.meal.mealItems.push(new MealItems());
+          angular.merge($scope.meal.mealItems[idx], mealItem);
+      });
+    }
+  });
 
   $scope.isNew = true;
 

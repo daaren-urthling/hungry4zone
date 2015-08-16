@@ -34,14 +34,6 @@ app.factory('Foods', ['$resource', function($resource){
     }
   };
 
-  //-----------------------------------------------------------------------------
-  Foods.findById = function (foods, id) {
-    for (i = 0; i < foods.length; i++) {
-      if (foods[i]._id == id)
-        return foods[i];
-    }
-  };
-
   return Foods;
 }]);
 
@@ -185,7 +177,7 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods',function($resou
 
   //-----------------------------------------------------------------------------
   Meals.prototype.reconnectFoods = function(foods) {
-    Meals.reconnectFoods(this);
+    Meals.reconnectFoods(this, foods);
   };
 
   return Meals;
