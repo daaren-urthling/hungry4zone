@@ -41,8 +41,24 @@ app.factory('Foods', ['$resource', function($resource){
 // FoodTypes factory
 //=============================================================================
 app.factory('FoodTypes', ['$resource', function($resource){
+
   FoodTypes = $resource('/foodTypes/:id', null, {
   });
+
+  FoodTypes.foodTypes = [];
+  FoodTypes.query({}, function success(result){
+    FoodTypes.foodTypes = result;
+  });
+
+  //-----------------------------------------------------------------------------
+  FoodTypes.find = function (type) {
+    for (i = 0; i < FoodTypes.foodTypes.length; i++) {
+      if (FoodTypes.foodTypes[i].type == type)
+        return FoodTypes.foodTypes[i];
+    }
+    return null;
+  };
+
   return FoodTypes;
 }]);
 
@@ -101,7 +117,7 @@ app.factory('MealItems', ['Foods', function(Foods){
 //=============================================================================
 // Meals factory
 //=============================================================================
-app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', 'FoodTypes', function($resource, MealItems, $http, Foods, FoodTypes){
+app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($resource, MealItems, $http, Foods){
 
   mealResource = $resource('/meals/:id', null, {
     'update': { method:'PUT' },
@@ -174,14 +190,6 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', 'FoodTypes', f
         meal.mealItems[idx] = new MealItems(m);
       }
     }
-    meal.mealItems.forEach(function(mealItem, idx) {
-      if (!mealItem || !mealItem.food || !mealItem.food.type)
-        return;
-      FoodTypes.get({id: mealItem.food.type }, function(result) {
-          // result is a Resource object, remove the extra stuff to assign
-          mealItem.foodType = angular.fromJson(angular.toJson(result));
-      });
-    });
   };
 
   //-----------------------------------------------------------------------------

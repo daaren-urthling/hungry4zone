@@ -38,7 +38,7 @@
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav">
-            <li><a href="#">Planner Pasti</a></li>
+            <li><a href="#/planner">Planner Pasti</a></li>
             <li><a href="#/calculator">Calcolatore</a></li>
           </ul>
           <form ng-show="loggedUser" class="navbar-form navbar-right">
@@ -114,6 +114,7 @@
     <script src="/ui/ui_resetPassword.js"></script>
     <script src="/ui/ui_meal.js"></script>
     <script src="/ui/ui_mealsGallery.js"></script>
+    <script src="/ui/ui_planner.js"></script>
 
     <script>
       app.run(['$rootScope', 'Users', function($rootScope, Users) {
@@ -189,6 +190,10 @@
           .when('/mealsGallery', {
             templateUrl: '/ui/ui_mealsGallery.html',
             controller: 'MealsGalleryController'
+          })
+          .when('/planner', {
+            templateUrl: '/ui/ui_planner.html',
+            controller: 'PlannerController'
           })
       }]);
     </script>

@@ -43,8 +43,9 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
       mealItem.totFats          = 0.0;
       mealItem.totCarbohydrates = 0.0;
 
-      if (mealItem.food && mealItem.foodType) {
-        mealItem.totProteins      = mealItem.qty * mealItem.food.proteins       * (mealItem.foodType.proteineAbsorption / 100.00) / 100.00;
+      if (mealItem.food && mealItem.food.type) {
+        foodType = FoodTypes.find(mealItem.food.type);
+        mealItem.totProteins      = mealItem.qty * mealItem.food.proteins       * (foodType.proteineAbsorption / 100.00) / 100.00;
         mealItem.totFats          = mealItem.qty * mealItem.food.fats           / 100.00;
         mealItem.totCarbohydrates = mealItem.qty * mealItem.food.carbohydrates  / 100.00;
       }
@@ -81,12 +82,8 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
 
   //-----------------------------------------------------------------------------
   $scope.onFoodSelected = function($item, $index, mealItem)  {
-    FoodTypes.get({id: mealItem.food.type }, function(result) {
-      // result is a Resource object, remove the extra stuff to assign
-      mealItem.foodType = angular.fromJson(angular.toJson(result));
-      recalculate(mealItem);
-      Meals.cacheItem({item: mealItem, idx: $index});
-    });
+    recalculate(mealItem);
+    Meals.cacheItem({item: mealItem, idx: $index});
     $scope.meal.adjustTail();
   };
 
