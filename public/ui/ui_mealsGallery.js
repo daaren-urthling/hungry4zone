@@ -4,16 +4,14 @@
 
 app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', function ($scope, SharedInfos, Meals, Foods, $location) {
 
-  Foods.query({}, function success(foods){
-    $scope.meals = Meals.query({}, function() {
-      for (mdx = 0; mdx < $scope.meals.length; mdx++ ){
-        meal = new Meals();
-        angular.merge(meal, $scope.meals[mdx]);
-        $scope.meals[mdx] = meal;
-        Meals.reconnectFoods($scope.meals[mdx], foods);
-        Meals.rebindObjects($scope.meals[mdx]);
-      }
-    });
+  $scope.meals = Meals.query({}, function() {
+    for (mdx = 0; mdx < $scope.meals.length; mdx++ ){
+      meal = new Meals();
+      angular.merge(meal, $scope.meals[mdx]);
+      $scope.meals[mdx] = meal;
+      Meals.reconnectFoods($scope.meals[mdx]);
+      Meals.rebindObjects($scope.meals[mdx]);
+    }
   });
 
   if (SharedInfos.has("alert"))  {

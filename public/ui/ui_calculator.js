@@ -15,9 +15,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     $scope.isNew = !$scope.meal._id || $scope.meal._id === "";
     recalculate();
     $scope.meal.adjustTail();
-    $scope.foods = Foods.query({}, function success(foods){
-      $scope.meal.reconnectFoods(foods);
-    });
+    Meals.reconnectFoods($scope.meal);
     Meals.cacheMeal($scope.meal);
   } else {
     Meals.cacheRetrieve(function(result) {
@@ -25,16 +23,11 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
       Meals.rebindObjects($scope.meal);
       recalculate();
       $scope.meal.adjustTail();
-
-      // Query the foods in any case to fill up the list.
-      // On success reconnect the meal items "food" objects with those of the array,
-      // missing that the dropdown selected items will remain empty
-      $scope.foods = Foods.query({}, function success(foods){
-        $scope.meal.reconnectFoods(foods);
-      });
+      Meals.reconnectFoods($scope.meal);
     });
   }
 
+  $scope.foods = Foods.query();
 
   //-----------------------------------------------------------------------------
   function recalculate(mealItem){

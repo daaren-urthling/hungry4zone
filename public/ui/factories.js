@@ -19,21 +19,6 @@ app.factory('Foods', ['$resource', function($resource){
     return "";
   };
 
-  //-----------------------------------------------------------------------------
-  Foods.find = function (foods, food) {
-    if (food._id) {
-      id = food._id;
-    } else if (typeof food === "string") {
-      id = food;
-    } else {
-      return null;
-    }
-    for (i = 0; i < foods.length; i++) {
-      if (foods[i]._id == id)
-        return foods[i];
-    }
-  };
-
   return Foods;
 }]);
 
@@ -45,6 +30,7 @@ app.factory('FoodTypes', ['$resource', function($resource){
   FoodTypes = $resource('/foodTypes/:id', null, {
   });
 
+  // as FoodTypes is a small read-only table, preload a copy of it
   FoodTypes.foodTypes = [];
   FoodTypes.query({}, function success(result){
     FoodTypes.foodTypes = result;
@@ -171,11 +157,23 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
   };
 
   //-----------------------------------------------------------------------------
-  Meals.reconnectFoods = function(meal, foods) {
+  Meals.reconnectFoods = function(meal) {
+    // avoid in-loop function declaration
+    var getFood = function(id, idx) {
+      Foods.get({id: id}, function success(result) {
+        meal.mealItems[idx].food = result;
+      });
+    };
+
     meal.mealItems.forEach(function(mealItem, idx){
-      food = Foods.find(foods, mealItem.food);
-      if (food)
-        mealItem.food = food;
+      if (mealItem.food._id) {
+        id = mealItem.food._id;
+      } else if (typeof mealItem.food === "string") {
+        id = mealItem.food;
+      } else {
+        return;
+      }
+      getFood(id, idx);
     });
   };
 
@@ -209,11 +207,6 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
     for (i = this.mealItems.length - 1; i > 0; i--)
       if (this.mealItems[i].food.name === "")
         this.mealItems.splice(i);
-  };
-
-  //-----------------------------------------------------------------------------
-  Meals.prototype.reconnectFoods = function(foods) {
-    Meals.reconnectFoods(this, foods);
   };
 
   return Meals;
