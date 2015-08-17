@@ -164,20 +164,22 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', 'FoodTypes', f
   };
 
   //-----------------------------------------------------------------------------
-  Meals.rebindObjects = function(meal, foods) {
+  Meals.rebindObjects = function(meal) {
+    if (!meal.mealItems)
+      return;
+
     for (idx = 0; idx < meal.mealItems.length; idx++) {
       if (!(meal.mealItems[idx] instanceof MealItems)) {
         m = meal.mealItems[idx];
         meal.mealItems[idx] = new MealItems(m);
       }
-      food = Foods.find(foods, meal.mealItems[idx].food);
-      if (food)
-        meal.mealItems[idx].food = food;
     }
     meal.mealItems.forEach(function(mealItem, idx) {
+      if (!mealItem || !mealItem.food || !mealItem.food.type)
+        return;
       FoodTypes.get({id: mealItem.food.type }, function(result) {
-        // result is a Resource object, remove the extra stuff to assign
-        mealItem.foodType = angular.fromJson(angular.toJson(result));
+          // result is a Resource object, remove the extra stuff to assign
+          mealItem.foodType = angular.fromJson(angular.toJson(result));
       });
     });
   };

@@ -18,21 +18,13 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     $scope.foods = Foods.query({}, function success(foods){
       $scope.meal.reconnectFoods(foods);
     });
+    Meals.cacheMeal($scope.meal);
   } else {
     Meals.cacheRetrieve(function(result) {
-      if (result.mealItems) {
-        $scope.meal.mealItems = [];
-        result.mealItems.forEach(function(mealItem, idx) {
-            $scope.meal.mealItems.push(new MealItems());
-            angular.merge($scope.meal.mealItems[idx], mealItem);
-            FoodTypes.get({id: mealItem.food.type }, function(result) {
-              // result is a Resource object, remove the extra stuff to assign
-              $scope.meal.mealItems[idx].foodType = angular.fromJson(angular.toJson(result));
-            });
-        });
-        recalculate();
-        $scope.meal.adjustTail();
-      }
+      angular.merge($scope.meal, angular.fromJson(angular.toJson(result)));
+      Meals.rebindObjects($scope.meal);
+      recalculate();
+      $scope.meal.adjustTail();
 
       // Query the foods in any case to fill up the list.
       // On success reconnect the meal items "food" objects with those of the array,
