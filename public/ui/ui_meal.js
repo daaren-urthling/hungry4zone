@@ -4,18 +4,14 @@
 
 app.controller('MealController', ['$scope', 'SharedInfos', '$location', '$rootScope', 'Meals', 'MealItems', function ($scope, SharedInfos, $location, $rootScope, Meals, MealItems) {
 
-  $scope.meal = new Meals();
-  Meals.cacheRetrieve(function(result) {
-    if (result.mealItems) {
-      $scope.meal.mealItems = [];
-      result.mealItems.forEach(function(mealItem, idx) {
-          $scope.meal.mealItems.push(new MealItems());
-          angular.merge($scope.meal.mealItems[idx], mealItem);
-      });
-    }
-  });
-
-  $scope.isNew = true;
+  if (SharedInfos.has("meal"))  {
+    $scope.meal = SharedInfos.get("meal");
+    $scope.meal.userId = $rootScope.loggedUser.id;
+    $scope.isNew = !$scope.meal._id || $scope.meal._id === "";
+  } else {
+    $scope.isNew = true;
+    $scope.meal = new Meals();
+  }
 
   //-----------------------------------------------------------------------------
   $scope.onAddClicked = function(){

@@ -8,24 +8,40 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
 
   $scope.hint = "";
 
-  Meals.cacheRetrieve(function(result) {
-    if (result.mealItems) {
-      $scope.meal.mealItems = [];
-      result.mealItems.forEach(function(mealItem, idx) {
-          $scope.meal.mealItems.push(new MealItems());
-          angular.merge($scope.meal.mealItems[idx], mealItem);
-      });
-      recalculate();
-      $scope.meal.adjustTail();
-    }
-
-    // Query the foods in any case to fill up the list.
-    // On success reconnect the meal items "food" objects with those of the array,
-    // missing that the dropdown selected items will remain empty
+  if (SharedInfos.has("meal"))  {
+    $scope.meal = SharedInfos.get("meal");
+    if ($rootScope.loggedUser)
+      $scope.meal.userId = $rootScope.loggedUser.id;
+    $scope.isNew = !$scope.meal._id || $scope.meal._id === "";
+    recalculate();
+    $scope.meal.adjustTail();
     $scope.foods = Foods.query({}, function success(foods){
       $scope.meal.reconnectFoods(foods);
     });
-  });
+  } else {
+    Meals.cacheRetrieve(function(result) {
+      if (result.mealItems) {
+        $scope.meal.mealItems = [];
+        result.mealItems.forEach(function(mealItem, idx) {
+            $scope.meal.mealItems.push(new MealItems());
+            angular.merge($scope.meal.mealItems[idx], mealItem);
+            FoodTypes.get({id: mealItem.food.type }, function(result) {
+              // result is a Resource object, remove the extra stuff to assign
+              $scope.meal.mealItems[idx].foodType = angular.fromJson(angular.toJson(result));
+            });
+        });
+        recalculate();
+        $scope.meal.adjustTail();
+      }
+
+      // Query the foods in any case to fill up the list.
+      // On success reconnect the meal items "food" objects with those of the array,
+      // missing that the dropdown selected items will remain empty
+      $scope.foods = Foods.query({}, function success(foods){
+        $scope.meal.reconnectFoods(foods);
+      });
+    });
+  }
 
 
   //-----------------------------------------------------------------------------
@@ -67,7 +83,8 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     else
       $scope.hint = "";
 
-    $scope.balanceGauge.refresh($scope.meal.mealRatio);
+    if ($scope.balanceGauge)
+      $scope.balanceGauge.refresh($scope.meal.mealRatio);
   }
 
   //-----------------------------------------------------------------------------
@@ -138,7 +155,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   //-----------------------------------------------------------------------------
   $scope.onMealSaveClicked = function(){
     $scope.meal.removeTail();
-    //SharedInfos.set("meal", $scope.meal);
+    SharedInfos.set("meal", $scope.meal);
     $location.url('/meal');
   };
 

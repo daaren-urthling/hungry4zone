@@ -70,13 +70,15 @@ app.factory('Users', ['$resource', function($resource){
 app.factory('MealItems', ['Foods', function(Foods){
 
   //-----------------------------------------------------------------------------
-  function MealItems() {
+  function MealItems(source) {
     this.qty              = 0.0;
     this.totProteins      = 0.0;
     this.totFats          = 0.0;
     this.totCarbohydrates = 0.0;
     this.food             = new Foods();
     this.food.name = "";
+    if (source)
+      angular.merge(this, source);
   }
 
   //-----------------------------------------------------------------------------
@@ -99,7 +101,7 @@ app.factory('MealItems', ['Foods', function(Foods){
 //=============================================================================
 // Meals factory
 //=============================================================================
-app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods',function($resource, MealItems, $http, Foods){
+app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', 'FoodTypes', function($resource, MealItems, $http, Foods, FoodTypes){
 
   mealResource = $resource('/meals/:id', null, {
     'update': { method:'PUT' },
@@ -133,6 +135,11 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods',function($resou
   };
 
   //-----------------------------------------------------------------------------
+  Meals.cacheMeal = function(meal) {
+    $http.put('/meals/cacheMeal', meal);
+  };
+
+  //-----------------------------------------------------------------------------
   Meals.cacheItem = function(data) {
     $http.put('/meals/cacheItem', data);
   };
@@ -153,6 +160,25 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods',function($resou
       food = Foods.find(foods, mealItem.food);
       if (food)
         mealItem.food = food;
+    });
+  };
+
+  //-----------------------------------------------------------------------------
+  Meals.rebindObjects = function(meal, foods) {
+    for (idx = 0; idx < meal.mealItems.length; idx++) {
+      if (!(meal.mealItems[idx] instanceof MealItems)) {
+        m = meal.mealItems[idx];
+        meal.mealItems[idx] = new MealItems(m);
+      }
+      food = Foods.find(foods, meal.mealItems[idx].food);
+      if (food)
+        meal.mealItems[idx].food = food;
+    }
+    meal.mealItems.forEach(function(mealItem, idx) {
+      FoodTypes.get({id: mealItem.food.type }, function(result) {
+        // result is a Resource object, remove the extra stuff to assign
+        mealItem.foodType = angular.fromJson(angular.toJson(result));
+      });
     });
   };
 
