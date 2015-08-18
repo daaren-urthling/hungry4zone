@@ -4,7 +4,7 @@
 
 app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', '$location', 'SharedInfos', 'MealItems', function ($scope, $rootScope, Meals, Foods, FoodTypes, $location, SharedInfos, MealItems) {
   $scope.meal = new Meals();
-  $scope.meal.adjustTail();
+  Meals.adjustTail($scope.meal);
 
   $scope.hint = "";
 
@@ -16,16 +16,16 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     $scope.foods = Foods.query({}, function success() {
       Meals.reconnectFoods($scope.meal);
       recalculate();
-      $scope.meal.adjustTail();
+      Meals.adjustTail($scope.meal);
       Meals.cacheMeal($scope.meal);
     });
   } else {
     Meals.cacheRetrieve(function(result) {
-      angular.merge($scope.meal, angular.fromJson(angular.toJson(result)));
+      $scope.meal = result;
       $scope.foods = Foods.query({}, function success() {
         Meals.reconnectFoods($scope.meal);
         recalculate();
-        $scope.meal.adjustTail();
+        Meals.adjustTail($scope.meal);
       });
     });
   }
@@ -83,7 +83,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   $scope.onFoodSelected = function($item, $index, mealItem)  {
     recalculate(mealItem);
     Meals.cacheItem({item: mealItem, idx: $index});
-    $scope.meal.adjustTail();
+    Meals.adjustTail($scope.meal);
   };
 
   //-----------------------------------------------------------------------------
@@ -129,20 +129,20 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     $scope.meal.mealItems.splice($index,1);
     recalculate();
     Meals.removeCachedItem({idx: $index});
-    $scope.meal.adjustTail();
+    Meals.adjustTail($scope.meal);
   };
 
   //-----------------------------------------------------------------------------
   $scope.onRemoveAllClicked = function(){
     $scope.meal = new Meals();
-    $scope.meal.adjustTail();
+    Meals.adjustTail($scope.meal);
     recalculate();
     Meals.removeAllCache();
   };
 
   //-----------------------------------------------------------------------------
   $scope.onMealSaveClicked = function(){
-    $scope.meal.removeTail();
+    Meals.removeTail($scope.meal);
     SharedInfos.set("meal", $scope.meal);
     $location.url('/meal');
   };

@@ -154,7 +154,7 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
   };
   Meals.prototype = Object.create(mealResource.prototype);
 
-  Meals.prototype.minLength = 5;
+  Meals.minLength = 5;
 
   // wrap the parent resource functions to call them easily
   //-----------------------------------------------------------------------------
@@ -215,22 +215,22 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
   };
 
   //-----------------------------------------------------------------------------
-  Meals.prototype.adjustTail = function() {
+  Meals.adjustTail = function(meal) {
     // add an empty slot if already full
-    if (this.mealItems.length >= this.minLength && this.mealItems[this.mealItems.length - 1].food.name !== "")
-      this.mealItems.push(new MealItems());
+    if (meal.mealItems.length >= Meals.minLength && meal.mealItems[meal.mealItems.length - 1].food.name !== "")
+      meal.mealItems.push(new MealItems());
     // add as many slots to arrive up to the minimum
     else
-      for (i = this.mealItems.length; i < this.minLength; i++)
-        this.mealItems.push(new MealItems());
+      for (i = meal.mealItems.length; i < Meals.minLength; i++)
+        meal.mealItems.push(new MealItems());
   };
 
   //-----------------------------------------------------------------------------
-  Meals.prototype.removeTail = function() {
+  Meals.removeTail = function(meal) {
     // remove extra empty lines at the bottom
-    for (i = this.mealItems.length - 1; i > 0; i--)
-      if (this.mealItems[i].food.name === "")
-        this.mealItems.splice(i);
+    for (i = meal.mealItems.length - 1; i > 0; i--)
+      if (meal.mealItems[i].food.name === "")
+        meal.mealItems.splice(i);
   };
 
   return Meals;
