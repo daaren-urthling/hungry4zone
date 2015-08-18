@@ -108,18 +108,16 @@ app.factory('Users', ['$resource', function($resource){
 app.factory('MealItems', ['Foods', function(Foods){
 
   //-----------------------------------------------------------------------------
-  function MealItems(source) {
+  function MealItems() {
     this.qty              = 0.0;
     this.totProteins      = 0.0;
     this.totFats          = 0.0;
     this.totCarbohydrates = 0.0;
     this.food             = new Foods();
-    if (source)
-      angular.merge(this, source);
   }
 
   //-----------------------------------------------------------------------------
-  MealItems.prototype.adjustLocale = function () {
+  MealItems.adjustLocale = function (mealItem) {
 
     function adjustNumberLocale(literal) {
       if (!literal) return 0.0;
@@ -128,7 +126,7 @@ app.factory('MealItems', ['Foods', function(Foods){
       return literal.replace(',','.');
     }
 
-    this.qty = adjustNumberLocale(this.qty);
+    mealItem.qty = adjustNumberLocale(mealItem.qty);
   };
 
 
@@ -214,19 +212,6 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
       else
         getFood(id, idx);
     });
-  };
-
-  //-----------------------------------------------------------------------------
-  Meals.rebindObjects = function(meal) {
-    if (!meal.mealItems)
-      return;
-
-    for (idx = 0; idx < meal.mealItems.length; idx++) {
-      if (!(meal.mealItems[idx] instanceof MealItems)) {
-        m = meal.mealItems[idx];
-        meal.mealItems[idx] = new MealItems(m);
-      }
-    }
   };
 
   //-----------------------------------------------------------------------------

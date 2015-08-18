@@ -10,7 +10,6 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
       angular.merge(meal, $scope.meals[mdx]);
       $scope.meals[mdx] = meal;
       Meals.reconnectFoods($scope.meals[mdx]);
-      Meals.rebindObjects($scope.meals[mdx]);
     }
   });
 
