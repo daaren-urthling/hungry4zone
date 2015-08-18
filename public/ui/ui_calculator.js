@@ -138,6 +138,7 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   $scope.onMealSaveClicked = function(){
     Meals.removeTail($scope.meal);
     SharedInfos.set("meal", $scope.meal);
+    // passing the meal to the meal editor the cache is no longer needed
     delete $sessionStorage.CalculatorController;
     $location.url('/meal');
   };
