@@ -2,7 +2,7 @@
 // CalculatorController - controller for ui_calculator.html
 //=============================================================================
 
-app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', 'MealItems', '$location', 'SharedInfos', function ($scope, $rootScope, Meals, Foods, FoodTypes, MealItems, $location, SharedInfos) {
+app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', '$location', 'SharedInfos', function ($scope, $rootScope, Meals, Foods, FoodTypes, $location, SharedInfos) {
   $scope.meal = new Meals();
   $scope.meal.adjustTail();
 
@@ -13,21 +13,23 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     if ($rootScope.loggedUser)
       $scope.meal.userId = $rootScope.loggedUser.id;
     $scope.isNew = !$scope.meal._id || $scope.meal._id === "";
-    recalculate();
-    $scope.meal.adjustTail();
-    Meals.reconnectFoods($scope.meal);
-    Meals.cacheMeal($scope.meal);
+    $scope.foods = Foods.query({}, function success() {
+      Meals.reconnectFoods($scope.meal);
+      recalculate();
+      $scope.meal.adjustTail();
+      Meals.cacheMeal($scope.meal);
+    });
   } else {
     Meals.cacheRetrieve(function(result) {
       angular.merge($scope.meal, angular.fromJson(angular.toJson(result)));
       Meals.rebindObjects($scope.meal);
-      recalculate();
-      $scope.meal.adjustTail();
-      Meals.reconnectFoods($scope.meal);
+      $scope.foods = Foods.query({}, function success() {
+        Meals.reconnectFoods($scope.meal);
+        recalculate();
+        $scope.meal.adjustTail();
+      });
     });
   }
-
-  $scope.foods = Foods.query();
 
   //-----------------------------------------------------------------------------
   function recalculate(mealItem){

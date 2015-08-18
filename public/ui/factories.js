@@ -3,11 +3,46 @@
 //=============================================================================
 app.factory('Foods', ['$resource', function($resource){
 
-  Foods = $resource('/foods/:id', null, {
+  foodsResource = $resource('/foods/:id', null, {
     'update': { method:'PUT' },
     'search': { method:'GET', url: '/foods/search/:name'},
     'upload': { method:'POST', url: '/foods/upload'}
   });
+
+  Foods = function() {
+    foodsResource.call(this, {
+      name          : "",
+      type          : "",
+      source        : 0,
+      proteins      : 0.0,
+      fats          : 0.0,
+      carbohydrates : 0.0,
+    });
+  };
+  Foods.prototype = Object.create(foodsResource.prototype);
+
+  Foods.query = function(a1, a2, a3, a4) {
+    Foods.foods = foodsResource.query(a1, a2, a3, a4);
+    return Foods.foods;
+  };
+
+  Foods.foods = [];
+
+  // wrap the parent resource functions to call them easily
+  //-----------------------------------------------------------------------------
+  Foods.get = foodsResource.get;
+  Foods.search = foodsResource.search;
+  Foods.update = foodsResource.update;
+  Foods.upload = foodsResource.upload;
+
+  //-----------------------------------------------------------------------------
+  Foods.find = function (id) {
+    for (i = 0; i < Foods.foods.length; i++) {
+      if (Foods.foods[i]._id == id)
+        return Foods.foods[i];
+    }
+    return new Foods();
+  };
 
   //-----------------------------------------------------------------------------
   Foods.prototype.sourceImage = function() {
@@ -78,7 +113,6 @@ app.factory('MealItems', ['Foods', function(Foods){
     this.totFats          = 0.0;
     this.totCarbohydrates = 0.0;
     this.food             = new Foods();
-    this.food.name = "";
     if (source)
       angular.merge(this, source);
   }
@@ -173,7 +207,11 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
       } else {
         return;
       }
-      getFood(id, idx);
+      // access the local cache if available
+      if (Foods.foods.length > 0)
+        meal.mealItems[idx].food = Foods.find(id);
+      else
+        getFood(id, idx);
     });
   };
 

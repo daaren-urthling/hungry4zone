@@ -2,7 +2,7 @@
 // MealController - controller for ui_meal.html
 //=============================================================================
 
-app.controller('MealController', ['$scope', 'SharedInfos', '$location', '$rootScope', 'Meals', 'MealItems', function ($scope, SharedInfos, $location, $rootScope, Meals, MealItems) {
+app.controller('MealController', ['$scope', 'SharedInfos', '$location', '$rootScope', 'Meals', function ($scope, SharedInfos, $location, $rootScope, Meals) {
 
   if (SharedInfos.has("meal"))  {
     $scope.meal = SharedInfos.get("meal");
