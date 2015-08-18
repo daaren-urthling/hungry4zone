@@ -2,10 +2,7 @@
 // CalculatorController - controller for ui_calculator.html
 //=============================================================================
 
-app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', '$location', 'SharedInfos', 'MealItems', function ($scope, $rootScope, Meals, Foods, FoodTypes, $location, SharedInfos, MealItems) {
-  $scope.meal = new Meals();
-  Meals.adjustTail($scope.meal);
-
+app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', '$location', 'SharedInfos', 'MealItems', '$sessionStorage', function ($scope, $rootScope, Meals, Foods, FoodTypes, $location, SharedInfos, MealItems, $sessionStorage) {
   $scope.hint = "";
 
   if (SharedInfos.has("meal"))  {
@@ -17,18 +14,21 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
       Meals.reconnectFoods($scope.meal);
       recalculate();
       Meals.adjustTail($scope.meal);
-      Meals.cacheMeal($scope.meal);
+    });
+  } else if ($sessionStorage.CalculatorController) {
+    $scope.meal = $sessionStorage.CalculatorController.meal;
+    $scope.foods = Foods.query({}, function success() {
+      Meals.reconnectFoods($scope.meal);
+      recalculate();
+      Meals.adjustTail($scope.meal);
     });
   } else {
-    Meals.cacheRetrieve(function(result) {
-      $scope.meal = result;
-      $scope.foods = Foods.query({}, function success() {
-        Meals.reconnectFoods($scope.meal);
-        recalculate();
-        Meals.adjustTail($scope.meal);
-      });
-    });
+    $scope.meal = new Meals();
+    Meals.adjustTail($scope.meal);
+    $scope.foods = Foods.query();
   }
+
+  $sessionStorage.CalculatorController = { meal : $scope.meal };
 
   //-----------------------------------------------------------------------------
   function recalculate(mealItem){
@@ -82,7 +82,6 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   //-----------------------------------------------------------------------------
   $scope.onFoodSelected = function($item, $index, mealItem)  {
     recalculate(mealItem);
-    Meals.cacheItem({item: mealItem, idx: $index});
     Meals.adjustTail($scope.meal);
   };
 
@@ -94,7 +93,6 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     MealItems.adjustLocale(mealItem);
 
     recalculate(mealItem);
-    Meals.cacheItem({item: mealItem, idx: $index});
 
     // need to call manually $apply as called via onchange (not ng-change)
     $scope.$apply();
@@ -120,15 +118,12 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
       mealItem.qty =0.0;
 
     recalculate(mealItem);
-    Meals.cacheItem({item: mealItem, idx: $index});
-
   };
 
   //-----------------------------------------------------------------------------
   $scope.onRemoveLineClicked = function($index){
     $scope.meal.mealItems.splice($index,1);
     recalculate();
-    Meals.removeCachedItem({idx: $index});
     Meals.adjustTail($scope.meal);
   };
 
@@ -137,13 +132,13 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
     $scope.meal = new Meals();
     Meals.adjustTail($scope.meal);
     recalculate();
-    Meals.removeAllCache();
   };
 
   //-----------------------------------------------------------------------------
   $scope.onMealSaveClicked = function(){
     Meals.removeTail($scope.meal);
     SharedInfos.set("meal", $scope.meal);
+    delete $sessionStorage.CalculatorController;
     $location.url('/meal');
   };
 

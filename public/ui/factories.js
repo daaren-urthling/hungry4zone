@@ -163,33 +163,6 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
   Meals.update = mealResource.update;
 
   //-----------------------------------------------------------------------------
-  Meals.cacheRetrieve = function(callback) {
-    $http.get('/meals/cacheRetrieve').success(function(result) {
-                callback(result);
-            });
-  };
-
-  //-----------------------------------------------------------------------------
-  Meals.cacheMeal = function(meal) {
-    $http.put('/meals/cacheMeal', meal);
-  };
-
-  //-----------------------------------------------------------------------------
-  Meals.cacheItem = function(data) {
-    $http.put('/meals/cacheItem', data);
-  };
-
-  //-----------------------------------------------------------------------------
-  Meals.removeCachedItem = function(data) {
-    $http.put('/meals/removeCachedItem', data);
-  };
-
-  //-----------------------------------------------------------------------------
-  Meals.removeAllCache = function() {
-    $http.put('/meals/removeAllCache');
-  };
-
-  //-----------------------------------------------------------------------------
   Meals.reconnectFoods = function(meal) {
     // avoid in-loop function declaration
     var getFood = function(id, idx) {
