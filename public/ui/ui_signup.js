@@ -3,7 +3,7 @@
 //=============================================================================
 
 //=============================================================================
-app.controller('SignupController', ['$scope', 'Users', '$location', '$rootScope', 'SharedInfos', function ($scope, Users, $location, $rootScope, SharedInfos) {
+app.controller('SignupController', ['$scope', 'Users', '$location', 'SharedInfos', '$sessionStorage', function ($scope, Users, $location, SharedInfos, $sessionStorage) {
 
   if (SharedInfos.has("email"))  {
     $scope.formData = { email : SharedInfos.get("email") };
@@ -19,7 +19,7 @@ app.controller('SignupController', ['$scope', 'Users', '$location', '$rootScope'
   //-----------------------------------------------------------------------------
   $scope.onSignupClicked = function(obj){
     Users.signup($scope.formData, function(result){ // success
-        $rootScope.loggedUser = result.loggedUser;
+        $sessionStorage.loggedUser = result.loggedUser;
         $scope.name = result.loggedUser.name;
         $scope.email = result.loggedUser.email;
         $scope.emailError = result.mailError;
@@ -28,7 +28,7 @@ app.controller('SignupController', ['$scope', 'Users', '$location', '$rootScope'
 
         $scope.signupDone = true;
     }, function(httpResponse) { // failure
-      $rootScope.loggedUser = null;
+      delete $sessionStorage.loggedUser;
       $scope.message = GetErrorMessage(httpResponse);
 
       $scope.signupDone = true;

@@ -2,13 +2,13 @@
 // CalculatorController - controller for ui_calculator.html
 //=============================================================================
 
-app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods', 'FoodTypes', '$location', 'SharedInfos', 'MealItems', '$sessionStorage', function ($scope, $rootScope, Meals, Foods, FoodTypes, $location, SharedInfos, MealItems, $sessionStorage) {
+app.controller('CalculatorController', ['$scope', 'Meals', 'Foods', 'FoodTypes', '$location', 'SharedInfos', 'MealItems', '$sessionStorage', function ($scope, Meals, Foods, FoodTypes, $location, SharedInfos, MealItems, $sessionStorage) {
   $scope.hint = "";
 
   if (SharedInfos.has("meal"))  {
     $scope.meal = SharedInfos.get("meal");
-    if ($rootScope.loggedUser)
-      $scope.meal.userId = $rootScope.loggedUser.id;
+    if ($sessionStorage.loggedUser)
+      $scope.meal.userId = $sessionStorage.loggedUser.id;
     $scope.isNew = !$scope.meal._id || $scope.meal._id === "";
     $scope.foods = Foods.query({}, function success() {
       Meals.reconnectFoods($scope.meal);

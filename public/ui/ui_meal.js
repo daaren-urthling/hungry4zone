@@ -2,11 +2,11 @@
 // MealController - controller for ui_meal.html
 //=============================================================================
 
-app.controller('MealController', ['$scope', 'SharedInfos', '$location', '$rootScope', 'Meals', '$sessionStorage', function ($scope, SharedInfos, $location, $rootScope, Meals, $sessionStorage) {
+app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals', '$sessionStorage', function ($scope, SharedInfos, $location, Meals, $sessionStorage) {
 
   if (SharedInfos.has("meal"))  {
     $scope.meal = SharedInfos.get("meal");
-    $scope.meal.userId = $rootScope.loggedUser.id;
+    $scope.meal.userId = $sessionStorage.loggedUser.id;
     $scope.isNew = !$scope.meal._id || $scope.meal._id === "";
   } else if ($sessionStorage.MealController) {
     $scope.meal = $sessionStorage.MealController.meal;

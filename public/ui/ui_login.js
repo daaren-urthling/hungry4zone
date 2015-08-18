@@ -2,7 +2,7 @@
 // LoginController - controller for ui_login.html
 //=============================================================================
 
-app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location','SharedInfos', function ($scope, Users, $rootScope, $location, SharedInfos) {
+app.controller('LoginController', ['$scope', 'Users', '$location','SharedInfos', '$sessionStorage', function ($scope, Users, $location, SharedInfos, $sessionStorage) {
 
   if (SharedInfos.has("email"))  {
     $scope.formData = { email : SharedInfos.get("email") };
@@ -25,14 +25,14 @@ app.controller('LoginController', ['$scope', 'Users', '$rootScope', '$location',
 
     Users.login($scope.formData, function(result) {
       $scope.loginError = null;
-      $rootScope.loggedUser = angular.fromJson(angular.toJson(result));
+      $sessionStorage.loggedUser = angular.fromJson(angular.toJson(result));
       if ($scope.forwardAddress) {
         $location.url($scope.forwardAddress);
       }
       else
         $location.url("/");
     }, function(httpResponse) { // failure
-        $rootScope.loggedUser = null;
+        delete $sessionStorage.loggedUser;
         $scope.loginError = GetErrorMessage(httpResponse);
     });
   };
