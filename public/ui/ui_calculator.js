@@ -76,6 +76,11 @@ app.controller('CalculatorController', ['$scope', '$rootScope', 'Meals', 'Foods'
   }
 
   //-----------------------------------------------------------------------------
+  $scope.sourceImage = function(food)  {
+    return Foods.sourceImage(food);
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.onFoodSelected = function($item, $index, mealItem)  {
     recalculate(mealItem);
     Meals.cacheItem({item: mealItem, idx: $index});

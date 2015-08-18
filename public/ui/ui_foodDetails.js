@@ -15,6 +15,11 @@ app.controller('FoodDetailController', ['$scope', '$routeParams', 'Foods', '$loc
   $scope.foodTypes = FoodTypes.query();
 
   //-----------------------------------------------------------------------------
+  $scope.sourceImage = function(food)  {
+    return Foods.sourceImage(food);
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.onAddClicked = function(){
     if(!$scope.food.name || $scope.food.name.length < 1)
     {

@@ -51,7 +51,7 @@
           <td width=16><span class="text-center text-muted glyphicon glyphicon-remove" ng-click="onRemoveLineClicked($index)"/></td>
             <td class="hidden-xs hidden-sm"><input type="text" class="form-control" ng-model="mealItem.food" typeahead="food as food.name for food in foods | filter:{name:$viewValue}:contains | limitTo:8" typeahead-on-select="onFoodSelected($item, $index, mealItem)"></td>
             <td class="hidden-md hidden-lg"><select class="form-control" ng-model="mealItem.food" ng-options="food as food.name for food in foods | orderBy:'name'" ng-change="onFoodSelected($item, $index, mealItem)" /></td>
-          <td class="text-center"><image width=20 ng-src="{{mealItem.food.sourceImage()}}"></td>
+          <td class="text-center"><image width=20 ng-src="{{sourceImage(mealItem.food)}}"></td>
           <td class="text-center hidden-xs hidden-sm hidden-md" width=80>{{ mealItem.food.type }}</td>
           <td class="proteins text-right hidden-xs hidden-sm" width="80">{{ mealItem.food.proteins | number:2 }}</td>
           <td class="fats text-right hidden-xs hidden-sm" width="80">{{ mealItem.food.fats | number:2 }}</td>

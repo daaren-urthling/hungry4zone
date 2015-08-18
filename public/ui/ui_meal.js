@@ -14,6 +14,11 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', '$rootSc
   }
 
   //-----------------------------------------------------------------------------
+  $scope.sourceImage = function(food)  {
+    return Foods.sourceImage(food);
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.onAddClicked = function(){
     if(!$scope.meal.name || $scope.meal.name.length < 1)
     {

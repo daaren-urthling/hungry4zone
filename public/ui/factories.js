@@ -45,12 +45,13 @@ app.factory('Foods', ['$resource', function($resource){
   };
 
   //-----------------------------------------------------------------------------
-  Foods.prototype.sourceImage = function() {
-    switch (this.source) {
-      case 1 : return "images/red.png";
-      case 2 : return "images/yellow.png";
-      case 3 : return "images/green.png";
-    }
+  Foods.sourceImage = function(food) {
+    if (food)
+      switch (food.source) {
+        case 1 : return "images/red.png";
+        case 2 : return "images/yellow.png";
+        case 3 : return "images/green.png";
+      }
     return "";
   };
 

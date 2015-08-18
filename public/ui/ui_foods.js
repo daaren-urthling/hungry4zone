@@ -14,6 +14,11 @@ app.controller('FoodsController', ['$scope', 'Foods', '$location', 'SharedInfos'
   }
 
   //-----------------------------------------------------------------------------
+  $scope.sourceImage = function(food)  {
+    return Foods.sourceImage(food);
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.onAddClicked = function(){
     $location.url('/foodDetail/0');
   };

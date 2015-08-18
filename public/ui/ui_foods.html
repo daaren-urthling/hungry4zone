@@ -31,7 +31,7 @@
       <td width="1%" ng-show="loggedUser.isAdmin"><a href="#/foodDetail/{{food._id}}"><span class="text-muted glyphicon glyphicon-menu-right" aria-hidden="true"></span></a></td>
       <td>{{ food.name }}</td>
       <td>{{ food.type }}</td>
-      <td class="text-center"><image width=16 ng-src="{{food.sourceImage()}}"></td>
+      <td class="text-center"><image width=16 ng-src="{{sourceImage(food)}}"></td>
       <td class="proteins text-right" width="10%">{{ food.proteins | number:2 }}</td>
       <td class="fats text-right" width="10%">{{ food.fats | number:2 }}</td>
       <td class="carbohydrates text-right" width="10%">{{ food.carbohydrates | number:2 }}</td>
