@@ -31,11 +31,11 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
       return;
     }
 
-    $scope.meal.$save(function(result) { // success
+    Meals.save($scope.meal, function success(result) {
         SharedInfos.set("alert", { "type" : "success", "msg" : "inserito un nuovo pasto: " + $scope.meal.name});
         delete $sessionStorage.MealController;
         $location.url('/mealsGallery');
-    }, function(httpResponse) { // failure
+    }, function failure(httpResponse) {
         $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
   };
@@ -48,21 +48,23 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
       return;
     }
 
-    $scope.meal.$update({id: $scope.meal._id}, $scope.meal, function(){
+    Meals.update({id: $scope.meal._id}, $scope.meal, function success(){
       SharedInfos.set("alert", { "type" : "success", "msg" : "Pasto modificato: " + $scope.meal.name});
       delete $sessionStorage.MealController;
       $location.url('/mealsGallery/');
-    }, function(httpResponse) { // failure
+    }, function failure(httpResponse) {
         $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
   };
 
   //-----------------------------------------------------------------------------
   $scope.onRemoveClicked = function(){
-    $scope.meal.$remove({id: $scope.meal._id}, function(){
+    Meals.remove({id: $scope.meal._id}, function success(){
       SharedInfos.set("alert", { "type" : "warning", "msg" : "Pasto eliminato: " + $scope.meal.name});
       delete $sessionStorage.MealController;
       $location.url('/mealsGallery/');
+    }, function failure(httpResponse) {
+        $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
   };
 

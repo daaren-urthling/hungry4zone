@@ -9,6 +9,8 @@
       <p ng-repeat="mealItem in meal.mealItems">{{mealItem.food.name}} {{mealItem.qty}} gr.</p>
       <span class="text-muted glyphicon glyphicon-pencil" aria-hidden="true" ng-click="onEditClicked(meal)"></span>
       <span class="text-muted glyphicon glyphicon-duplicate" aria-hidden="true" ng-click="onDuplicateClicked(meal)"></span>
+      <span>&nbsp;&nbsp;&nbsp;</span>
+      <span class="text-muted glyphicon glyphicon-remove" aria-hidden="true" ng-click="onRemoveClicked(meal, $index)"></span>
     </div>
   </div>
 </div> <!-- /container -->

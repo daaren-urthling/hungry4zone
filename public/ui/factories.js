@@ -158,9 +158,11 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
 
   // wrap the parent resource functions to call them easily
   //-----------------------------------------------------------------------------
+  Meals.save = mealResource.save;
   Meals.query = mealResource.query;
   Meals.search = mealResource.search;
   Meals.update = mealResource.update;
+  Meals.remove = mealResource.remove;
 
   //-----------------------------------------------------------------------------
   Meals.reconnectFoods = function(meal) {

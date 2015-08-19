@@ -30,4 +30,14 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
     SharedInfos.set("meal", meal);
     $location.url('/calculator');
   };
+
+  //-----------------------------------------------------------------------------
+  $scope.onRemoveClicked = function(meal, $index) {
+    Meals.remove({id: meal._id}, function success() {
+      $scope.meals.splice($index, 1);
+      $scope.alert = { "type" : "warning", "msg" : "Pasto eliminato: " + meal.name};
+    }, function failure(httpResponse) {
+      $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
+    });
+  };
 }]);

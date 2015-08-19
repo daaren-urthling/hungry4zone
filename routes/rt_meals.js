@@ -42,3 +42,25 @@ router.post('/', function(req, res, next) {
     });
   });
 });
+
+// update         (PUT /:id)
+//-----------------------------------------------------------------------------
+router.put('/:id', function(req, res, next) {
+  Meal.findByIdAndUpdate(req.params.id, req.body, {new: true}, function (err, obj) {
+    if (err) return next(err);
+    if (obj === null)
+      return next(new ApplicationError("Pasto non trovato, id: " + req.params.id));
+    res.json(obj._doc);
+  });
+});
+
+ // remove        (DELETE /:id)
+ //-----------------------------------------------------------------------------
+router.delete('/:id', function(req, res, next) {
+  Meal.findByIdAndRemove(req.params.id, req.body, function (err, obj) {
+    if (err) return next(err);
+    if (obj === null)
+      return next(new ApplicationError("Pasto non trovato, id: " + req.params.id));
+    res.send(obj._doc);
+  });
+});
