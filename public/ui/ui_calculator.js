@@ -5,11 +5,10 @@
 app.controller('CalculatorController', ['$scope', 'Meals', 'Foods', 'FoodTypes', '$location', 'SharedInfos', 'MealItems', '$sessionStorage', function ($scope, Meals, Foods, FoodTypes, $location, SharedInfos, MealItems, $sessionStorage) {
   $scope.hint = "";
 
-  if (SharedInfos.has("meal"))  {
-    $scope.meal = SharedInfos.get("meal");
-    if ($sessionStorage.loggedUser)
-      $scope.meal.userId = $sessionStorage.loggedUser.id;
-    $scope.isNew = !$scope.meal._id || $scope.meal._id === "";
+  if (SharedInfos.has("mealInfo"))  {
+    mealInfo = SharedInfos.get("mealInfo");
+    $scope.meal = mealInfo.meal;
+    $scope.isNew = (mealInfo.action === "new");
     $scope.foods = Foods.query({}, function success() {
       Meals.reconnectFoods($scope.meal);
       recalculate();
@@ -17,6 +16,7 @@ app.controller('CalculatorController', ['$scope', 'Meals', 'Foods', 'FoodTypes',
     });
   } else if ($sessionStorage.CalculatorController) {
     $scope.meal = $sessionStorage.CalculatorController.meal;
+    $scope.isNew = $sessionStorage.CalculatorController.isNew;
     $scope.foods = Foods.query({}, function success() {
       Meals.reconnectFoods($scope.meal);
       recalculate();
@@ -24,11 +24,16 @@ app.controller('CalculatorController', ['$scope', 'Meals', 'Foods', 'FoodTypes',
     });
   } else {
     $scope.meal = new Meals();
+    $scope.isNew = true;
     Meals.adjustTail($scope.meal);
     $scope.foods = Foods.query();
   }
 
-  $sessionStorage.CalculatorController = { meal : $scope.meal };
+  $sessionStorage.CalculatorController = { meal : $scope.meal, isNew : $scope.isNew };
+
+  if (SharedInfos.has("alert"))  {
+    $scope.alert = SharedInfos.get("alert");
+  }
 
   //-----------------------------------------------------------------------------
   function recalculate(mealItem){
@@ -137,10 +142,15 @@ app.controller('CalculatorController', ['$scope', 'Meals', 'Foods', 'FoodTypes',
   //-----------------------------------------------------------------------------
   $scope.onMealSaveClicked = function(){
     Meals.removeTail($scope.meal);
-    SharedInfos.set("meal", $scope.meal);
+    SharedInfos.set("mealInfo", { meal: $scope.meal, action : ($scope.isNew ? "new" : "edit") });
     // passing the meal to the meal editor the cache is no longer needed
     delete $sessionStorage.CalculatorController;
     $location.url('/meal');
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onCloseAlert = function(){
+    $scope.alert = null;
   };
 
   //-----------------------------------------------------------------------------

@@ -21,13 +21,14 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
 
   //-----------------------------------------------------------------------------
   $scope.onEditClicked = function(meal){
-    SharedInfos.set("meal", meal);
+    SharedInfos.set("mealInfo", { meal: meal, action : "edit" });
     $location.url('/meal');
   };
 
   //-----------------------------------------------------------------------------
   $scope.onDuplicateClicked = function(meal){
-    SharedInfos.set("meal", meal);
+    SharedInfos.set("mealInfo", { meal: meal, action : "new" });
+    SharedInfos.set("alert", { "type" : "success", "msg" : 'Crea un nuovo pasto con ingredienti simili a "' + meal.name + '", poi aggiungilo al tuo ricettario cliccando su "Salva"'});
     $location.url('/calculator');
   };
 

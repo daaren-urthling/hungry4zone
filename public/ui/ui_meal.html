@@ -22,6 +22,9 @@
         </tr>
       </table>
     </div>
+    <div class="row" ng-show="!isNew">
+      <p>Cambia il contenuto del pasto <a class="btn btn-default" ng-click="onChangeIngredientsClicked()" role="button">Vai &raquo;</a></p>
+    </div>
     <div class="row">
       <p>Calorie totali: {{meal.totCalories}}</p>
     </div>

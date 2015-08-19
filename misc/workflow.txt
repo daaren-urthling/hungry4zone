@@ -1,0 +1,14 @@
+== nuovo ==
+[1] calcolatore (salva)-> scheda pasto  (annulla)
+          ^--------------------------------+
+                                        (aggiungi) -> ricettario
+
+== nuovo per copia ==
+ricettario (copia)-> [1]
+
+== modifica ==
+ricettario (modifica)-> scheda pasto  (annulla)
+        ^--------------------------------+
+                                      (aggiorna) -> ricettario
+                                      (cambia) -> calcolatore (salva)
+                              ^----------------------------------+
