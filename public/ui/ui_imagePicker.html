@@ -22,12 +22,13 @@
     <div class="col-lg-6 col-sm-6 col-xs-6">
       <ul class="list-group">
         <li class="list-group-item list-group-item-info">Album</li>
-        <li ng-class="albumRowClass($index)" ng-repeat="album in albums | filter: search | orderBy: '+name' " ng-click="onAlbumClicked($index, album)">{{album.name}}</li>
+        <li ng-class="albumRowClass($index)" ng-repeat="album in albums  | filter: search | orderBy: '+name'| startFrom : firstVisibleItem | limitTo : itemsPerPage " ng-click="onAlbumClicked($index, album)">{{album.name}}</li>
       </ul>
+      <pagination total-items="albums.length" items-per-page="itemsPerPage" max-size="5" rotate="false" ng-model="currentPage" ng-change="onPageChanged()"></pagination>
     </div>
     <div class="col-lg-6 col-sm-6 col-xs-6">
       <ul ng-show="images.length > 0" class="list-group">
-        <li class="list-group-item list-group-item-info">Immagini</li>
+        <li class="list-group-item list-group-item-info">Immagini{{albumName}}</li>
         <li ng-class="imageRowClass($index)" ng-repeat="image in images">
           <img class="thumbnail img-responsive" ng-src="{{image.img}}" ng-click="onImageClicked($index, image)">
         </li>

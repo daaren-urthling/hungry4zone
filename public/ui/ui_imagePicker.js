@@ -8,6 +8,7 @@ app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'Share
   $scope.images = [];
 
   $scope.albumIdx = -1;
+  $scope.albumName = "";
   $scope.imageIdx = -1;
 
   $scope.selectedImage = {};
@@ -24,6 +25,17 @@ app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'Share
   }, function failure (response) {
     $scope.alert = { type : "danger", msg :GetErrorMessage(response) };
   });
+
+  $scope.currentPage = 1;
+  $scope.itemsPerPage = 15;
+  $scope.firstVisibleItem = 0;
+
+  //-----------------------------------------------------------------------------
+  $scope.onPageChanged = function() {
+    $scope.firstVisibleItem = ($scope.currentPage - 1) * $scope.itemsPerPage;
+    $scope.albumIdx = -1;
+    $scope.imageIdx = -1;
+  };
 
   //-----------------------------------------------------------------------------
   $scope.albumRowClass = function($index){
@@ -44,6 +56,7 @@ app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'Share
   //-----------------------------------------------------------------------------
   $scope.onAlbumClicked = function($index, album){
     $scope.albumIdx = $index;
+    $scope.albumName = ": " + album.name;
     Picasa.getImageList(album).then(function success(result) {
         $scope.images = result;
         $scope.imageIdx = -1;
@@ -71,3 +84,12 @@ app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'Share
   };
 
 }]);
+
+//We already have a limitTo filter built-in to angular,
+//let's make a startFrom filter
+app.filter('startFrom', function() {
+    return function(input, start) {
+        start = +start; //parse to int
+        return input.slice(start);
+    };
+});
