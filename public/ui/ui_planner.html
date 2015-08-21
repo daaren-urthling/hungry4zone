@@ -10,4 +10,16 @@
   </table>
   <p><button class="btn btn-default" ng-click="onAddClicked()">Aggiungi</button></p>
   <p><button class="btn btn-default" ng-click="onInspectClicked()">Controlla</button></p>
+  <br/>
+  <p><button class="btn btn-default" ng-click="onPickImageClicked()">Scegli foto</button></p>
+  <br/>
+  <p><img src="{{img}}"/></p>
+  <p>{{caption}}</p>
+  <br/>
+  <p><button class="btn btn-default" ng-click="onAlbumClicked()">Album</button></p>
+  <div class="col-lg-6 col-sm-6 col-xs-6">
+  <ul class="list-group">
+    <li class="list-group-item h4z-small-list-group-item" ng-repeat="album in albums">{{album.name}}</li>
+  </ul>
+  </div>
 </div> <!-- /container -->

@@ -53,3 +53,8 @@ body {
 .h4z-hyperlink {
     cursor: pointer;
 }
+
+.h4z-small-list-group-item {
+  padding-top: 3px;
+  padding-bottom: 3px;
+}

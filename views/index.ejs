@@ -116,6 +116,7 @@
     <script src="/ui/ui_meal.js"></script>
     <script src="/ui/ui_mealsGallery.js"></script>
     <script src="/ui/ui_planner.js"></script>
+    <script src="/ui/ui_imagePicker.js"></script>
 
     <script>
       app.run(function($rootScope, $sessionStorage, $location, SharedInfos, Users) {
@@ -185,6 +186,10 @@
           .when('/planner', {
             templateUrl: '/ui/ui_planner.html',
             controller: 'PlannerController'
+          })
+          .when('/imagePicker', {
+            templateUrl: '/ui/ui_imagePicker.html',
+            controller: 'ImagePickerController'
           })
       }]);
     </script>

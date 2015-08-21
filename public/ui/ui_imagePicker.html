@@ -1,0 +1,35 @@
+<div class="container">
+  <h2>Scegli un'immagine</h2>
+  <div class="row">
+    <div class="col-lg-6 col-sm-6 col-xs-6">
+      <form class="form-inline" role="form">
+        <div class="input-group">
+          <span class="input-group-addon"><span class="text-muted glyphicon glyphicon-search" aria-hidden="true"></span></span>
+          <input id="search" type="text" class="form-control" placeholder="Cerca" ng-model="search.name">
+        </div>
+      </form>
+    </div>
+    <div class="col-lg-6 col-sm-6 col-xs-6" align="right">
+      <form class="form-inline" role="form">
+        <a role="button" class="btn btn-primary" ng-click="onOkClicked()">Ok</a>
+        <a role="button" class="btn btn-default" ng-click="onCancelClicked()">Annulla</a>
+      </form>
+    </div>
+  </div>
+  <br/>
+  <div class="row">
+    <alert ng-show="alert" type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
+    <div class="col-lg-6 col-sm-6 col-xs-6">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-info">Album</li>
+        <li ng-class="albumRowClass($index)" ng-repeat="album in albums | filter: search | orderBy: '+name' " ng-click="onAlbumClicked($index, album)">{{album.name}}</li>
+      </ul>
+    </div>
+    <div class="col-lg-6 col-sm-6 col-xs-6">
+      <ul class="list-group">
+        <li class="list-group-item list-group-item-info">Immagini</li>
+        <li ng-class="imageRowClass($index)" ng-repeat="image in images"><img class="thumbnail img-responsive" src="{{image.img}}" ng-click="onImageClicked($index, image)"></li>
+      </ul>
+    </div>
+  </div>
+</div> <!-- /container -->
