@@ -26,9 +26,11 @@
       </ul>
     </div>
     <div class="col-lg-6 col-sm-6 col-xs-6">
-      <ul class="list-group">
+      <ul ng-show="images.length > 0" class="list-group">
         <li class="list-group-item list-group-item-info">Immagini</li>
-        <li ng-class="imageRowClass($index)" ng-repeat="image in images"><img class="thumbnail img-responsive" src="{{image.img}}" ng-click="onImageClicked($index, image)"></li>
+        <li ng-class="imageRowClass($index)" ng-repeat="image in images">
+          <img class="thumbnail img-responsive" ng-src="{{image.img}}" ng-click="onImageClicked($index, image)">
+        </li>
       </ul>
     </div>
   </div>

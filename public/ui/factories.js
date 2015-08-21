@@ -149,7 +149,7 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
       name : "",
       mealItems : [],
       totCalories : 0,
-      userId : null,
+      userId : null
     });
   };
   Meals.prototype = Object.create(mealResource.prototype);

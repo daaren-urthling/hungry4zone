@@ -12,7 +12,8 @@
     </div>
     <div ng-repeat="meal in meals" class="col-lg-3 col-sm-4 col-xs-6">
       <h3>{{meal.name}}</h3>
-      <p ng-repeat="mealItem in meal.mealItems">{{mealItem.food.name}} {{mealItem.qty}} gr.</p>
+      <img ng-show="meal.imageURL" class="thumbnail img-responsive" ng-src="{{meal.imageURL}}"/>
+      <p ng-repeat="mealItem in meal.mealItems">{{mealItem.qty}} gr. {{mealItem.food.name}}</p>
       <span class="text-muted glyphicon glyphicon-pencil" aria-hidden="true" ng-click="onEditClicked(meal)"></span>
       <span class="text-muted glyphicon glyphicon-duplicate" aria-hidden="true" ng-click="onDuplicateClicked(meal)"></span>
       <span>&nbsp;&nbsp;&nbsp;</span>

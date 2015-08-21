@@ -1,33 +1,36 @@
 <div class="container">
   <br/>
-  <div class="row col-sm-6">
-    <form role="form" class="form-horizontal">
-      <div class="form-group">
-        <div class="col-sm-6">
-          <input id="name" type="text" class="form-control input-lg" placeholder="Dai un nome al tuo pasto" ng-model="meal.name" ng-change="onMealNameChanged()" ng-model-options="{ updateOn: 'blur' }">
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <form role="form" class="form-horizontal">
+        <div class="form-group">
+            <input id="name" type="text" class="form-control input-lg" placeholder="Dai un nome al tuo pasto" ng-model="meal.name" ng-change="onMealNameChanged()" ng-model-options="{ updateOn: 'blur' }">
         </div>
+      </form>
+    </div>
+  </div>
+  <div class="row">
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <div class="table-responsive">
+        <table class="table table-condensed">
+          <tr ng-repeat="mealItem in meal.mealItems">
+            <td class="text-center" width=20><image width=20 ng-src="{{sourceImage(mealItem.food)}}"></td>
+            <td width=60 class="text-right">{{ mealItem.qty }} gr.</td>
+            <td class="text-left">{{ mealItem.food.name }}</td>
+          </tr>
+        </table>
       </div>
-    </form>
-    <div class="table-responsive">
-      <table class="table table-condensed">
-        <tr>
-          <th class="text-left">Alimento</th>
-          <th class="text-center">Fonte</th>
-          <th width=80 class="text-center">Qtà</th>
-        </tr>
-        <tr ng-repeat="mealItem in meal.mealItems">
-          <td class="text-left">{{ mealItem.food.name }}</td>
-          <td class="text-center"><image width=20 ng-src="{{sourceImage(mealItem.food)}}"></td>
-          <td width=80 class="text-right">{{ mealItem.qty }} gr.</td>
-        </tr>
-      </table>
+      <div class="row" ng-show="!isNew">
+        <p>Cambia il contenuto del pasto <a class="btn btn-default" ng-click="onChangeIngredientsClicked()" role="button">Vai &raquo;</a></p>
+      </div>
     </div>
-    <div class="row" ng-show="!isNew">
-      <p>Cambia il contenuto del pasto <a class="btn btn-default" ng-click="onChangeIngredientsClicked()" role="button">Vai &raquo;</a></p>
+    <div class="col-lg-6 col-md-6 col-sm-6">
+      <a class="h4z-hyperlink small" ng-click="onPickImageClicked()">Associa un'immagine</a>
+      <img ng-show="imageURL" class="thumbnail img-responsive" src="{{imageURL}}"/>
     </div>
-    <div class="row">
-      <p>Calorie totali: {{meal.totCalories}}</p>
-    </div>
+  </div>
+  <div class="row">
+    <p>Calorie totali: {{meal.totCalories}}</p>
     <alert ng-show="alert" type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
     <div ng-show="isNew" class="btn-group col-sm-offset-2">
       <div class="btn-group">

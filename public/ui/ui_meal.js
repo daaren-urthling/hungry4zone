@@ -2,14 +2,18 @@
 // MealController - controller for ui_meal.html
 //=============================================================================
 
-app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals', '$sessionStorage', function ($scope, SharedInfos, $location, Meals, $sessionStorage) {
+app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals', '$sessionStorage', 'Picasa', function ($scope, SharedInfos, $location, Meals, $sessionStorage, Picasa) {
 
   if (SharedInfos.has("mealInfo"))  {
     mealInfo = SharedInfos.get("mealInfo");
     $scope.meal = mealInfo.meal;
     $scope.isNew = (mealInfo.action === "new");
-    if ($scope.isNew && $sessionStorage.loggedUser)
-      $scope.meal.userId = $sessionStorage.loggedUser.id;
+    if ($scope.isNew) {
+      if ($sessionStorage.loggedUser)
+        $scope.meal.userId = $sessionStorage.loggedUser.id;
+      $scope.meal.imageCoord = null;
+        $scope.meal.name = "";
+    }
   } else if ($sessionStorage.MealController) {
     $scope.meal = $sessionStorage.MealController.meal;
     $scope.isNew = $sessionStorage.MealController.isNew;
@@ -19,6 +23,19 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
   }
 
   $sessionStorage.MealController = { meal : $scope.meal, isNew : $scope.isNew };
+
+  if (SharedInfos.has("imagePickerInfo"))  {
+    imagePickerInfo = SharedInfos.get("imagePickerInfo");
+    $scope.meal.imageCoord = imagePickerInfo.imageCoord;
+  }
+
+  if ($scope.meal.imageCoord) {
+    Picasa.getImageURL($scope.meal.imageCoord, 288).then(function success(imageUrl) {
+      $scope.imageURL = imageUrl;
+    }, function failure(response) {
+      console.log(response);
+    });
+  }
 
   //-----------------------------------------------------------------------------
   $scope.sourceImage = function(food)  {
@@ -100,6 +117,12 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
       }, function(httpResponse) { // failure
         $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
       });
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onPickImageClicked = function(){
+    SharedInfos.set("imagePickerInfo", { returnTo : "/meal" });
+    $location.url('/imagePicker');
   };
 
   //-----------------------------------------------------------------------------

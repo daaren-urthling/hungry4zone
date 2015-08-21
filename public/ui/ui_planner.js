@@ -18,11 +18,7 @@ app.controller('PlannerController', ['$scope', 'SharedInfos', '$sessionStorage',
 
   if (SharedInfos.has("imagePickerInfo"))  {
     imagePickerInfo = SharedInfos.get("imagePickerInfo");
-    Picasa.getImageURL(imagePickerInfo.imageCoord, 288, function success(imageUrl) {
-      $scope.img = imageUrl;
-    }, function failure(response) {
-      console.log(response);
-    });
+    Picasa.getImageURL(imagePickerInfo.imageCoord, 288).then(function success(imageUrl) { $scope.img = imageUrl; });
   }
 
 
@@ -60,10 +56,8 @@ app.controller('PlannerController', ['$scope', 'SharedInfos', '$sessionStorage',
     // }, function failure (result) {
     //   console.log(result);
     // });
-    Picasa.getAlbumList(function success(result) {
-      $scope.albums = result;
-    }, function failure (result) {
-
+    Picasa.getAlbumList().then(function success(albums) {
+      $scope.albums = albums;
     });
 
   };

@@ -5,6 +5,7 @@
 app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'SharedInfos', function ($scope, Picasa, $location, SharedInfos) {
 
   $scope.albums = [];
+  $scope.images = [];
 
   $scope.albumIdx = -1;
   $scope.imageIdx = -1;
@@ -18,10 +19,10 @@ app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'Share
     imagePickerInfo = { returnTo : "/" };
   }
 
-  Picasa.getAlbumList(function success(result) {
-      $scope.albums = result;
-    }, function failure (response) {
-      $scope.alert = { type : "danger", msg :GetErrorMessage(response) };
+  Picasa.getAlbumList().then(function success(albums) {
+    $scope.albums = albums;
+  }, function failure (response) {
+    $scope.alert = { type : "danger", msg :GetErrorMessage(response) };
   });
 
   //-----------------------------------------------------------------------------
@@ -43,7 +44,7 @@ app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'Share
   //-----------------------------------------------------------------------------
   $scope.onAlbumClicked = function($index, album){
     $scope.albumIdx = $index;
-    Picasa.getImageList(album, function success(result) {
+    Picasa.getImageList(album).then(function success(result) {
         $scope.images = result;
         $scope.imageIdx = -1;
       }, function failure (response) {

@@ -2,11 +2,16 @@
 // MealsGalleryController - controller for ui_mealsGallery.html
 //=============================================================================
 
-app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', function ($scope, SharedInfos, Meals, Foods, $location) {
+app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', 'Picasa', function ($scope, SharedInfos, Meals, Foods, $location, Picasa) {
 
   $scope.meals = Meals.query({}, function() {
     $scope.meals.forEach (function(meal, idx) {
       Meals.reconnectFoods($scope.meals[idx]);
+      if ($scope.meals[idx].imageCoord) {
+        Picasa.getImageURL($scope.meals[idx].imageCoord, 128).then(function(imageURL) {
+          $scope.meals[idx].imageURL = imageURL;
+        }) ;
+      }
     });
   });
 
