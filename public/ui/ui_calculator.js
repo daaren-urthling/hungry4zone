@@ -62,6 +62,7 @@ app.controller('CalculatorController', ['$scope', 'Meals', 'Foods', 'FoodTypes',
     $scope.meal.blockProteins      = $scope.meal.totProteins * 0.14;
     $scope.meal.blockFats          = $scope.meal.totFats * 0.32;
     $scope.meal.blockCarbohydrates = $scope.meal.totCarbohydrates * 0.11;
+    $scope.meal.blocks = Math.round(($scope.meal.blockProteins + $scope.meal.blockFats + $scope.meal.blockCarbohydrates) / 3);
 
     $scope.meal.totCalories = Math.ceil($scope.meal.totProteins * 4 + $scope.meal.totFats * 9 + $scope.meal.totCarbohydrates * 4);
     $scope.meal.mealRatio = $scope.meal.totCarbohydrates !== 0.0 ?

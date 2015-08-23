@@ -37,7 +37,15 @@
   </div>
   <br class="visible-xs"/>
   <div class="row">
-    <p>Calorie totali <span class="badge">{{meal.totCalories}}</span></p>
+    <br />
+    <table>
+      <tr><td style="padding-right: 10px;">Calorie totali</td><td><span class="badge h4z-calories-label">{{meal.totCalories}}</span></td></tr>
+      <tr><td style="padding-right: 10px;">Blocchetti</td><td><span class="badge proteins-label">{{meal.blockProteins | number:2}}</span>&nbsp;<span class="badge fats-label">{{meal.blockFats | number:2}}</span>&nbsp;<span class="badge carbohydrates-label">{{meal.blockCarbohydrates | number:2}}</span></td></tr>
+      <tr><td style="padding-right: 10px;">Blocchi</td><td><span class="badge">{{meal.blocks}}</span></td></tr>
+    </table>
+    <br />
+  </div>
+  <div class="row">
     <alert ng-show="alert" type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
     <div ng-show="isNew" class="btn-group col-sm-offset-2">
       <div class="btn-group">

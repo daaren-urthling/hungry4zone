@@ -21,10 +21,9 @@
       <a role="button" class="btn btn-default" href="#/calculator"><span class="text-muted glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Aggiungi una ricetta</a>
     </div>
   </div>
-  <div ng-show="alert" >
-    <br/>
-      <alert type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
-    <br/>
+  <div class="row" ng-show="alert">
+    <br class="visible-xs-block" />
+    <alert type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
   </div>
   <div class="row">
     <div ng-repeat="meal in f_meals = (meals | filter: search) | orderBy : '+name' | startFrom : firstVisibleItem | limitTo : itemsPerPage" class="col-md-4 col-sm-6 h4z-meal-cell">
@@ -33,7 +32,8 @@
         <div class="media-left h4z-media-left">
           <table height="180px">
           <tr><td class="h4z-meal-right-pane" colspan=3 style="vertical-align:top"><img class="media-object" ng-src="{{(meal.imageURL) ? meal.imageURL : noImage}}"/></td></tr>
-            <tr><td class="h4z-meal-right-pane" colspan=3 align="center">Calorie <span class="badge">{{meal.totCalories}}</span></td></tr>
+            <tr><td class="h4z-meal-right-pane" colspan=3 align="center">Calorie <span class="badge h4z-calories-label">{{meal.totCalories}}</span></td></tr>
+            <tr><td class="h4z-meal-right-pane" colspan=3 align="center">Blocchi <span class="badge">{{meal.blocks}}</span></td></tr>
             <tr height="100%">
               <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-pencil " aria-hidden="true" ng-click="onEditClicked(meal)"></span></td>
               <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-duplicate" aria-hidden="true" ng-click="onDuplicateClicked(meal)"></span></td>

@@ -1,11 +1,15 @@
 var mongoose = require('mongoose');
 
 var MealSchema = new mongoose.Schema({
-  name          : String,
-  mealItems     : [ { qty : Number, totProteins: Number, totFats : Number, totCarbohydrates: Number, food : { type: mongoose.Schema.Types.ObjectId, ref: 'Food' } } ],
-  totCalories   : Number,
-  userId        : mongoose.Schema.Types.ObjectId,
-  imageCoord    : { albumId : String, imageId : String }
+  name                : String,
+  mealItems           : [ { qty : Number, totProteins: Number, totFats : Number, totCarbohydrates: Number, food : { type: mongoose.Schema.Types.ObjectId, ref: 'Food' } } ],
+  blockProteins       : Number,
+  blockFats           : Number,
+  blockCarbohydrates  : Number,
+  blocks              : Number,
+  totCalories         : Number,
+  userId              : mongoose.Schema.Types.ObjectId,
+  imageCoord          : { albumId : String, imageId : String }
 });
 
 var Meal = mongoose.model('Meal', MealSchema);

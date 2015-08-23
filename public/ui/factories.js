@@ -148,6 +148,10 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
     mealResource.call(this, {
       name : "",
       mealItems : [],
+      blockProteins : 0,
+      blockFats : 0,
+      blockCarbohydrates : 0,
+      blocks : 0,
       totCalories : 0,
       userId : null
     });
