@@ -4,6 +4,8 @@
 
 app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', 'Picasa', function ($scope, SharedInfos, Meals, Foods, $location, Picasa) {
 
+  $scope.noImage = 'images/no-image.png';
+
   $scope.meals = Meals.query({}, function() {
     $scope.meals.forEach (function(meal, idx) {
       Meals.reconnectFoods($scope.meals[idx]);
@@ -18,6 +20,18 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   if (SharedInfos.has("alert"))  {
     $scope.alert = SharedInfos.get("alert");
   }
+
+  $scope.currentPage = 1;
+  $scope.itemsPerPage = 6;
+  $scope.firstVisibleItem = 0;
+
+  //-----------------------------------------------------------------------------
+  $scope.onPageChanged = function() {
+    $scope.firstVisibleItem = ($scope.currentPage - 1) * $scope.itemsPerPage;
+    $scope.albumIdx = -1;
+    $scope.imageIdx = -1;
+  };
+
 
   //-----------------------------------------------------------------------------
   $scope.onCloseAlert = function(){

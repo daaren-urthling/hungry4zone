@@ -1,23 +1,55 @@
 <div class="container">
-  <h2>Ricettario</h2>
-  <br/>
-  <alert ng-show="alert" type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
-  <br/>
+  <div class="row" >
+    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-10">
+      <h2>Ricettario</h2>
+    </div>
+    <div align="right" class="visible-xs-block col-xs-2">
+      <br/>
+      <a role="button" class="btn btn-default" href="#/calculator"><span class="text-muted glyphicon glyphicon-plus" aria-hidden="true"></a>
+    </div>
+    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
+      <form class="form-inline" role="form">
+        <br class="hidden-xs" />
+        <div class="input-group">
+          <span class="input-group-addon"><span class="text-muted glyphicon glyphicon-search" aria-hidden="true"></span></span>
+          <input id="search" type="text" class="form-control" placeholder="Cerca" ng-model="search.name">
+        </div>
+      </form>
+    </div>
+    <div align="right" class="hidden-xs col-lg-4 col-md-4 col-sm-3">
+      <br/>
+      <a role="button" class="btn btn-default" href="#/calculator"><span class="text-muted glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Aggiungi una ricetta</a>
+    </div>
+  </div>
+  <div ng-show="alert" >
+    <br/>
+      <alert type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
+    <br/>
+  </div>
   <div class="row">
-    <div class="col-lg-3 col-sm-4 col-xs-6">
-      <h3>Aggiungi una ricetta</h3>
-      <a role="button" class="btn btn-default" href="#/calculator">
-        <span class="text-muted glyphicon glyphicon-plus" aria-hidden="true"></span>
-      </a>
+    <div ng-repeat="meal in f_meals = (meals | filter: search) | orderBy : '+name' | startFrom : firstVisibleItem | limitTo : itemsPerPage" class="col-md-4 col-sm-6 h4z-meal-cell">
+      <h4 class="h4z-meal-title">{{meal.name}}</h4>
+      <div class="media h4z-media">
+        <div class="media-left h4z-media-left">
+          <table height="180px">
+          <tr><td class="h4z-meal-right-pane" colspan=3 style="vertical-align:top"><img class="media-object" ng-show="meal.imageURL" ng-src="{{(meal.imageURL) ? meal.imageURL : noImage}}"/></td></tr>
+            <tr><td class="h4z-meal-right-pane" colspan=3 align="center">Calorie <span class="badge">{{meal.totCalories}}</span></td></tr>
+            <tr height="100%">
+              <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-pencil " aria-hidden="true" ng-click="onEditClicked(meal)"></span></td>
+              <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-duplicate" aria-hidden="true" ng-click="onDuplicateClicked(meal)"></span></td>
+              <td align="right" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-remove" aria-hidden="true" ng-click="onRemoveClicked(meal, $index)"></span></td>
+            </tr>
+          </table>
+        </div>
+        <div class="media-body">
+          <table>
+            <tr ng-repeat="mealItem in meal.mealItems"><td style="vertical-align:top" align="right" width="60px">{{mealItem.qty}} <small>gr.</small>&nbsp;</td><td>{{mealItem.food.name}}</td>
+          </table>
+        </div>
+      </div>
     </div>
-    <div ng-repeat="meal in meals" class="col-lg-3 col-sm-4 col-xs-6">
-      <h3>{{meal.name}}</h3>
-      <img ng-show="meal.imageURL" class="thumbnail img-responsive" ng-src="{{meal.imageURL}}"/>
-      <p ng-repeat="mealItem in meal.mealItems">{{mealItem.qty}} gr. {{mealItem.food.name}}</p>
-      <span class="text-muted glyphicon glyphicon-pencil" aria-hidden="true" ng-click="onEditClicked(meal)"></span>
-      <span class="text-muted glyphicon glyphicon-duplicate" aria-hidden="true" ng-click="onDuplicateClicked(meal)"></span>
-      <span>&nbsp;&nbsp;&nbsp;</span>
-      <span class="text-muted glyphicon glyphicon-remove" aria-hidden="true" ng-click="onRemoveClicked(meal, $index)"></span>
-    </div>
+  </div>
+  <div class="row">
+    <pagination total-items="f_meals.length" items-per-page="itemsPerPage" max-size="5" rotate="false" ng-model="currentPage" ng-change="onPageChanged()"></pagination>
   </div>
 </div> <!-- /container -->

@@ -58,3 +58,34 @@ body {
   padding-top: 3px;
   padding-bottom: 3px;
 }
+
+.h4z-meal-title {
+    background-color: #F0F0F0;
+    padding-top: 3px;
+    padding-bottom: 3px;
+    padding-left: 3px;
+    margin-bottom: 0px;
+}
+
+.h4z-meal-right-pane {
+    background-color: #FBFBFB;
+}
+
+.h4z-meal-cell {
+  padding-left: 5px;
+  padding-right: 5px;
+}
+
+.h4z-media {
+  margin-top: 0px;
+}
+
+.h4z-media-left {
+  padding-right: 0px;
+}
+
+@media screen and (max-width: 992px) {
+  .h4z-icon-button {
+    font-size: 20px;
+  }
+}

@@ -4,6 +4,8 @@
 
 app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals', '$sessionStorage', 'Picasa', function ($scope, SharedInfos, $location, Meals, $sessionStorage, Picasa) {
 
+  $scope.noImage = 'images/no-image-big.png';
+
   if (SharedInfos.has("mealInfo"))  {
     mealInfo = SharedInfos.get("mealInfo");
     $scope.meal = mealInfo.meal;
@@ -12,7 +14,7 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
       if ($sessionStorage.loggedUser)
         $scope.meal.userId = $sessionStorage.loggedUser.id;
       $scope.meal.imageCoord = null;
-        $scope.meal.name = "";
+      $scope.meal.name = "";
     }
   } else if ($sessionStorage.MealController) {
     $scope.meal = $sessionStorage.MealController.meal;
@@ -123,6 +125,12 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
   $scope.onPickImageClicked = function(){
     SharedInfos.set("imagePickerInfo", { returnTo : "/meal" });
     $location.url('/imagePicker');
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onRemoveImageClicked = function(){
+    $scope.meal.imageCoord = null;
+    $scope.imageURL = null;
   };
 
   //-----------------------------------------------------------------------------

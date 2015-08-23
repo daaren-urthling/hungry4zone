@@ -9,6 +9,11 @@
       </form>
     </div>
   </div>
+  <div class="row visible-xs">
+    <a ng-show="!meal.imageCoord" class="h4z-hyperlink small" ng-click="onPickImageClicked()">Associa un'immagine</a>
+    <button ng-show="meal.imageCoord" class="btn btn-default btn-xs" ng-click="onRemoveImageClicked()"><span class="text-muted glyphicon glyphicon-remove"></span>&nbsp;&nbsp; Elimina immagine</button>
+    <img ng-show="imageURL" class="thumbnail img-responsive" ng-src="{{imageURL}}"/>
+  </div>
   <div class="row">
     <div class="col-lg-6 col-md-6 col-sm-6">
       <div class="table-responsive">
@@ -21,16 +26,18 @@
         </table>
       </div>
       <div class="row" ng-show="!isNew">
-        <p>Cambia il contenuto del pasto <a class="btn btn-default" ng-click="onChangeIngredientsClicked()" role="button">Vai &raquo;</a></p>
+        <button class="btn btn-default btn-xs" ng-click="onChangeIngredientsClicked()"><span class="text-muted glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Cambia il contenuto del pasto</button>
       </div>
     </div>
-    <div class="col-lg-6 col-md-6 col-sm-6">
-      <a class="h4z-hyperlink small" ng-click="onPickImageClicked()">Associa un'immagine</a>
-      <img ng-show="imageURL" class="thumbnail img-responsive" src="{{imageURL}}"/>
+    <div class="col-lg-6 col-md-6 col-sm-6 hidden-xs">
+      <a ng-show="!meal.imageCoord" class="h4z-hyperlink small" ng-click="onPickImageClicked()">Associa un'immagine</a>
+      <button ng-show="meal.imageCoord" class="btn btn-default btn-xs" ng-click="onRemoveImageClicked()"><span class="text-muted glyphicon glyphicon-remove"></span>&nbsp;&nbsp; Elimina immagine</button>
+      <img class="thumbnail img-responsive" ng-src="{{(imageURL) ? imageURL : noImage}}"/>
     </div>
   </div>
+  <br class="visible-xs"/>
   <div class="row">
-    <p>Calorie totali: {{meal.totCalories}}</p>
+    <p>Calorie totali <span class="badge">{{meal.totCalories}}</span></p>
     <alert ng-show="alert" type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
     <div ng-show="isNew" class="btn-group col-sm-offset-2">
       <div class="btn-group">
