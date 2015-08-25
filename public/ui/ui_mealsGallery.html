@@ -26,7 +26,7 @@
     <alert type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
   </div>
   <div class="row">
-    <div ng-repeat="meal in f_meals = (meals | filter: search) | orderBy : '+name' | startFrom : firstVisibleItem | limitTo : itemsPerPage" class="col-md-4 col-sm-6 h4z-meal-cell">
+    <div ng-repeat="meal in f_meals = (meals | filter: search) | orderBy : '+name' | startFrom : firstVisibleItem | limitTo : itemsPerPage" class="col-md-4 col-sm-6 h4z-meal-cell" role="button" ng-click="onMealClicked()">
       <h4 class="h4z-meal-title">{{meal.name}}</h4>
       <div class="media h4z-media">
         <div class="media-left h4z-media-left">
@@ -35,7 +35,7 @@
             <tr><td class="h4z-meal-right-pane" colspan=3 align="center"><span class="badge h4z-calories-label">{{meal.totCalories}}</span> calorie</td></tr>
             <tr><td class="h4z-meal-right-pane" colspan=3 align="center"><span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
             <tr height="100%">
-              <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-pencil " aria-hidden="true" ng-click="onEditClicked(meal)"></span></td>
+              <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-pencil " aria-hidden="true" ng-click="onEditClicked(meal, $event)"></span></td>
               <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-duplicate" aria-hidden="true" ng-click="onDuplicateClicked(meal)"></span></td>
               <td align="right" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-remove" aria-hidden="true" ng-click="onRemoveClicked(meal, $index)"></span></td>
             </tr>

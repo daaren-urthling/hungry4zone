@@ -39,9 +39,14 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   };
 
   //-----------------------------------------------------------------------------
-  $scope.onEditClicked = function(meal){
+  $scope.onEditClicked = function(meal, $event){
+    $event.stopPropagation();
     SharedInfos.set("mealInfo", { meal: meal, action : "edit" });
     $location.url('/meal');
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onMealClicked = function(meal){
   };
 
   //-----------------------------------------------------------------------------
