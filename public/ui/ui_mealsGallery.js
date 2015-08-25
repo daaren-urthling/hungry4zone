@@ -2,7 +2,7 @@
 // MealsGalleryController - controller for ui_mealsGallery.html
 //=============================================================================
 
-app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', 'Picasa', function ($scope, SharedInfos, Meals, Foods, $location, Picasa) {
+app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', 'Picasa', '$modal', function ($scope, SharedInfos, Meals, Foods, $location, Picasa, $modal) {
 
   $scope.noImage = 'images/no-image.png';
 
@@ -46,18 +46,37 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   };
 
   //-----------------------------------------------------------------------------
-  $scope.onMealClicked = function(meal){
+  $scope.onMealClicked = function(f_meals, $index){
+    for (i = 0; i < $scope.meals.length; i++)
+      $scope.meals[i].active = null;
+    f_meals[$index + $scope.firstVisibleItem].active = true;
+
+      var modalInstance = $modal.open({
+        animation: false,
+        templateUrl: 'ui_mealCarousel.html',
+        controller: 'MealsCarouselController',
+        size : 'md',
+        resolve: {
+          meals: function () {
+            return f_meals;
+          }
+        }
+      });
+
+      modalInstance.result.then(function () {
+      }, function () {
+      });
   };
 
   //-----------------------------------------------------------------------------
-  $scope.onDuplicateClicked = function(meal){
+  $scope.onDuplicateClicked = function(meal, $event){
     SharedInfos.set("mealInfo", { meal: meal, action : "new" });
     SharedInfos.set("alert", { "type" : "success", "msg" : 'Crea un nuovo pasto con ingredienti simili a "' + meal.name + '", poi aggiungilo al tuo ricettario cliccando su "Salva"'});
     $location.url('/calculator');
   };
 
   //-----------------------------------------------------------------------------
-  $scope.onRemoveClicked = function(meal, $index) {
+  $scope.onRemoveClicked = function(meal, $index, $event) {
     Meals.remove({id: meal._id}, function success() {
       $scope.meals.splice($index, 1);
       $scope.alert = { "type" : "warning", "msg" : "Pasto eliminato: " + meal.name};
@@ -65,4 +84,19 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
       $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
   };
+}]);
+
+//=============================================================================
+// MealsCarouselController - controller for ui_mealCarousel.html
+//=============================================================================
+
+app.controller('MealsCarouselController', ['$scope', '$modalInstance', 'meals', function ($scope, $modalInstance, meals) {
+
+  $scope.meals = meals;
+  $scope.noImage = 'images/no-image.png';
+
+  $scope.onCloseClicked = function () {
+    $modalInstance.dismiss('close');
+  };
+
 }]);

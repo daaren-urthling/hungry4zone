@@ -26,7 +26,7 @@
     <alert type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
   </div>
   <div class="row">
-    <div ng-repeat="meal in f_meals = (meals | filter: search) | orderBy : '+name' | startFrom : firstVisibleItem | limitTo : itemsPerPage" class="col-md-4 col-sm-6 h4z-meal-cell" role="button" ng-click="onMealClicked()">
+    <div ng-repeat="meal in f_meals = (meals | filter: search | orderBy : '+name') | startFrom : firstVisibleItem | limitTo : itemsPerPage" class="col-md-4 col-sm-6 h4z-meal-cell" role="button" ng-click="onMealClicked(f_meals, $index)">
       <h4 class="h4z-meal-title">{{meal.name}}</h4>
       <div class="media h4z-media">
         <div class="media-left h4z-media-left">
@@ -36,8 +36,8 @@
             <tr><td class="h4z-meal-right-pane" colspan=3 align="center"><span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
             <tr height="100%">
               <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-pencil " aria-hidden="true" ng-click="onEditClicked(meal, $event)"></span></td>
-              <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-duplicate" aria-hidden="true" ng-click="onDuplicateClicked(meal)"></span></td>
-              <td align="right" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-remove" aria-hidden="true" ng-click="onRemoveClicked(meal, $index)"></span></td>
+              <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-duplicate" aria-hidden="true" ng-click="onDuplicateClicked(meal, $event)"></span></td>
+              <td align="right" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-remove" aria-hidden="true" ng-click="onRemoveClicked(meal, $index, $event)"></span></td>
             </tr>
           </table>
         </div>
@@ -53,3 +53,32 @@
     <pagination total-items="f_meals.length" items-per-page="itemsPerPage" max-size="5" rotate="false" ng-model="currentPage" ng-change="onPageChanged()"></pagination>
   </div>
 </div> <!-- /container -->
+
+
+<script type="text/ng-template" id="ui_mealCarousel.html">
+   <div class="modal-body">
+     <carousel id="mealCarousel" interval="-1">
+       <slide ng-repeat="meal in meals | filter: search | orderBy : '+name'" active="meal.active">
+        <h4>{{meal.name}}</h4>
+         <div class="media">
+          <div class="media-left">
+            <table>
+              <tr><td style="vertical-align:top"><img class="media-object" ng-src="{{(meal.imageURL) ? meal.imageURL : noImage}}" width=200 style="margin:auto;"/></td></tr>
+              <tr><td align="center"><span class="badge h4z-calories-label">{{meal.totCalories}}</span> calorie</td></tr>
+              <tr><td align="center"><span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
+              <tr><td align="center"><span class="badge proteins-label">P {{meal.blockProteins | number:1}}</span>&nbsp;<span class="badge fats-label">G {{meal.blockFats | number:1}}</span>&nbsp;<span class="badge carbohydrates-label">C {{meal.blockCarbohydrates | number:1}}</span></td></tr>
+            </table>
+          </div>
+          <div class="media-body">
+            <table>
+              <tr ng-repeat="mealItem in meal.mealItems"><td style="vertical-align:top" align="right" width="60px">{{mealItem.qty}} <small>gr.</small>&nbsp;</td><td align="left">{{mealItem.food.name}}</td>
+            </table>
+          </div>
+         </div>
+       </slide>
+  </carousel>
+  </div>
+   <div class="modal-footer">
+     <button class="btn btn-default" type="button" ng-click="onCloseClicked()">Chiudi</button>
+   </div>
+ </script>
