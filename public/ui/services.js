@@ -94,13 +94,27 @@ app.service('Picasa', ['$http','$q', function($http, $q) {
       throw "bad image parameters";
     if (!size)
       size = 200;
-    if (!(size in allowedSizes))
-      throw "bad requested size";
+    if (!angular.isArray(size)) {
+      if (!(size in allowedSizes))
+        throw "bad requested size";
+    } else {
+      for (s = 0; s < size.length; s++) {
+        if (!(size[s] in allowedSizes))
+          throw "bad requested size";
+      }
+    }
 
     var defer = $q.defer();
 
     $http.jsonp(picasa.basePath + '/albumid/' + imageCoord.albumId + '/photoid/' + imageCoord.imageId + '?v=2&thumbsize='+size+'&alt=json&callback=JSON_CALLBACK' ).then(function (response) {
-        defer.resolve(response.data.feed.media$group.media$thumbnail[0].url);
+        if (response.data.feed.media$group.media$thumbnail.length == 1) {
+          defer.resolve(response.data.feed.media$group.media$thumbnail[0].url);
+        } else {
+          urls = [];
+          for (i = 0; i < response.data.feed.media$group.media$thumbnail.length; i++)
+            urls.push(response.data.feed.media$group.media$thumbnail[i].url);
+          defer.resolve(urls);
+        }
     }, function (response) {
         defer.reject(response);
     });

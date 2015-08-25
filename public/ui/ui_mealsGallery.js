@@ -10,8 +10,9 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
     $scope.meals.forEach (function(meal, idx) {
       Meals.reconnectFoods($scope.meals[idx]);
       if ($scope.meals[idx].imageCoord) {
-        Picasa.getImageURL($scope.meals[idx].imageCoord, 128).then(function(imageURL) {
-          $scope.meals[idx].imageURL = imageURL;
+        Picasa.getImageURL($scope.meals[idx].imageCoord, [128, 200]).then(function(imageURLs) {
+          $scope.meals[idx].imageURL = imageURLs[0];
+          $scope.meals[idx].bigImageURL = imageURLs[1];
         }) ;
       }
     });
@@ -32,7 +33,6 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
     $scope.imageIdx = -1;
   };
 
-
   //-----------------------------------------------------------------------------
   $scope.onCloseAlert = function(){
     $scope.alert = null;
@@ -40,9 +40,31 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
 
   //-----------------------------------------------------------------------------
   $scope.onEditClicked = function(meal, $event){
-    $event.stopPropagation();
+    if ($event)
+      $event.stopPropagation();
     SharedInfos.set("mealInfo", { meal: meal, action : "edit" });
     $location.url('/meal');
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onDuplicateClicked = function(meal, $event){
+    if ($event)
+      $event.stopPropagation();
+    SharedInfos.set("mealInfo", { meal: meal, action : "new" });
+    SharedInfos.set("alert", { "type" : "success", "msg" : 'Crea un nuovo pasto con ingredienti simili a "' + meal.name + '", poi aggiungilo al tuo ricettario cliccando su "Salva"'});
+    $location.url('/calculator');
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onRemoveClicked = function(meal, $index, $event) {
+    if ($event)
+      $event.stopPropagation();
+    Meals.remove({id: meal._id}, function success() {
+      $scope.meals.splice($index, 1);
+      $scope.alert = { "type" : "warning", "msg" : "Pasto eliminato: " + meal.name};
+    }, function failure(httpResponse) {
+      $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
+    });
   };
 
   //-----------------------------------------------------------------------------
@@ -63,40 +85,52 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
         }
       });
 
-      modalInstance.result.then(function () {
+      modalInstance.result.then(function (result) {
+        switch (result.action) {
+          case "edit" : $scope.onEditClicked(result.meal); break;
+          case "duplicate" : $scope.onDuplicateClicked(result.meal); break;
+          case "remove" : $scope.onRemoveClicked(result.meal, result.idx); break;
+        }
       }, function () {
       });
   };
 
-  //-----------------------------------------------------------------------------
-  $scope.onDuplicateClicked = function(meal, $event){
-    SharedInfos.set("mealInfo", { meal: meal, action : "new" });
-    SharedInfos.set("alert", { "type" : "success", "msg" : 'Crea un nuovo pasto con ingredienti simili a "' + meal.name + '", poi aggiungilo al tuo ricettario cliccando su "Salva"'});
-    $location.url('/calculator');
-  };
-
-  //-----------------------------------------------------------------------------
-  $scope.onRemoveClicked = function(meal, $index, $event) {
-    Meals.remove({id: meal._id}, function success() {
-      $scope.meals.splice($index, 1);
-      $scope.alert = { "type" : "warning", "msg" : "Pasto eliminato: " + meal.name};
-    }, function failure(httpResponse) {
-      $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
-    });
-  };
 }]);
 
 //=============================================================================
 // MealsCarouselController - controller for ui_mealCarousel.html
 //=============================================================================
 
-app.controller('MealsCarouselController', ['$scope', '$modalInstance', 'meals', function ($scope, $modalInstance, meals) {
+app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 'meals', function ($scope, Foods, $modalInstance, meals) {
 
   $scope.meals = meals;
   $scope.noImage = 'images/no-image.png';
 
+  //-----------------------------------------------------------------------------
   $scope.onCloseClicked = function () {
     $modalInstance.dismiss('close');
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.sourceImage = function(food)  {
+    return Foods.sourceImage(food);
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onActionClicked = function(action){
+    var idx = -1;
+
+    meal = $scope.meals.filter(function(m, i){
+      if (m.active) {
+        idx = i;
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    if (meal.length > 0)
+      $modalInstance.close({action : action, meal : meal[0], idx : idx});
   };
 
 }]);

@@ -92,6 +92,12 @@ body {
   padding-right: 0px;
 }
 
+.h4z-div-left-inline {
+  float:left;
+  display:inline-block;
+  padding-right:3px;
+}
+
 @media screen and (max-width: 992px) {
   .h4z-icon-button {
     font-size: 20px;
