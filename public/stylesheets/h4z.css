@@ -121,3 +121,9 @@ body {
   background-repeat: repeat-y;
   color:white;
 }
+
+@media screen and (max-width: 768px) {
+  .h4z-img-responsive {
+    width: 128px;
+  }
+}
