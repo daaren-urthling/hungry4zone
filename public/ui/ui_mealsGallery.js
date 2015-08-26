@@ -2,7 +2,7 @@
 // MealsGalleryController - controller for ui_mealsGallery.html
 //=============================================================================
 
-app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', 'Picasa', '$modal', function ($scope, SharedInfos, Meals, Foods, $location, Picasa, $modal) {
+app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', 'Picasa', '$modal', '$sessionStorage', function ($scope, SharedInfos, Meals, Foods, $location, Picasa, $modal, $sessionStorage) {
 
   $scope.noImage = 'images/no-image.png';
 
@@ -26,6 +26,15 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   $scope.itemsPerPage = 6;
   $scope.firstVisibleItem = 0;
   $scope.maxMealItems = 8;
+
+  //-----------------------------------------------------------------------------
+  $scope.isOwner = function(meal) {
+    return  $sessionStorage.loggedUser &&
+            (
+              $sessionStorage.loggedUser.isAdmin ||
+              meal.userId === $sessionStorage.loggedUser.id
+            );
+  };
 
   //-----------------------------------------------------------------------------
   $scope.onPageChanged = function() {
@@ -82,6 +91,9 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
         resolve: {
           meals: function () {
             return f_meals;
+          },
+          isOwner: function () {
+            return $scope.isOwner;
           }
         }
       });
@@ -102,10 +114,29 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
 // MealsCarouselController - controller for ui_mealCarousel.html
 //=============================================================================
 
-app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 'meals', function ($scope, Foods, $modalInstance, meals) {
+app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 'meals', 'isOwner', function ($scope, Foods, $modalInstance, meals, isOwner) {
 
   $scope.meals = meals;
   $scope.noImage = 'images/no-image-md.png';
+
+  //-----------------------------------------------------------------------------
+  function currentMeal() {
+    meal = $scope.meals.filter(function(m, i){
+      if (m.active) {
+        idx = i;
+        return true;
+      } else {
+        return false;
+      }
+    });
+
+    if (meal.length > 0) {
+      return meal[0];
+    }
+    else {
+      return null;
+    }
+  }
 
   //-----------------------------------------------------------------------------
   $scope.onCloseClicked = function () {
@@ -118,20 +149,14 @@ app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 
   };
 
   //-----------------------------------------------------------------------------
+  $scope.isOwner = function(meal) {
+    return isOwner(currentMeal());
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.onActionClicked = function(action){
     var idx = -1;
-
-    meal = $scope.meals.filter(function(m, i){
-      if (m.active) {
-        idx = i;
-        return true;
-      } else {
-        return false;
-      }
-    });
-
-    if (meal.length > 0)
-      $modalInstance.close({action : action, meal : meal[0], idx : idx});
+    $modalInstance.close({action : action, meal : currentMeal(), idx : idx});
   };
 
 }]);

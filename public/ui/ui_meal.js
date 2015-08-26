@@ -12,7 +12,10 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
     $scope.isNew = (mealInfo.action === "new");
     if ($scope.isNew) {
       if ($sessionStorage.loggedUser)
-        $scope.meal.userId = $sessionStorage.loggedUser.id;
+        if ($sessionStorage.loggedUser.isAdmin)
+          $scope.meal.userId = null; // null user id means public meal
+        else
+          $scope.meal.userId = $sessionStorage.loggedUser.id;
       $scope.meal._id = null;
       $scope.meal.imageCoord = null;
       $scope.meal.name = "";
