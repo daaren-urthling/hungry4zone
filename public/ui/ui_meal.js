@@ -13,6 +13,7 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
     if ($scope.isNew) {
       if ($sessionStorage.loggedUser)
         $scope.meal.userId = $sessionStorage.loggedUser.id;
+      $scope.meal._id = null;
       $scope.meal.imageCoord = null;
       $scope.meal.name = "";
     }
