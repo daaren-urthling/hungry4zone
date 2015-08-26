@@ -30,8 +30,8 @@
       <h4 class="h4z-meal-title">{{meal.name}}</h4>
       <div class="media h4z-media">
         <div class="media-left h4z-media-left">
-          <table height="180px">
-          <tr><td class="h4z-meal-right-pane" colspan=3 style="vertical-align:top"><img class="media-object" ng-src="{{(meal.imageURL) ? meal.imageURL : noImage}}"/></td></tr>
+          <table height="160px">
+          <tr><td class="h4z-meal-right-pane" colspan=3 style="vertical-align:top; height:96px"><img class="media-object" ng-src="{{(meal.imageURL) ? meal.imageURL : noImage}}"/></td></tr>
             <tr><td class="h4z-meal-right-pane" colspan=3 align="center"><span class="badge h4z-calories-label">{{meal.totCalories}}</span> calorie</td></tr>
             <tr><td class="h4z-meal-right-pane" colspan=3 align="center"><span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
             <tr height="100%">
@@ -42,8 +42,9 @@
           </table>
         </div>
         <div class="media-body">
-          <table>
-            <tr ng-repeat="mealItem in meal.mealItems"><td style="vertical-align:top" align="right" width="60px">{{mealItem.qty}} <small>gr.</small>&nbsp;</td><td>{{mealItem.food.name}}</td>
+          <table style="position: relative" width=100%>
+            <tr ng-repeat="mealItem in meal.mealItems | limitTo : maxMealItems"><td style="vertical-align:top" align="right" width="60px">{{mealItem.qty}} <small>gr.</small>&nbsp;</td><td>{{mealItem.food.name}}</td>
+            <tr ng-show="meal.mealItems.length > maxMealItems"><td colspan=2 class="h4z-more-indicator"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></td></tr>
           </table>
         </div>
       </div>
@@ -63,7 +64,7 @@
          <div class="media">
           <div class="media-left">
             <table>
-              <tr><td style="vertical-align:top"><img class="media-object" ng-src="{{(meal.bigImageURL) ? meal.bigImageURL : noImage}}" width=200 style="margin:auto;"/></td></tr>
+              <tr><td style="vertical-align:top; height:150px"><img class="media-object" ng-src="{{(meal.bigImageURL) ? meal.bigImageURL : noImage}}" style="margin:auto;"/></td></tr>
               <tr><td style="padding-bottom: 5px; align=center"><span class="badge h4z-calories-label">{{meal.totCalories}}</span> calorie</td></tr>
               <tr><td style="padding-bottom: 5px; align=center"><span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
               <tr><td style="padding-bottom: 5px; align=center"><span class="badge proteins-label">P {{meal.blockProteins | number:1}}</span>&nbsp;<span class="badge fats-label">G {{meal.blockFats | number:1}}</span>&nbsp;<span class="badge carbohydrates-label">C {{meal.blockCarbohydrates | number:1}}</span></td></tr>

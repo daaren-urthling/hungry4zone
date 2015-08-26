@@ -25,6 +25,7 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   $scope.currentPage = 1;
   $scope.itemsPerPage = 6;
   $scope.firstVisibleItem = 0;
+  $scope.maxMealItems = 8;
 
   //-----------------------------------------------------------------------------
   $scope.onPageChanged = function() {
@@ -104,7 +105,7 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
 app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 'meals', function ($scope, Foods, $modalInstance, meals) {
 
   $scope.meals = meals;
-  $scope.noImage = 'images/no-image.png';
+  $scope.noImage = 'images/no-image-md.png';
 
   //-----------------------------------------------------------------------------
   $scope.onCloseClicked = function () {

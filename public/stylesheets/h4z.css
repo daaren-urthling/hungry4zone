@@ -107,3 +107,17 @@ body {
 #mealCarousel .carousel-indicators {display:none}
 #mealCarousel .carousel-control.left {background-image:none}
 #mealCarousel .carousel-control.right {background-image:none}
+
+.h4z-more-indicator {
+  position: absolute;
+  bottom: 0px;
+  height: 15px;
+  left: 50%;
+  width: 100%;
+  padding-left: 0;
+  margin-left: -50%;
+  text-align: center;
+  background-image: linear-gradient(to top,rgba(0,0,150,.2) 0,rgba(0,0,150,.0001) 100%);
+  background-repeat: repeat-y;
+  color:white;
+}
