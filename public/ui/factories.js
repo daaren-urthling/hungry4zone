@@ -139,6 +139,7 @@ app.factory('MealItems', ['Foods', function(Foods){
 app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($resource, MealItems, $http, Foods){
 
   mealResource = $resource('/meals/:id', null, {
+    'query' : { method : 'GET', isArray:true, cache: false},
     'update': { method:'PUT' },
     'search': { method:'GET', url: '/meals/search/:name'},
   });
