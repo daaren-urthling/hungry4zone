@@ -8,6 +8,7 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
 
   $scope.meals = Meals.query({}, function() {
     $scope.meals.forEach (function(meal, idx) {
+      $scope.meals[idx].originalIdx = idx; // useful for delete
       Meals.reconnectFoods($scope.meals[idx]);
       if ($scope.meals[idx].imageCoord) {
         Picasa.getImageURL($scope.meals[idx].imageCoord, [128, 200]).then(function(imageURLs) {
@@ -70,7 +71,8 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
     if ($event)
       $event.stopPropagation();
     Meals.remove({id: meal._id}, function success() {
-      $scope.meals.splice($index, 1);
+      $scope.meals.splice(meal.originalIdx, 1);
+      $scope.f_meals.splice($index, 1);
       $scope.alert = { "type" : "warning", "msg" : "Pasto eliminato: " + meal.name};
     }, function failure(httpResponse) {
       $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
