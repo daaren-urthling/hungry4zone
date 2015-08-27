@@ -160,7 +160,7 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
   forceCacheInvalidate();
 
   mealResource = $resource('/meals/:id', null, {
-    // 'query' : { method : 'GET', isArray:true, cache: false, url: '/meals/?at='+ Meals.timestamp},
+    'query' : { method : 'GET', isArray:true, cache: false, url: '/meals/?at='+ Meals.timestamp},
     'update': { method:'PUT' },
     'search': { method:'GET', url: '/meals/search/:name'},
   });
