@@ -162,9 +162,10 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
   Meals.minLength = 5;
 
   var timestamp = null;
-
   //-----------------------------------------------------------------------------
   Meals.query = function() {
+    // create a different parameter to force the browser to perform the call instead of
+    // retreiving data from the cache
     if (!timestamp)
       timestamp = new Date().getTime();
     arguments[0].at = timestamp;
@@ -173,19 +174,19 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
 
   //-----------------------------------------------------------------------------
   Meals.update = function() {
-    timestamp = null;
+    timestamp = null; // to invalidate the cache
     return mealResource.update.apply(this, arguments);
   };
 
   //-----------------------------------------------------------------------------
   Meals.save = function() {
-    timestamp = null;
+    timestamp = null; // to invalidate the cache
     return mealResource.save.apply(this, arguments);
   };
 
   //-----------------------------------------------------------------------------
   Meals.remove = function() {
-    timestamp = null;
+    timestamp = null; // to invalidate the cache
     return mealResource.remove.apply(this, arguments);
   };
 
