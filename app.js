@@ -64,14 +64,6 @@ app.use(function(appErr, req, res, next) {
   }
 });
 
-app.use(function noCache(req, res, next){
-
-    res.header("Cache-Control", "no-cache, no-store, must-revalidate");
-    res.header("Pragma", "no-cache");
-    res.header("Expires",0);
-    next();
-});
-
 // error handlers
 
 // development error handler

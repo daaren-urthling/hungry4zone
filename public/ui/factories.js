@@ -138,6 +138,12 @@ app.factory('MealItems', ['Foods', function(Foods){
 //=============================================================================
 app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($resource, MealItems, $http, Foods){
 
+  mealResource = $resource('/meals/:id', null, {
+    'update': { method:'PUT' },
+    'search': { method:'GET', url: '/meals/search/:name'},
+  });
+
+
   //-----------------------------------------------------------------------------
   Meals = function() {
     mealResource.call(this, {
@@ -151,49 +157,41 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
       userId : null
     });
   };
-
-  Meals.timestamp = null;
-  //-----------------------------------------------------------------------------
-  function forceCacheInvalidate() {
-    Meals.timestamp = new Date().getTime();
-  }
-  forceCacheInvalidate();
-
-  mealResource = $resource('/meals/:id', null, {
-    'query' : { method : 'GET', isArray:true, cache: false, url: '/meals/?at='+ Meals.timestamp},
-    'update': { method:'PUT' },
-    'search': { method:'GET', url: '/meals/search/:name'},
-  });
-
   Meals.prototype = Object.create(mealResource.prototype);
 
   Meals.minLength = 5;
 
+  var timestamp = null;
+
+  //-----------------------------------------------------------------------------
+  Meals.query = function() {
+    if (!timestamp)
+      timestamp = new Date().getTime();
+    arguments[0].at = timestamp;
+    return mealResource.query.apply(this, arguments);
+  };
+
   //-----------------------------------------------------------------------------
   Meals.update = function() {
-    forceCacheInvalidate();
+    timestamp = null;
     return mealResource.update.apply(this, arguments);
   };
 
   //-----------------------------------------------------------------------------
   Meals.save = function() {
-    forceCacheInvalidate();
+    timestamp = null;
     return mealResource.save.apply(this, arguments);
   };
 
   //-----------------------------------------------------------------------------
   Meals.remove = function() {
-    forceCacheInvalidate();
+    timestamp = null;
     return mealResource.remove.apply(this, arguments);
   };
 
   // wrap the parent resource functions to call them easily
   //-----------------------------------------------------------------------------
-  // Meals.save = mealResource.save;
-  Meals.query = mealResource.query;
   Meals.search = mealResource.search;
-  // Meals.update = mealResource.update;
-  // Meals.remove = mealResource.remove;
 
   //-----------------------------------------------------------------------------
   Meals.reconnectFoods = function(meal) {
