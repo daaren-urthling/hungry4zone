@@ -43,9 +43,26 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
     });
   }
 
+  var tags = [
+    { "text": "Pasto" },
+    { "text": "Spuntino" },
+    { "text": "Colazione" },
+    { "text": "Pranzo" },
+    { "text": "Cena" },
+    { "text": "Estivo" },
+    { "text": "Invernale" },
+  ];
+
   //-----------------------------------------------------------------------------
   $scope.sourceImage = function(food)  {
     return Foods.sourceImage(food);
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.loadTags = function($query) {
+    return tags.filter(function(tag) {
+        return tag.text.toLowerCase().indexOf($query.toLowerCase()) != -1;
+      });
   };
 
   //-----------------------------------------------------------------------------

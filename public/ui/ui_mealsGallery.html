@@ -30,10 +30,11 @@
       <h4 class="h4z-meal-title"><span style="display:inline-block; font-size:16px" ng-show="meal.userId" class="text-info glyphicon glyphicon-user" aria-hidden="true">&nbsp;</span>{{meal.name}}</h4>
       <div class="media h4z-media">
         <div class="media-left h4z-media-left">
-          <table height="160px">
-          <tr><td class="h4z-meal-right-pane" colspan=3 style="vertical-align:top; height:96px"><img class="media-object" ng-src="{{(meal.imageURL) ? meal.imageURL : noImage}}"/></td></tr>
-            <tr><td class="h4z-meal-right-pane" colspan=3 align="center"><span class="badge h4z-calories-label">{{meal.totCalories}}</span> calorie</td></tr>
-            <tr><td class="h4z-meal-right-pane" colspan=3 align="center"><span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
+          <table height="180px">
+          <tr><td class="h4z-meal-right-pane" colspan=3 style="vertical-align:top; height:100px; padding-right:10px;padding-left:10px;"><img class="media-object" ng-src="{{(meal.imageURL) ? meal.imageURL : noImage}}"/></td></tr>
+            <tr><td class="h4z-meal-right-pane small" colspan=3 align="center"><span class="badge h4z-calories-label">{{meal.totCalories}}</span> calorie&nbsp;<span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
+            <!-- <tr><td class="h4z-meal-right-pane small" colspan=3 align="center"><span class="badge">{{meal.blocks}}</span> blocchi</td></tr> -->
+            <tr><td class="h4z-meal-right-pane small text-info" colspan=3 align="center"><em>{{tagsList(meal)}}</em></td></tr>
             <tr height="100%">
               <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-duplicate" aria-hidden="true" ng-click="onDuplicateClicked(meal, $event)"></span></td>
               <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-pencil " aria-hidden="true" ng-click="onEditClicked(meal, $event)" ng-show="isOwner(meal)"></span></td>
@@ -41,11 +42,12 @@
             </tr>
           </table>
         </div>
-        <div class="media-body">
-          <table style="position: relative" width=100%>
-            <tr ng-repeat="mealItem in meal.mealItems | limitTo : maxMealItems"><td style="vertical-align:top" align="right" width="60px">{{mealItem.qty}} <small>gr.</small>&nbsp;</td><td>{{mealItem.food.name}}</td>
-            <tr ng-show="meal.mealItems.length > maxMealItems"><td colspan=2 class="h4z-more-indicator"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></td></tr>
+        <div class="media-body" style="position: relative" >
+          <table width=100%>
+            <tr ng-repeat="mealItem in meal.mealItems | limitTo : maxMealItems"><td style="vertical-align:top" align="right" width="50px">{{mealItem.qty}} <small>gr.</small>&nbsp;</td><td>{{mealItem.food.name}}</td>
+            <!-- <tr ng-show="meal.mealItems.length > maxMealItems"><td colspan=2 class="h4z-more-indicator"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></td></tr> -->
           </table>
+          <div class="h4z-more-indicator" ng-show="meal.mealItems.length > maxMealItems"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></tr>
         </div>
       </div>
     </div>
@@ -65,9 +67,9 @@
           <div class="media-left">
             <table>
               <tr><td style="vertical-align:top; height:150px"><img class="media-object h4z-img-responsive" ng-src="{{(meal.bigImageURL) ? meal.bigImageURL : noImage}}" style="margin:auto;"/></td></tr>
-              <tr><td style="padding-bottom: 5px; align=center"><span class="badge h4z-calories-label">{{meal.totCalories}}</span> calorie</td></tr>
-              <tr><td style="padding-bottom: 5px; align=center"><span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
+              <tr><td style="padding-bottom: 5px; align=center"><span class="badge h4z-calories-label">{{meal.totCalories}}</span> calorie&nbsp;&nbsp;<span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
               <tr><td style="padding-bottom: 5px; align=center"><span class="badge proteins-label">P {{meal.blockProteins | number:1}}</span>&nbsp;<span class="badge fats-label">G {{meal.blockFats | number:1}}</span>&nbsp;<span class="badge carbohydrates-label">C {{meal.blockCarbohydrates | number:1}}</span></td></tr>
+              <tr><td style="padding-bottom: 5px; align=center"><span ng-repeat="tag in meal.tags"> <span class="badge h4z-tags-badge">{{tag.text}}</span>&nbsp;</span></td></tr>
             </table>
           </div>
           <div class="media-body">

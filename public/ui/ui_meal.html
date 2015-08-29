@@ -28,6 +28,12 @@
       <div class="row" ng-show="!isNew">
         <button class="btn btn-default btn-xs" ng-click="onChangeIngredientsClicked()"><span class="text-muted glyphicon glyphicon-pencil"></span>&nbsp;&nbsp;Cambia il contenuto del pasto</button>
       </div>
+      <hr />
+      <table>
+        <tr><td style="padding-right: 10px;">Calorie totali</td><td><span class="badge h4z-calories-label">{{meal.totCalories}}</span></td></tr>
+        <tr><td style="padding-right: 10px;">Blocchetti</td><td><span class="badge proteins-label">P {{meal.blockProteins | number:1}}</span>&nbsp;<span class="badge fats-label">G {{meal.blockFats | number:1}}</span>&nbsp;<span class="badge carbohydrates-label">C {{meal.blockCarbohydrates | number:1}}</span></td></tr>
+        <tr><td style="padding-right: 10px;">Blocchi</td><td><span class="badge">{{meal.blocks}}</span></td></tr>
+      </table>
     </div>
     <div class="col-lg-6 col-md-6 col-sm-6 hidden-xs">
       <a ng-show="!meal.imageCoord" class="h4z-hyperlink small" ng-click="onPickImageClicked()">Associa un'immagine</a>
@@ -35,15 +41,20 @@
       <img class="thumbnail img-responsive" ng-src="{{(imageURL) ? imageURL : noImage}}"/>
     </div>
   </div>
-  <br class="visible-xs"/>
+  <br/>
   <div class="row">
-    <br />
-    <table>
-      <tr><td style="padding-right: 10px;">Calorie totali</td><td><span class="badge h4z-calories-label">{{meal.totCalories}}</span></td></tr>
-      <tr><td style="padding-right: 10px;">Blocchetti</td><td><span class="badge proteins-label">{{meal.blockProteins | number:1}}</span>&nbsp;<span class="badge fats-label">{{meal.blockFats | number:1}}</span>&nbsp;<span class="badge carbohydrates-label">{{meal.blockCarbohydrates | number:1}}</span></td></tr>
-      <tr><td style="padding-right: 10px;">Blocchi</td><td><span class="badge">{{meal.blocks}}</span></td></tr>
-    </table>
-    <br />
+    <form role="form" class="form-horizontal">
+      <div class="form-group">
+        <label for="tags" class="col-sm-1 control-label">Etichette</label>
+        <div>
+          <tags-input class="col-sm-5" id="tags" type="text" class="form-control" ng-model="meal.tags" placeholder="Aggiungi" add-from-autocomplete-only="true">
+          <auto-complete source="loadTags($query)"></auto-complete>
+          </tags-input>
+        </div>
+        <span class="help-block small" >Le etichette sono utili per trovare rapidamente un certo tipo di pasto.<br/>
+        Scegli fra: Pasto o Spuntino, Colazione, Pranzo o Cena, Estivo oppure Invernale.</span>
+      </div>
+    </form>
   </div>
   <div class="row">
     <alert ng-show="alert" type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>

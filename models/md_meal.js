@@ -9,7 +9,8 @@ var MealSchema = new mongoose.Schema({
   blocks              : Number,
   totCalories         : Number,
   userId              : mongoose.Schema.Types.ObjectId,
-  imageCoord          : { albumId : String, imageId : String }
+  imageCoord          : { albumId : String, imageId : String },
+  tags                : [ { text : String } ]
 });
 
 var Meal = mongoose.model('Meal', MealSchema);

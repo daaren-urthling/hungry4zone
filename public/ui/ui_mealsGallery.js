@@ -38,6 +38,18 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   };
 
   //-----------------------------------------------------------------------------
+  $scope.tagsList = function(meal){
+    var list = "";
+    meal.tags.forEach(function(tag) {
+      list = list + tag.text + ", ";
+    });
+    if (list.length > 2)
+      return list.substring(0,list.length - 2);
+    else
+      return "";
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.onPageChanged = function() {
     $scope.firstVisibleItem = ($scope.currentPage - 1) * $scope.itemsPerPage;
     $scope.albumIdx = -1;
