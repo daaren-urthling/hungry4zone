@@ -2,7 +2,7 @@
 // MealsGalleryController - controller for ui_mealsGallery.html
 //=============================================================================
 
-app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', 'Picasa', '$modal', '$sessionStorage', function ($scope, SharedInfos, Meals, Foods, $location, Picasa, $modal, $sessionStorage) {
+app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', 'Picasa', '$modal', '$sessionStorage', 'MealTags', function ($scope, SharedInfos, Meals, Foods, $location, Picasa, $modal, $sessionStorage, MealTags) {
 
   $scope.noImage = 'images/no-image.png';
 
@@ -27,6 +27,13 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   $scope.itemsPerPage = 6;
   $scope.firstVisibleItem = 0;
   $scope.maxMealItems = 8;
+
+  //-----------------------------------------------------------------------------
+  $scope.loadTags = function($query) {
+    return MealTags.filter(function(tag) {
+        return tag.text.toLowerCase().indexOf($query.toLowerCase()) != -1;
+      });
+  };
 
   //-----------------------------------------------------------------------------
   $scope.isOwner = function(meal) {

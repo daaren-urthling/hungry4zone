@@ -2,7 +2,7 @@
 // MealController - controller for ui_meal.html
 //=============================================================================
 
-app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals', '$sessionStorage', 'Picasa', function ($scope, SharedInfos, $location, Meals, $sessionStorage, Picasa) {
+app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals', '$sessionStorage', 'Picasa', 'MealTags', function ($scope, SharedInfos, $location, Meals, $sessionStorage, Picasa, MealTags) {
 
   $scope.noImage = 'images/no-image-big.png';
 
@@ -43,16 +43,6 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
     });
   }
 
-  var tags = [
-    { "text": "Pasto" },
-    { "text": "Spuntino" },
-    { "text": "Colazione" },
-    { "text": "Pranzo" },
-    { "text": "Cena" },
-    { "text": "Estivo" },
-    { "text": "Invernale" },
-  ];
-
   //-----------------------------------------------------------------------------
   $scope.sourceImage = function(food)  {
     return Foods.sourceImage(food);
@@ -60,7 +50,7 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
 
   //-----------------------------------------------------------------------------
   $scope.loadTags = function($query) {
-    return tags.filter(function(tag) {
+    return MealTags.filter(function(tag) {
         return tag.text.toLowerCase().indexOf($query.toLowerCase()) != -1;
       });
   };

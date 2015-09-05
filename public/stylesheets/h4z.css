@@ -132,3 +132,8 @@ body {
     width: 128px;
   }
 }
+
+tags-input .host {
+    margin-top: 0px;
+    margin-bottom: 0px;
+}

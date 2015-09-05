@@ -1,22 +1,29 @@
 <div class="container">
   <div class="row" >
-    <div class="col-lg-4 col-md-4 col-sm-3 col-xs-10">
+    <div class="col-lg-2 col-md-2 col-sm-3 col-xs-10">
       <h2>Ricettario</h2>
     </div>
     <div align="right" class="visible-xs-block col-xs-2">
       <br/>
       <a role="button" class="btn btn-default" href="#/calculator"><span class="text-muted glyphicon glyphicon-plus" aria-hidden="true"></a>
     </div>
-    <div class="col-lg-4 col-md-4 col-sm-6 col-xs-12">
-      <form class="form-inline" role="form">
+    <div class="col-lg-8 col-md-8 col-sm-6 col-xs-12">
+      <form class="form-inline row" role="form" >
         <br class="hidden-xs" />
-        <div class="input-group">
-          <span class="input-group-addon"><span class="text-muted glyphicon glyphicon-search" aria-hidden="true"></span></span>
-          <input id="search" type="text" class="form-control" placeholder="Cerca" ng-model="search.name">
+        <div class="form-group col-sm-6 row" >
+          <div class="input-group col-xs-11">
+            <span class="input-group-addon"><span class="text-muted glyphicon glyphicon-search" aria-hidden="true"></span></span>
+            <input id="search" type="text" class="form-control" placeholder="Cerca" ng-model="search.name">
+          </div>
+        </div>
+        <div class="form-group col-sm-6 row">
+            <tags-input id="tags" type="text" class="" placeholder="Etichette" ng-model="tags" add-from-autocomplete-only="true">
+              <auto-complete source="loadTags($query)"></auto-complete>
+            </tags-input>
         </div>
       </form>
     </div>
-    <div align="right" class="hidden-xs col-lg-4 col-md-4 col-sm-3">
+    <div align="right" class="hidden-xs col-lg-2 col-md-2 col-sm-3">
       <br/>
       <a role="button" class="btn btn-default" href="#/calculator"><span class="text-muted glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Aggiungi una ricetta</a>
     </div>
@@ -26,7 +33,7 @@
     <alert type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
   </div>
   <div class="row">
-    <div ng-repeat="meal in f_meals = (meals | filter: search | orderBy : '+name') | startFrom : firstVisibleItem | limitTo : itemsPerPage" class="col-md-4 col-sm-6 h4z-meal-cell" role="button" ng-click="onMealClicked(f_meals, $index)">
+    <div ng-repeat="meal in f_meals = (meals | filter: search | withTags: tags | orderBy : '+name') | startFrom : firstVisibleItem | limitTo : itemsPerPage" class="col-md-4 col-sm-6 h4z-meal-cell" role="button" ng-click="onMealClicked(f_meals, $index)">
       <h4 class="h4z-meal-title"><span style="display:inline-block; font-size:16px" ng-show="meal.userId" class="text-info glyphicon glyphicon-user" aria-hidden="true">&nbsp;</span>{{meal.name}}</h4>
       <div class="media h4z-media">
         <div class="media-left h4z-media-left">
@@ -47,7 +54,8 @@
             <tr ng-repeat="mealItem in meal.mealItems | limitTo : maxMealItems"><td style="vertical-align:top" align="right" width="50px">{{mealItem.qty}} <small>gr.</small>&nbsp;</td><td>{{mealItem.food.name}}</td>
             <!-- <tr ng-show="meal.mealItems.length > maxMealItems"><td colspan=2 class="h4z-more-indicator"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></td></tr> -->
           </table>
-          <div class="h4z-more-indicator" ng-show="meal.mealItems.length > maxMealItems"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></tr>
+          <div class="h4z-more-indicator" ng-show="meal.mealItems.length > maxMealItems"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true">
+          </div>
         </div>
       </div>
     </div>
@@ -61,7 +69,7 @@
 <script type="text/ng-template" id="ui_mealCarousel.html">
    <div class="modal-body">
      <carousel id="mealCarousel" interval="-1">
-       <slide ng-repeat="meal in meals | filter: search | orderBy : '+name'" active="meal.active">
+       <slide ng-repeat="meal in meals | orderBy : '+name'" active="meal.active">
         <h4 class="h4z-meal-title"><span style="display:inline-block; float:left; font-size:16px" ng-show="meal.userId" class="text-info glyphicon glyphicon-user" aria-hidden="true">&nbsp;</span>{{meal.name}}</h4>
          <div class="media">
           <div class="media-left">
