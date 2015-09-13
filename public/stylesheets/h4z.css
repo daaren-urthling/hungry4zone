@@ -137,3 +137,9 @@ tags-input .host {
     margin-top: 0px;
     margin-bottom: 0px;
 }
+
+.h4z-meal-items-table {
+  height: 180px;
+  display: block;
+  overflow-y: hidden;
+}

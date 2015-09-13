@@ -41,7 +41,7 @@
           <tr><td class="h4z-meal-right-pane" colspan=3 style="vertical-align:top; height:100px; padding-right:10px;padding-left:10px;"><img class="media-object" ng-src="{{(meal.imageURL) ? meal.imageURL : noImage}}"/></td></tr>
             <tr><td class="h4z-meal-right-pane small" colspan=3 align="center"><span class="badge h4z-calories-label">{{meal.totCalories}}</span> calorie&nbsp;<span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
             <!-- <tr><td class="h4z-meal-right-pane small" colspan=3 align="center"><span class="badge">{{meal.blocks}}</span> blocchi</td></tr> -->
-            <tr><td class="h4z-meal-right-pane small text-info" colspan=3 align="center"><em>{{tagsList(meal)}}</em></td></tr>
+            <tr height=40px><td class="h4z-meal-right-pane small text-info" colspan=3 align="center"><em>{{tagsList(meal)}}</em></td></tr>
             <tr height="100%">
               <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-duplicate" aria-hidden="true" ng-click="onDuplicateClicked(meal, $event)"></span></td>
               <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-pencil " aria-hidden="true" ng-click="onEditClicked(meal, $event)" ng-show="isOwner(meal)"></span></td>
@@ -50,15 +50,15 @@
           </table>
         </div>
         <div class="media-body" style="position: relative" >
-          <table width=100%>
-            <tr ng-repeat="mealItem in meal.mealItems | limitTo : maxMealItems"><td style="vertical-align:top" align="right" width="50px">{{mealItem.qty}} <small>gr.</small>&nbsp;</td><td>{{mealItem.food.name}}</td>
-            <!-- <tr ng-show="meal.mealItems.length > maxMealItems"><td colspan=2 class="h4z-more-indicator"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true"></td></tr> -->
+          <table width=100% class="h4z-meal-items-table" h4z-check-overflow="isOverflow">
+            <tr ng-repeat="mealItem in meal.mealItems"><td style="vertical-align:top" align="right" width="50px">{{mealItem.qty}} <small>gr.</small>&nbsp;</td><td>{{mealItem.food.name}}</td>
           </table>
-          <div class="h4z-more-indicator" ng-show="meal.mealItems.length > maxMealItems"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true">
+          <div class="h4z-more-indicator" ng-show="isOverflow"><span class="glyphicon glyphicon-chevron-down" aria-hidden="true">
           </div>
         </div>
       </div>
     </div>
+    <div ng-init="OnGalleryCompleted()"></div>
   </div>
   <div class="row">
     <pagination total-items="f_meals.length" items-per-page="itemsPerPage" max-size="5" rotate="false" ng-model="currentPage" ng-change="onPageChanged()"></pagination>

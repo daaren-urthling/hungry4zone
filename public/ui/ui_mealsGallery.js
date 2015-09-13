@@ -2,7 +2,7 @@
 // MealsGalleryController - controller for ui_mealsGallery.html
 //=============================================================================
 
-app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', 'Picasa', '$modal', '$sessionStorage', 'MealTags', function ($scope, SharedInfos, Meals, Foods, $location, Picasa, $modal, $sessionStorage, MealTags) {
+app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', 'Picasa', '$modal', '$sessionStorage', 'MealTags', '$timeout', function ($scope, SharedInfos, Meals, Foods, $location, Picasa, $modal, $sessionStorage, MealTags, $timeout) {
 
   $scope.noImage = 'images/no-image.png';
 
@@ -61,6 +61,7 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
     $scope.firstVisibleItem = ($scope.currentPage - 1) * $scope.itemsPerPage;
     $scope.albumIdx = -1;
     $scope.imageIdx = -1;
+    $scope.OnGalleryCompleted(0);
   };
 
   //-----------------------------------------------------------------------------
@@ -129,6 +130,15 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
       });
   };
 
+  //-----------------------------------------------------------------------------
+  $scope.OnGalleryCompleted = function(delay) {
+    if (delay === undefined)
+      delay = 1000;
+    $timeout(function() {
+        $scope.$broadcast('galleryCompleted');
+    }, delay); // need some timeout or won't work always on a fast browser
+  };
+
 }]);
 
 //=============================================================================
@@ -180,4 +190,31 @@ app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 
     $modalInstance.close({action : action, meal : currentMeal(), idx : idx});
   };
 
+}]);
+
+//=============================================================================
+// h4zCheckOverflow - drective to show an overflow indicator on a table
+//=============================================================================
+
+app.directive('h4zCheckOverflow',[ '$window',  function($window) {
+    return function(scope, elm, attr) {
+
+      // when the rendering of the gallery is completed, set the overflow
+      // marker to show or stay hidden
+      scope.$on('galleryCompleted', function (event, data) {
+        scope[attr.h4zCheckOverflow] = (elm[0].scrollHeight > elm[0].offsetHeight);
+      });
+
+      // register to the window resizing event, to check if lines in the tables
+      // are wrapping
+      angular.element($window).bind("resize",function(){
+        isOverflow = (elm[0].scrollHeight > elm[0].offsetHeight);
+        // $apply only if the overflow condition has changed
+        if (scope[attr.h4zCheckOverflow] != isOverflow){
+            scope[attr.h4zCheckOverflow] = isOverflow;
+            scope.$apply();
+        }
+      });
+
+    };
 }]);
