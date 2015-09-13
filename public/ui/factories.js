@@ -156,6 +156,7 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
       totCalories : 0,
       userId : null,
       tags : [],
+      recipeURL : ""
     });
   };
   Meals.prototype = Object.create(mealResource.prototype);

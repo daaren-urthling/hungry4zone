@@ -185,6 +185,12 @@ app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 
   };
 
   //-----------------------------------------------------------------------------
+  $scope.RecipeURL = function() {
+    meal = currentMeal();
+    if (meal) return meal.recipeURL;
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.onActionClicked = function(action){
     var idx = -1;
     $modalInstance.close({action : action, meal : currentMeal(), idx : idx});

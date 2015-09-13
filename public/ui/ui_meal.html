@@ -39,6 +39,15 @@
       <a ng-show="!meal.imageCoord" class="h4z-hyperlink small" ng-click="onPickImageClicked()">Associa un'immagine</a>
       <button ng-show="meal.imageCoord" class="btn btn-default btn-xs" ng-click="onRemoveImageClicked()"><span class="text-muted glyphicon glyphicon-remove"></span>&nbsp;&nbsp; Elimina immagine</button>
       <img class="thumbnail img-responsive" ng-src="{{(imageURL) ? imageURL : noImage}}"/>
+      <form role="form" class="form">
+        <label class="control-label col-xs-8">Link alla ricetta</label><a class="col-xs-2" style="text-align:right;" href="{{meal.recipeURL}}" target="_blank">vai</a>
+        <div class="col-xs-10">
+          <div class="form-group has-feedback">
+            <input id="recipeURL" class="form-control" type="text" ng-model="meal.recipeURL">
+            <span class="glyphicon glyphicon-remove form-control-feedback h4z-clickable-form-control-feedback" aria-hidden="true" role="button" ng-click="meal.recipeURL = ''"></span>
+          </div>
+        </div>
+      </form>
     </div>
   </div>
   <br/>

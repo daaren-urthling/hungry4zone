@@ -143,3 +143,7 @@ tags-input .host {
   display: block;
   overflow-y: hidden;
 }
+
+.h4z-clickable-form-control-feedback {
+  pointer-events: inherit;
+}
