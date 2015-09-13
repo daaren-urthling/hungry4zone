@@ -41,7 +41,7 @@
           {{meal.name}}
         </span>
         <span ng-show="meal.recipeURL">
-          <a href="{{meal.recipeURL}}">
+          <a href="{{meal.recipeURL}}" target="_blank">
             {{meal.name}}&nbsp;
             <span style="display:inline-block; font-size:16px; color:inherit"  class="text-info glyphicon glyphicon-cutlery" aria-hidden="true"></span>
           </a>
@@ -69,7 +69,7 @@
         </div>
       </div>
     </div>
-    <div ng-init="OnGalleryCompleted()"></div>
+    <div ng-init="onGalleryCompleted()"></div>
   </div>
   <div class="row">
     <pagination total-items="f_meals.length" items-per-page="itemsPerPage" max-size="5" rotate="false" ng-model="currentPage" ng-change="onPageChanged()"></pagination>
@@ -95,10 +95,22 @@
             <table>
               <tr ng-repeat="mealItem in meal.mealItems">
                 <td class="text-center" width=15><image width=15 ng-src="{{sourceImage(mealItem.food)}}"></td>
-                <td style="vertical-align:top" align="right" width="60px">{{mealItem.qty}} <small>gr.</small>&nbsp;</td>
+                <td style="vertical-align:top" align="right" width="60px">{{mealItem.totQty ? mealItem.totQty : mealItem.qty}} <small>gr.</small>&nbsp;</td>
                 <td align="left">{{mealItem.food.name}}</td>
               </tr>
             </table>
+            <div class="row" style="position:absolute; bottom:0">
+              <div class="col-xs-2">
+                Porzioni:
+              </div>
+              <div class="col-xs-5">
+                <div class="input-group">
+                  <span class="input-group-addon" role="button" ng-click="onServingsClicked(meal, '-')"><span class="text-center text-muted glyphicon glyphicon-minus" /></span></span>
+                  <input type="text" class="form-control text-center" ng-model="servings">
+                  <span class="input-group-addon" role="button" ng-click="onServingsClicked(meal, '+')"><span class="text-center text-muted glyphicon glyphicon-plus" /></span></span>
+                </div>
+              </div>
+            </div>
           </div>
          </div>
        </slide>

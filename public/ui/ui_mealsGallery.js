@@ -131,7 +131,7 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   };
 
   //-----------------------------------------------------------------------------
-  $scope.OnGalleryCompleted = function(delay) {
+  $scope.onGalleryCompleted = function(delay) {
     if (delay === undefined)
       delay = 1000;
     $timeout(function() {
@@ -149,6 +149,7 @@ app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 
 
   $scope.meals = meals;
   $scope.noImage = 'images/no-image-md.png';
+  $scope.servings = 1;
 
   //-----------------------------------------------------------------------------
   function currentMeal() {
@@ -194,6 +195,19 @@ app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 
   $scope.onActionClicked = function(action){
     var idx = -1;
     $modalInstance.close({action : action, meal : currentMeal(), idx : idx});
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onServingsClicked = function(meal, sign) {
+    console.log(sign);
+    if (sign === '+')
+      $scope.servings++;
+    else if (sign === '-' && $scope.servings > 1)
+      $scope.servings--;
+
+    meal.mealItems.forEach(function(item){
+      item.totQty = item.qty * $scope.servings;
+    });
   };
 
 }]);
