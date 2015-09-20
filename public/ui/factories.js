@@ -243,6 +243,28 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
   return Meals;
 }]);
 
+//=============================================================================
+// DailyMeals factory
+//=============================================================================
+app.factory('DailyMeals', ['$resource', function($resource){
+
+  dailyMealResource = $resource('/dailyMeals/:id', null, {
+    'update': { method:'PUT' },
+    'search': { method:'GET', url: '/dailyMeals/search/:name'},
+  });
+
+  //-----------------------------------------------------------------------------
+  DailyMeals = function() {
+    dailyMealResource.call(this, {
+      date : new Date(),
+      meals : [],
+      notes : ""
+    });
+  };
+  DailyMeals.prototype = Object.create(dailyMealResource.prototype);
+
+  return DailyMeals;
+}]);
 
 // Merge function, if angular < 1.4 is used
 //-----------------------------------------------------------------------------

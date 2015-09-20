@@ -2,70 +2,33 @@
 // PlannerController - controller for ui_planner.html
 //=============================================================================
 
-app.controller('PlannerController', ['$scope', 'SharedInfos', '$sessionStorage', 'Picasa', '$location', function ($scope, SharedInfos, $sessionStorage, Picasa, $location) {
+app.controller('PlannerController', ['$scope', 'DailyMeals', function ($scope, DailyMeals) {
 
-  // if (SharedInfos.has("cache.PlannerController")){
-  //   $scope.items = SharedInfos.get("cache.PlannerController");
-  // }
-  // SharedInfos.set("cache.PlannerController", $scope.items);
+  var today = new Date();
+  // start on Saturday
+  $scope.startDate  = addDays(today, -((today.getDay() + 1) % 7));
+  $scope.endDate = addDays($scope.startDate, 6);
+  $scope.dayNames = ["Sabato", "Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"] ;
+  $scope.mealKinds = [ { name : "Colazione", short : false }, { name : "Spuntino", short : true }, { name : "Pranzo", short : false }, { name : "Spuntino", short : true }, { name : "Cena", short : false } ];
 
-  if ($sessionStorage.items) {
-    $scope.items = $sessionStorage.items;
-  } else {
-    $scope.items = [];
-    $sessionStorage.items =  $scope.items;
+  $scope.thisWeek = [];
+  for (d = 0; d < 7; d++) {
+    dailyMeals = new DailyMeals();
+    dailyMeals.date = addDays($scope.startDate, d);
+    $scope.thisWeek.push(dailyMeals);
   }
 
-  if (SharedInfos.has("imagePickerInfo"))  {
-    imagePickerInfo = SharedInfos.get("imagePickerInfo");
-    Picasa.getImageURL(imagePickerInfo.imageCoord, 288).then(function success(imageUrl) { $scope.img = imageUrl; });
-  }
-
-
-  // $http.defaults.useXDomain = true;
-
   //-----------------------------------------------------------------------------
-  $scope.onCloseAlert = function(){
-    $scope.alert = null;
-  };
-
-  //-----------------------------------------------------------------------------
-  $scope.onAddClicked = function(){
-    $scope.items.push({ a : 0, b : "ciao "});
-  };
-
-  //-----------------------------------------------------------------------------
-  $scope.onInspectClicked = function(){
-    // if (SharedInfos.has("cache.PlannerController"))
-    //   itm = SharedInfos.get("cache.PlannerController");
-    //   SharedInfos.set("cache.PlannerController", itm);
-    if ($sessionStorage.items)
-      itm = $sessionStorage.items;
-  };
-
-  $scope.albums = [];
-  //-----------------------------------------------------------------------------
-  $scope.onAlbumClicked = function(){
-    // $http.get('https://picasaweb.google.com/data/feed/api/user/105734972554056284073').then(function success (result) {
-    // $http.get('https://picasaweb.google.com/data/feed/api/user/105734972554056284073/albumid/5749722873821751473').then(function success (result) {
-    // $http.jsonp('https://picasaweb.google.com/data/feed/api/user/105734972554056284073/albumid/5749722873821751473' + '?alt=json&kind=photo&hl=pl&imgmax=912&callback=JSON_CALLBACK').then(function success (result) {
-    // $http.jsonp('https://picasaweb.google.com/data/feed/api/user/105734972554056284073/albumid/5749722873821751473' + '?v=2&imgmax=200&alt=json&callback=JSON_CALLBACK' ).then(function success (result) {
-    //   var res = result;
-    //   $scope.img = res.data.feed.entry[0].content.src;
-    //   $scope.caption = res.data.feed.entry[0].summary.$t;
-    // }, function failure (result) {
-    //   console.log(result);
-    // });
-    Picasa.getAlbumList().then(function success(albums) {
-      $scope.albums = albums;
-    });
+  $scope.onMealClicked = function($index, kIndex) {
 
   };
 
   //-----------------------------------------------------------------------------
-  $scope.onPickImageClicked = function(){
-    SharedInfos.set("imagePickerInfo", { returnTo : "/planner" });
-    $location.url('/imagePicker');
+  $scope.todayStyle = function($index, element) {
+      if ($index == ((today.getDay() + 1) % 7))
+        if (element === 'th')
+          return "{'background-color':'lightblue'}";
+        else
+          return "{'background-color':'mintcream'}";
   };
-
 }]);

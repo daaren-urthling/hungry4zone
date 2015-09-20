@@ -9,10 +9,11 @@ var ApplicationError = require('./utils/applicationError.js');
 
 var routes = require('./routes/index');
 
-var users     = require('./routes/rt_users');
-var foods     = require('./routes/rt_foods');
-var foodTypes = require('./routes/rt_foodTypes');
-var meals     = require('./routes/rt_meals');
+var users       = require('./routes/rt_users');
+var foods       = require('./routes/rt_foods');
+var foodTypes   = require('./routes/rt_foodTypes');
+var meals       = require('./routes/rt_meals');
+var dailyMeals  = require('./routes/rt_dailyMeals');
 
 var app = express();
 
@@ -41,6 +42,7 @@ app.use('/users', users);
 app.use('/foods', foods);
 app.use('/foodTypes', foodTypes);
 app.use('/meals', meals);
+app.use('/dailyMeals', dailyMeals);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

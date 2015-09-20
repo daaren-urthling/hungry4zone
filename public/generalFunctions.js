@@ -1,3 +1,4 @@
+//-----------------------------------------------------------------------------
 function GetErrorMessage(httpResponse) {
   if (httpResponse && httpResponse.data && httpResponse.data.message) {
     return httpResponse.data.message;
@@ -6,4 +7,9 @@ function GetErrorMessage(httpResponse) {
   } else {
     return "Errore sconosciuto sul server";
   }
+}
+
+//-----------------------------------------------------------------------------
+function addDays(date, days) {
+  return new Date(date.getFullYear(),date.getMonth(),date.getDate()+days);
 }
