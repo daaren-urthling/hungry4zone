@@ -244,34 +244,34 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
 }]);
 
 //=============================================================================
-// DailyMeals factory
+// DailyPlan factory
 //=============================================================================
-app.factory('DailyMeals', ['$resource', function($resource){
+app.factory('DailyPlan', ['$resource', function($resource){
 
-  dailyMealResource = $resource('/dailyMeals/:id', null, {
+  dailyPlanResource = $resource('/dailyPlan/:id', null, {
     'update': { method:'PUT' },
-    'search': { method:'GET', url: '/dailyMeals/search/:name'},
+    'search': { method:'GET', url: '/dailyPlan/search/:name'},
   });
 
   //-----------------------------------------------------------------------------
-  DailyMeals = function() {
-    dailyMealResource.call(this, {
+  DailyPlan = function() {
+    dailyPlanResource.call(this, {
       date : new Date(),
       meals : [],
       notes : ""
     });
   };
-  DailyMeals.prototype = Object.create(dailyMealResource.prototype);
+  DailyPlan.prototype = Object.create(dailyPlanResource.prototype);
 
   //-----------------------------------------------------------------------------
-  DailyMeals.mealFor = function(dailyMeals, kind) {
-    for (m = 0; m < dailyMeals.meals.length; m ++) {
-      if (dailyMeals.meals[m].kind === kind)
-        return dailyMeals.meals[m];
+  DailyPlan.mealFor = function(dailyPlan, kind) {
+    for (m = 0; m < dailyPlan.meals.length; m ++) {
+      if (dailyPlan.meals[m].kind === kind)
+        return dailyPlan.meals[m];
     }
   };
 
-  return DailyMeals;
+  return DailyPlan;
 }]);
 
 // Merge function, if angular < 1.4 is used

@@ -1,11 +1,11 @@
 var mongoose = require('mongoose');
 
-var DailyMealsSchema = new mongoose.Schema({
+var DailyPlanSchema = new mongoose.Schema({
   date   : Date,
   meals  : [ { kind : String, meal : { type: mongoose.Schema.Types.ObjectId, ref: 'Meal' } } ],
   notes  : String
 });
 
-var DailyMeals = mongoose.model('DailyMeals', DailyMealsSchema);
+var DailyPlan = mongoose.model('DailyPlan', DailyPlanSchema);
 //=============================================================================
-module.exports = DailyMeals;
+module.exports = DailyPlan;

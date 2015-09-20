@@ -1,6 +1,6 @@
 var express = require('express');
 var mongoose = require('mongoose');
-var DailyMeals = require('../models/md_dailyMeals.js');
+var DailyPlan = require('../models/md_dailyPlan.js');
 var ApplicationError = require('../utils/applicationError.js');
 
 var router = express.Router();
