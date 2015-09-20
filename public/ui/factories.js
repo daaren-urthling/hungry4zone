@@ -263,6 +263,14 @@ app.factory('DailyMeals', ['$resource', function($resource){
   };
   DailyMeals.prototype = Object.create(dailyMealResource.prototype);
 
+  //-----------------------------------------------------------------------------
+  DailyMeals.mealFor = function(dailyMeals, kind) {
+    for (m = 0; m < dailyMeals.meals.length; m ++) {
+      if (dailyMeals.meals[m].kind === kind)
+        return dailyMeals.meals[m];
+    }
+  };
+
   return DailyMeals;
 }]);
 

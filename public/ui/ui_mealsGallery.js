@@ -23,6 +23,12 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
     $scope.alert = SharedInfos.get("alert");
   }
 
+  $scope.tags = [];
+  if (SharedInfos.has("pickInfo"))  {
+    $scope.pickInfo = SharedInfos.get("pickInfo");
+    $scope.tags.push({ "text" : $scope.pickInfo.kind});
+  }
+
   $scope.currentPage = 1;
   $scope.itemsPerPage = 6;
   $scope.firstVisibleItem = 0;
@@ -61,7 +67,7 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
     $scope.firstVisibleItem = ($scope.currentPage - 1) * $scope.itemsPerPage;
     $scope.albumIdx = -1;
     $scope.imageIdx = -1;
-    $scope.OnGalleryCompleted(0);
+    $scope.onGalleryCompleted(0);
   };
 
   //-----------------------------------------------------------------------------
@@ -100,6 +106,29 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   };
 
   //-----------------------------------------------------------------------------
+  $scope.onPickMealClicked = function(meal, $event) {
+    if ($event)
+      $event.stopPropagation();
+    if (!$scope.pickInfo.meal || $scope.pickInfo.meal._id != meal._id) {
+      $scope.pickInfo.meal = meal;
+    }
+    else {
+      $scope.pickInfo.meal = null;
+    }
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onPickConfirmClicked = function() {
+    SharedInfos.set("pickInfo", $scope.pickInfo);
+    $location.url('/planner');
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onPickCancelClicked = function() {
+    $location.url('/planner');
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.onMealClicked = function(f_meals, $index){
     for (i = 0; i < $scope.meals.length; i++)
       $scope.meals[i].active = null;
@@ -116,8 +145,11 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
           },
           isOwner: function () {
             return $scope.isOwner;
+          },
+          pickInfo: function () {
+            return $scope.pickInfo;
           }
-        }
+}
       });
 
       modalInstance.result.then(function (result) {
@@ -125,6 +157,7 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
           case "edit" : $scope.onEditClicked(result.meal); break;
           case "duplicate" : $scope.onDuplicateClicked(result.meal); break;
           case "remove" : $scope.onRemoveClicked(result.meal, result.idx); break;
+          case "pick" : $scope.pickInfo.meal = result.meal;
         }
       }, function () {
       });
@@ -145,11 +178,12 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
 // MealsCarouselController - controller for ui_mealCarousel.html
 //=============================================================================
 
-app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 'meals', 'isOwner', function ($scope, Foods, $modalInstance, meals, isOwner) {
+app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 'meals', 'isOwner', 'pickInfo', function ($scope, Foods, $modalInstance, meals, isOwner, pickInfo) {
 
   $scope.meals = meals;
   $scope.noImage = 'images/no-image-md.png';
   $scope.servings = 1;
+  $scope.pickInfo = pickInfo;
 
   //-----------------------------------------------------------------------------
   function currentMeal() {

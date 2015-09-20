@@ -13,8 +13,9 @@
       </tr>
       <tr ng-repeat="kind in mealKinds" ng-init="kIndex = $index" style="vertical-align:center">
           <td ng-show="!kind.short" width="10px" height="100px" class="h4z-planner-titles" ><div class="h4z-vertical-text"><strong>{{kind.name}}</strong></div></td>
-          <td ng-show="!kind.short" width="14%" ng-repeat="day in dayNames" style="text-align:center; vertical-align:middle" ng-style="{{todayStyle($index,'td')}}" ng-click="onMealClicked($index, kIndex)">
-            <span class="h4z-glyphicon-placeholder glyphicon glyphicon-plus" aria-hidden="true"></span>
+          <td ng-show="!kind.short" width="14%" ng-repeat="day in dayNames" style="text-align:center; vertical-align:middle" ng-style="{{todayStyle($index,'td')}}" ng-click="onMealClicked($index, kind.name)" ng-init="dailyMeal=dailyMealFor($index, kind.name)">
+            <span ng-show="!dailyMeal" class="h4z-glyphicon-placeholder glyphicon glyphicon-plus" aria-hidden="true"></span>
+            <span ng-show="dailyMeal">{{dailyMeal.meal.name}}</span>
           </td>
 
           <td ng-show="kind.short" width="10px" height="20px" class="h4z-planner-titles">&nbsp;</td>
