@@ -26,17 +26,17 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
 
   if (SharedInfos.has("pickInfo"))  {
     pickInfo = SharedInfos.get("pickInfo");
-    dailyMeal = DailyPlan.mealFor($scope.thisWeek[pickInfo.day], pickInfo.kind);
-    if (dailyMeal)
-      dailyMeal.meal = pickInfo.meal;
+    dailyPlan = $scope.thisWeek[pickInfo.day];
+    m = DailyPlan.indexOf(dailyPlan, pickInfo.kind);
+    if (m >= 0)
+      dailyPlan.meals[m].meal = pickInfo.meal;
     else
-      $scope.thisWeek[pickInfo.day].meals.push({ kind : pickInfo.kind, meal : pickInfo.meal});
+      dailyPlan.meals.push({ kind : pickInfo.kind, meal : pickInfo.meal});
   }
 
   //-----------------------------------------------------------------------------
   $scope.onMealClicked = function($index, kind) {
-    dailyMeal = DailyPlan.mealFor($scope.thisWeek[$index], kind);
-    SharedInfos.set("pickInfo", { day: $index, kind : kind, meal : dailyMeal ? dailyMeal.meal : null });
+    SharedInfos.set("pickInfo", { day: $index, kind : kind, meal : DailyPlan.mealFor($scope.thisWeek[$index], kind) });
     SharedInfos.set("alert", { "type" : "success", "msg" : 'Scegli cosa vuoi ' + $scope.dayNames[$index] + ' per ' + kind + ', poi aggiungilo al planner cliccando su "Conferma"'});
     $location.url('/mealsGallery');
 };
@@ -51,7 +51,7 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   };
 
   //-----------------------------------------------------------------------------
-  $scope.dailyMealFor = function($index, kind) {
+  $scope.mealFor = function($index, kind) {
     return DailyPlan.mealFor($scope.thisWeek[$index], kind);
   };
 

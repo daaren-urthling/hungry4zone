@@ -264,11 +264,18 @@ app.factory('DailyPlan', ['$resource', function($resource){
   DailyPlan.prototype = Object.create(dailyPlanResource.prototype);
 
   //-----------------------------------------------------------------------------
-  DailyPlan.mealFor = function(dailyPlan, kind) {
+  DailyPlan.indexOf = function(dailyPlan, kind) {
     for (m = 0; m < dailyPlan.meals.length; m ++) {
       if (dailyPlan.meals[m].kind === kind)
-        return dailyPlan.meals[m];
+        return m;
     }
+  };
+
+  //-----------------------------------------------------------------------------
+  DailyPlan.mealFor = function(dailyPlan, kind) {
+    m = DailyPlan.indexOf(dailyPlan, kind);
+    if (m >= 0)
+        return dailyPlan.meals[m].meal;
   };
 
   return DailyPlan;
