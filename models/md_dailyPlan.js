@@ -9,3 +9,10 @@ var DailyPlanSchema = new mongoose.Schema({
 var DailyPlan = mongoose.model('DailyPlan', DailyPlanSchema);
 //=============================================================================
 module.exports = DailyPlan;
+
+//-----------------------------------------------------------------------------
+DailyPlan.exist = function (date, callback) {
+  this.findOne({date : date}, function(err, obj){
+    callback(err, obj !== null, obj && obj._doc);
+  });
+};

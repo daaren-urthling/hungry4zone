@@ -32,14 +32,37 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
       dailyPlan.meals[m].meal = pickInfo.meal;
     else
       dailyPlan.meals.push({ kind : pickInfo.kind, meal : pickInfo.meal});
+
+    store(dailyPlan);
   }
+
+  //-----------------------------------------------------------------------------
+  function store(dailyPlan) {
+    if (!dailyPlan._id) {
+      DailyPlan.save(dailyPlan, function success(result) {
+        dailyPlan._id = result._id;
+      }, function failure(httpResponse) {
+          $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
+      });
+    } else {
+      DailyPlan.update({id: dailyPlan._id}, dailyPlan, function success(result) {
+      }, function failure(httpResponse) {
+          $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
+      });
+    }
+  }
+
+  //-----------------------------------------------------------------------------
+  $scope.onNotesChanged = function($index) {
+    store($scope.thisWeek[$index]);
+  };
 
   //-----------------------------------------------------------------------------
   $scope.onMealClicked = function($index, kind) {
     SharedInfos.set("pickInfo", { day: $index, kind : kind, meal : DailyPlan.mealFor($scope.thisWeek[$index], kind) });
     SharedInfos.set("alert", { "type" : "success", "msg" : 'Scegli cosa vuoi ' + $scope.dayNames[$index] + ' per ' + kind + ', poi aggiungilo al planner cliccando su "Conferma"'});
     $location.url('/mealsGallery');
-};
+  };
 
   //-----------------------------------------------------------------------------
   $scope.todayStyle = function($index, element) {

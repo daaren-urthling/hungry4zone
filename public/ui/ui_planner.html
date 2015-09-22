@@ -5,6 +5,10 @@
   <div class="row" >
     <div class="lead">Settimana dal {{startDate | date:'d/M/yyyy'}} al {{endDate | date:'d/M/yyyy'}}</div>
   </div>
+  <div class="row" ng-show="alert">
+    <br class="visible-xs-block" />
+    <alert type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
+  </div>
   <div class="row" >
     <table border="1px solid" class = "table table-condensed">
       <tr>
@@ -31,7 +35,7 @@
         <td width="10px" >&nbsp;</th>
         <td width="14%" ng-repeat="day in dayNames" style="text-align:center">
           <!-- {{thisWeek[$index].notes}} -->
-          <input type="text" class="form-control" ng-model="thisWeek[$index].notes">
+          <input type="text" class="form-control" ng-model="thisWeek[$index].notes" ng-change="onNotesChanged($index)" ng-model-options="{ updateOn: 'blur' }">
         </td>
       </tr>
     </table>

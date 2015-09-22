@@ -250,7 +250,6 @@ app.factory('DailyPlan', ['$resource', function($resource){
 
   dailyPlanResource = $resource('/dailyPlan/:id', null, {
     'update': { method:'PUT' },
-    'search': { method:'GET', url: '/dailyPlan/search/:name'},
   });
 
   //-----------------------------------------------------------------------------
@@ -277,6 +276,12 @@ app.factory('DailyPlan', ['$resource', function($resource){
     if (m >= 0)
         return dailyPlan.meals[m].meal;
   };
+
+  // wrap the parent resource functions to call them easily
+  //-----------------------------------------------------------------------------
+  DailyPlan.query = dailyPlanResource.query;
+  DailyPlan.save = dailyPlanResource.save;
+  DailyPlan.update = dailyPlanResource.update;
 
   return DailyPlan;
 }]);
