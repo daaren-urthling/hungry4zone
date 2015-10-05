@@ -2,8 +2,10 @@
   <div class="row" >
     <h2>Planner</h2>
   </div>
-  <div class="row" >
-    <div class="lead">Settimana dal {{startDate | date:'d/M/yyyy'}} al {{endDate | date:'d/M/yyyy'}}</div>
+  <div class="row">
+    <button class="btn btn-default" ng-click="onChangeWeekClicked(-1)">&lt;</button>
+    <button class="btn btn-default" ng-click="onChangeWeekClicked(1)">&gt;</button>
+    <div class="lead" style="display:inline; ">Settimana dal {{startDate | date:'d/M/yyyy'}} al {{endDate | date:'d/M/yyyy'}}</div>
   </div>
   <div class="row" ng-show="alert">
     <br class="visible-xs-block" />
@@ -17,9 +19,9 @@
       </tr>
       <tr ng-repeat="kind in mealKinds" ng-init="kIndex = $index" style="vertical-align:center">
           <td ng-show="!kind.short" width="10px" height="100px" class="h4z-planner-titles" ><div class="h4z-vertical-text"><strong>{{kind.name}}</strong></div></td>
-          <td ng-show="!kind.short" width="14%" ng-repeat="day in dayNames" style="text-align:center; vertical-align:middle" ng-style="{{todayStyle($index,'td')}}" ng-click="onMealClicked($index, kind.name)" ng-init="meal=mealFor($index, kind.name)">
-            <span ng-show="!meal" class="h4z-glyphicon-placeholder glyphicon glyphicon-plus" aria-hidden="true"></span>
-            <span ng-show="meal">{{meal.name}}</span>
+          <td ng-show="!kind.short" width="14%" ng-repeat="day in dayNames" style="text-align:center; vertical-align:middle" ng-style="{{todayStyle($index,'td')}}" ng-click="onMealClicked($index, kind.name)" >
+            <span ng-show="!mealFor($index, kind.name)" class="h4z-glyphicon-placeholder glyphicon glyphicon-plus" aria-hidden="true"></span>
+            <span ng-show="mealFor($index, kind.name)">{{mealFor($index, kind.name).name}}</span>
           </td>
 
           <td ng-show="kind.short" width="10px" height="20px" class="h4z-planner-titles">&nbsp;</td>

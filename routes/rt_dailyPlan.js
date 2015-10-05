@@ -17,6 +17,15 @@ router.get('/', function(req, res, next) {
   });
 });
 
+// search          (GET /search)
+//-----------------------------------------------------------------------------
+ router.get('/search/', function(req, res, next) {
+  DailyPlan.find({"date": {"$gte": req.param('start'), "$lte": req.param('end')}}, function (err, dailyPlans) {
+    if (err) return next(err);
+    res.json(dailyPlans);
+  });
+});
+
 // save           (POST /)
 //-----------------------------------------------------------------------------
 router.post('/', function(req, res, next) {

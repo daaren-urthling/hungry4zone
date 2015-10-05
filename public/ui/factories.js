@@ -195,6 +195,7 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
   // wrap the parent resource functions to call them easily
   //-----------------------------------------------------------------------------
   Meals.search = mealResource.search;
+  Meals.get = mealResource.get;
 
   //-----------------------------------------------------------------------------
   Meals.reconnectFoods = function(meal) {
@@ -246,10 +247,11 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
 //=============================================================================
 // DailyPlan factory
 //=============================================================================
-app.factory('DailyPlan', ['$resource', function($resource){
+app.factory('DailyPlan', ['$resource', 'Meals', function($resource, Meals){
 
   dailyPlanResource = $resource('/dailyPlan/:id', null, {
     'update': { method:'PUT' },
+    'search': { method:'GET', url: '/dailyPlan/search', params: {start: '@start', end:'@end'}, isArray:true },
   });
 
   //-----------------------------------------------------------------------------
@@ -280,8 +282,30 @@ app.factory('DailyPlan', ['$resource', function($resource){
   // wrap the parent resource functions to call them easily
   //-----------------------------------------------------------------------------
   DailyPlan.query = dailyPlanResource.query;
+  DailyPlan.search = dailyPlanResource.search;
   DailyPlan.save = dailyPlanResource.save;
   DailyPlan.update = dailyPlanResource.update;
+
+  //-----------------------------------------------------------------------------
+  DailyPlan.reconnectMeals = function(dailyPlan) {
+    // avoid in-loop function declaration
+    var getMeal = function(id, idx) {
+      Meals.get({id: id}, function success(result) {
+        dailyPlan.meals[idx].meal = result;
+      });
+    };
+
+    dailyPlan.meals.forEach(function(meal, idx){
+      if (meal.meal._id) {
+        id = meal.meal._id;
+      } else if (typeof meal.meal === "string") {
+        id = meal.meal;
+      } else {
+        return;
+      }
+      getMeal(id, idx);
+    });
+  };
 
   return DailyPlan;
 }]);

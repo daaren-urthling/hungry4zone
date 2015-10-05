@@ -2,27 +2,45 @@
 // PlannerController - controller for ui_planner.html
 //=============================================================================
 
-app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$location', '$sessionStorage', function ($scope, DailyPlan, SharedInfos, $location, $sessionStorage) {
+app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$location', '$sessionStorage', '$route', function ($scope, DailyPlan, SharedInfos, $location, $sessionStorage, $route) {
 
-  var today = new Date();
-  // start on Saturday
-  $scope.startDate  = addDays(today, -((today.getDay() + 1) % 7));
-  $scope.endDate = addDays($scope.startDate, 6);
   $scope.dayNames = ["Sabato", "Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"] ;
   $scope.mealKinds = [ { name : "Colazione", short : false }, { name : "Spuntino", short : true }, { name : "Pranzo", short : false }, { name : "Spuntino", short : true }, { name : "Cena", short : false } ];
+  var today = new Date(); today.setHours(0,0,0,0);
 
   if ($sessionStorage.PlannerController) {
     $scope.thisWeek = $sessionStorage.PlannerController.thisWeek;
+    $scope.startDate = $sessionStorage.PlannerController.startDate;
+    $scope.endDate = $sessionStorage.PlannerController.endDate;
   } else {
+    if (SharedInfos.has("startDate"))  {
+      $scope.startDate = SharedInfos.get("startDate");
+    } else {
+      // start on Saturday
+      $scope.startDate  = addDays(today, -((today.getDay() + 1) % 7));
+    }
+    $scope.endDate = addDays($scope.startDate, 6);
+
     $scope.thisWeek = [];
     for (d = 0; d < 7; d++) {
       dailyPlan = new DailyPlan();
       dailyPlan.date = addDays($scope.startDate, d);
       $scope.thisWeek.push(dailyPlan);
     }
-  }
 
-  $sessionStorage.PlannerController = { thisWeek : $scope.thisWeek };
+  }
+    queryObj = {start: $scope.startDate.valueOf(), end: $scope.endDate.valueOf()};
+    DailyPlan.search({start: $scope.startDate, end: $scope.endDate}, function(result) { // success
+      result.forEach(function(dailyPlan) {
+        idx = diffDays(dailyPlan.date, $scope.startDate);
+        $scope.thisWeek[idx] = dailyPlan;
+        DailyPlan.reconnectMeals(dailyPlan);
+      });
+    }, function(httpResponse) { // failure
+      $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
+    });
+
+  $sessionStorage.PlannerController = { thisWeek : $scope.thisWeek, startDate : $scope.startDate, endDate : $scope.endDate };
 
   if (SharedInfos.has("pickInfo"))  {
     pickInfo = SharedInfos.get("pickInfo");
@@ -66,16 +84,31 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
 
   //-----------------------------------------------------------------------------
   $scope.todayStyle = function($index, element) {
-      if ($index == ((today.getDay() + 1) % 7))
-        if (element === 'th')
-          return "{'background-color':'lightblue'}";
-        else
-          return "{'background-color':'mintcream'}";
+    if (addDays($scope.startDate, $index).valueOf() != today.valueOf())
+      return;
+
+    if (element === 'th')
+      return "{'background-color':'lightblue'}";
+    else
+      return "{'background-color':'mintcream'}";
   };
 
   //-----------------------------------------------------------------------------
   $scope.mealFor = function($index, kind) {
     return DailyPlan.mealFor($scope.thisWeek[$index], kind);
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onChangeWeekClicked = function(direction) {
+      $scope.startDate  = addDays($scope.startDate, direction * 7);
+      SharedInfos.set("startDate", $scope.startDate);
+      $sessionStorage.PlannerController = null;
+      $route.reload();
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onCloseAlert = function(){
+    $scope.alert = null;
   };
 
 }]);
