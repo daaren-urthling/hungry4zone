@@ -28,8 +28,6 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
       $scope.thisWeek.push(dailyPlan);
     }
 
-  }
-    queryObj = {start: $scope.startDate.valueOf(), end: $scope.endDate.valueOf()};
     DailyPlan.search({start: $scope.startDate, end: $scope.endDate}, function(result) { // success
       result.forEach(function(dailyPlan) {
         idx = diffDays(dailyPlan.date, $scope.startDate);
@@ -39,6 +37,8 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
     }, function(httpResponse) { // failure
       $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
+  }
+
 
   $sessionStorage.PlannerController = { thisWeek : $scope.thisWeek, startDate : $scope.startDate, endDate : $scope.endDate };
 
@@ -83,6 +83,18 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   };
 
   //-----------------------------------------------------------------------------
+  $scope.onRemoveMealClicked = function($index, kind, $event) {
+    if ($event)
+      $event.stopPropagation();
+    dailyPlan = $scope.thisWeek[$index];
+    m = DailyPlan.indexOf(dailyPlan, kind);
+    if (m >= 0) {
+      dailyPlan.meals.splice(m,1);
+      store(dailyPlan);
+    }
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.todayStyle = function($index, element) {
     if (addDays($scope.startDate, $index).valueOf() != today.valueOf())
       return;
@@ -111,4 +123,20 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
     $scope.alert = null;
   };
 
+}]);
+
+//=============================================================================
+// h4zMealFor - drective to keep the meal cells updated when the data model changes
+//=============================================================================
+app.directive('h4zMealFor',[ function() {
+  return {
+    restrict: 'A',
+    link: function getMeal(scope, element, attrs) {
+      var splits = attrs.h4zMealFor.split("=");
+      scope.$watch(splits[1], function (val) {
+        scope.$eval(attrs.h4zMealFor);
+        // console.log(scope.day, scope.$parent.kind.name, scope.meal ? scope.meal.name : "manca");
+      });
+    }
+  };
 }]);

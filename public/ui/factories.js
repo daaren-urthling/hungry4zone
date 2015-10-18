@@ -292,10 +292,12 @@ app.factory('DailyPlan', ['$resource', 'Meals', function($resource, Meals){
     var getMeal = function(id, idx) {
       Meals.get({id: id}, function success(result) {
         dailyPlan.meals[idx].meal = result;
+        Meals.reconnectFoods(dailyPlan.meals[idx].meal);
       });
     };
 
     dailyPlan.meals.forEach(function(meal, idx){
+      if (!meal.meal) return;
       if (meal.meal._id) {
         id = meal.meal._id;
       } else if (typeof meal.meal === "string") {

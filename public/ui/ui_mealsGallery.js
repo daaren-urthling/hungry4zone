@@ -149,7 +149,7 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
           pickInfo: function () {
             return $scope.pickInfo;
           }
-}
+        }
       });
 
       modalInstance.result.then(function (result) {

@@ -19,9 +19,12 @@
       </tr>
       <tr ng-repeat="kind in mealKinds" ng-init="kIndex = $index" style="vertical-align:center">
           <td ng-show="!kind.short" width="10px" height="100px" class="h4z-planner-titles" ><div class="h4z-vertical-text"><strong>{{kind.name}}</strong></div></td>
-          <td ng-show="!kind.short" width="14%" ng-repeat="day in dayNames" style="text-align:center; vertical-align:middle" ng-style="{{todayStyle($index,'td')}}" ng-click="onMealClicked($index, kind.name)" >
-            <span ng-show="!mealFor($index, kind.name)" class="h4z-glyphicon-placeholder glyphicon glyphicon-plus" aria-hidden="true"></span>
-            <span ng-show="mealFor($index, kind.name)">{{mealFor($index, kind.name).name}}</span>
+          <td ng-show="!kind.short" width="14%" ng-repeat="day in dayNames" style="text-align:center; vertical-align:middle" ng-style="{{todayStyle($index,'td')}}" ng-click="onMealClicked($index, kind.name)" h4z-meal-for="meal=mealFor($index, kind.name)">
+            <span ng-show="!meal" class="h4z-glyphicon-placeholder glyphicon glyphicon-plus" aria-hidden="true"></span>
+            <div ng-show="meal">
+              <div>{{meal.name}}</div>
+              <div style="text-align:right; vertical-align:bottom" ><span class="text-muted glyphicon glyphicon-remove" aria-hidden="true" ng-click="onRemoveMealClicked($index, kind.name, $event)"></span></div>
+            </div>
           </td>
 
           <td ng-show="kind.short" width="10px" height="20px" class="h4z-planner-titles">&nbsp;</td>
@@ -36,7 +39,6 @@
       <tr>
         <td width="10px" >&nbsp;</th>
         <td width="14%" ng-repeat="day in dayNames" style="text-align:center">
-          <!-- {{thisWeek[$index].notes}} -->
           <input type="text" class="form-control" ng-model="thisWeek[$index].notes" ng-change="onNotesChanged($index)" ng-model-options="{ updateOn: 'blur' }">
         </td>
       </tr>
