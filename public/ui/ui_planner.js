@@ -76,7 +76,9 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   };
 
   //-----------------------------------------------------------------------------
-  $scope.onMealClicked = function($index, kind) {
+  $scope.onChangeMealClicked = function($index, kind, $event) {
+    if ($event)
+      $event.stopPropagation();
     SharedInfos.set("pickInfo", { day: $index, kind : kind, meal : DailyPlan.mealFor($scope.thisWeek[$index], kind) });
     SharedInfos.set("alert", { "type" : "success", "msg" : 'Scegli cosa vuoi ' + $scope.dayNames[$index] + ' per ' + kind + ', poi aggiungilo al planner cliccando su "Conferma"'});
     $location.url('/mealsGallery');
@@ -95,14 +97,20 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   };
 
   //-----------------------------------------------------------------------------
-  $scope.todayStyle = function($index, element) {
+  $scope.onDailyDetailClicked = function($index, $event) {
+    if ($event)
+      $event.stopPropagation();
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.backgroundColor = function($index, element) {
     if (addDays($scope.startDate, $index).valueOf() != today.valueOf())
-      return;
+      return ;
 
     if (element === 'th')
-      return "{'background-color':'lightblue'}";
+      return "lightblue";
     else
-      return "{'background-color':'mintcream'}";
+      return "mintcream";
   };
 
   //-----------------------------------------------------------------------------

@@ -15,15 +15,30 @@
     <table border="1px solid" class = "table table-condensed">
       <tr>
         <th width="10px" class="h4z-planner-titles">&nbsp;</th>
-        <th width="14%" ng-repeat="day in dayNames" ng-style="{{todayStyle($index,'th')}}" class="h4z-planner-titles">{{day}}</th>
+        <th width="14%" ng-repeat="day in dayNames" ng-style="{{ {'background-color':backgroundColor($index,'th')} }}" class="h4z-planner-titles">{{day}}</th>
       </tr>
-      <tr ng-repeat="kind in mealKinds" ng-init="kIndex = $index" style="vertical-align:center">
+      <tr ng-repeat="kind in mealKinds" ng-init="kIndex = $index">
           <td ng-show="!kind.short" width="10px" height="100px" class="h4z-planner-titles" ><div class="h4z-vertical-text"><strong>{{kind.name}}</strong></div></td>
-          <td ng-show="!kind.short" width="14%" ng-repeat="day in dayNames" style="text-align:center; vertical-align:middle" ng-style="{{todayStyle($index,'td')}}" ng-click="onMealClicked($index, kind.name)" h4z-meal-for="meal=mealFor($index, kind.name)">
-            <span ng-show="!meal" class="h4z-glyphicon-placeholder glyphicon glyphicon-plus" aria-hidden="true"></span>
-            <div ng-show="meal">
-              <div>{{meal.name}}</div>
-              <div style="text-align:right; vertical-align:bottom" ><span class="text-muted glyphicon glyphicon-remove" aria-hidden="true" ng-click="onRemoveMealClicked($index, kind.name, $event)"></span></div>
+          <td ng-show="!kind.short" width="14%" style="max-width:1px; position:relative" ng-repeat="day in dayNames" h4z-meal-for="meal=mealFor($index, kind.name)" ng-style="{{  {'background-color':backgroundColor($index,'td')} }}" ng-click="onChangeMealClicked($index, kind.name, $event)" >
+            <div ng-show="!meal" class="h4z-planner-placeholder">
+              <span class="h4z-glyphicon-placeholder glyphicon glyphicon-plus" aria-hidden="true"></span>
+            </div>
+            <div ng-show="meal" ng-click="onDailyDetailClicked($index, $event)">
+              <div class="h4z-planner-meal-title">
+                <small><strong>{{meal.name}}</strong></small>
+              </div>
+              <div style="position:relative">
+                <table width=100% class="h4z-planner-meal-items-table">
+                  <tr ng-repeat="mealItem in meal.mealItems">
+                    <td style="vertical-align:top" align="right" width="45px"><small>{{mealItem.qty}} gr.</small>&nbsp;</td>
+                    <td align="left"><small>{{mealItem.food.name}}</small></td>
+                  </tr>
+                </table>
+              </div>
+              <div class="h4z-planner-meal-bottom" >
+                <div style="float:left"><span class="h4z-icon-button text-muted glyphicon glyphicon-retweet" aria-hidden="true" ng-click="onChangeMealClicked($index, kind.name, $event)"></span></div>
+                <div style="float:right"><span class="h4z-icon-button text-muted glyphicon glyphicon-remove" aria-hidden="true" ng-click="onRemoveMealClicked($index, kind.name, $event)"></span></div>
+              </div>
             </div>
           </td>
 

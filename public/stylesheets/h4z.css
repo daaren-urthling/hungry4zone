@@ -108,6 +108,9 @@ body {
     font-size: 20px;
   }
 }
+.h4z-icon-button {
+  cursor: pointer;
+}
 
 #mealCarousel .carousel-indicators {display:none}
 #mealCarousel .carousel-control.left {background-image:none}
@@ -168,7 +171,39 @@ tags-input .host {
   text-align:center;
 }
 
+.h4z-planner-meal-items-table {
+  display: block;
+  height:100%;
+  overflow-x: hidden;
+  white-space: nowrap;
+  margin-bottom:20px;
+}
+
+.h4z-planner-meal-title {
+  white-space: nowrap;
+  overflow-x: hidden;
+  text-align: center;
+}
+
+.h4z-planner-meal-bottom {
+  position:absolute;
+  bottom: 0;
+  width:80%;
+  margin-left:-40%;
+  left:50%
+}
+
 .h4z-glyphicon-placeholder {
   color: lightgrey;
   font-size: 25px;
+  cursor: pointer;
+}
+
+.h4z-planner-placeholder {
+  position:absolute;
+  left:50%;
+  top:50%;
+  /* glyphicon is 29x25 px*/
+  margin-top:-15px;
+  margin-left:-12px;
 }
