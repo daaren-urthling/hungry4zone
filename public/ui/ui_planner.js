@@ -8,7 +8,7 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   $scope.mealKinds = [ { name : "Colazione", short : false }, { name : "Spuntino", short : true }, { name : "Pranzo", short : false }, { name : "Spuntino", short : true }, { name : "Cena", short : false } ];
   var today = new Date(); today.setHours(0,0,0,0);
 
-  if ($sessionStorage.PlannerController) {
+  if ($sessionStorage.PlannerController && $sessionStorage.PlannerController.userId === $sessionStorage.loggedUser.id) {
     $scope.thisWeek = $sessionStorage.PlannerController.thisWeek;
     $scope.startDate = $sessionStorage.PlannerController.startDate;
     $scope.endDate = $sessionStorage.PlannerController.endDate;
@@ -24,11 +24,12 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
     $scope.thisWeek = [];
     for (d = 0; d < 7; d++) {
       dailyPlan = new DailyPlan();
+      dailyPlan.userId = $sessionStorage.loggedUser.id;
       dailyPlan.date = addDays($scope.startDate, d);
       $scope.thisWeek.push(dailyPlan);
     }
 
-    DailyPlan.search({start: $scope.startDate, end: $scope.endDate}, function(result) { // success
+    DailyPlan.search({userId: $sessionStorage.loggedUser.id, start: $scope.startDate, end: $scope.endDate}, function(result) { // success
       result.forEach(function(dailyPlan) {
         idx = diffDays(dailyPlan.date, $scope.startDate);
         $scope.thisWeek[idx] = dailyPlan;
@@ -40,7 +41,7 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   }
 
 
-  $sessionStorage.PlannerController = { thisWeek : $scope.thisWeek, startDate : $scope.startDate, endDate : $scope.endDate };
+  $sessionStorage.PlannerController = { userId: $sessionStorage.loggedUser.id, thisWeek : $scope.thisWeek, startDate : $scope.startDate, endDate : $scope.endDate };
 
   if (SharedInfos.has("pickInfo"))  {
     pickInfo = SharedInfos.get("pickInfo");

@@ -20,7 +20,7 @@ router.get('/', function(req, res, next) {
 // search          (GET /search)
 //-----------------------------------------------------------------------------
  router.get('/search/', function(req, res, next) {
-  DailyPlan.find({"date": {"$gte": req.param('start'), "$lte": req.param('end')}}, function (err, dailyPlans) {
+  DailyPlan.find({"userId" : req.param('userId'), "date": {"$gte": req.param('start'), "$lte": req.param('end')}}, function (err, dailyPlans) {
     if (err) return next(err);
     res.json(dailyPlans);
   });
@@ -29,7 +29,7 @@ router.get('/', function(req, res, next) {
 // save           (POST /)
 //-----------------------------------------------------------------------------
 router.post('/', function(req, res, next) {
-  DailyPlan.exist(req.body.date, function(err, found, dailyPlan) {
+  DailyPlan.exist(req.body.userId, req.body.date, function(err, found, dailyPlan) {
     if (err)    return next(err);
     if (found)  return next(new ApplicationError("Planning già presente: " + req.body.date));
 

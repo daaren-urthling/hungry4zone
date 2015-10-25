@@ -251,7 +251,7 @@ app.factory('DailyPlan', ['$resource', 'Meals', function($resource, Meals){
 
   dailyPlanResource = $resource('/dailyPlan/:id', null, {
     'update': { method:'PUT' },
-    'search': { method:'GET', url: '/dailyPlan/search', params: {start: '@start', end:'@end'}, isArray:true },
+    'search': { method:'GET', url: '/dailyPlan/search', params: {userId: '@userId', start: '@start', end:'@end'}, isArray:true },
   });
 
   //-----------------------------------------------------------------------------
