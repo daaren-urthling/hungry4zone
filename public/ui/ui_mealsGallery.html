@@ -94,9 +94,9 @@
           <div class="media-left">
             <table>
               <tr><td style="vertical-align:top; height:150px"><img class="media-object h4z-img-responsive" ng-src="{{(meal.bigImageURL) ? meal.bigImageURL : noImage}}" style="margin:auto;"/></td></tr>
-              <tr><td style="padding-bottom: 5px; align=center"><span class="badge h4z-calories-label">{{meal.totCalories}}</span> calorie&nbsp;&nbsp;<span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
-              <tr><td style="padding-bottom: 5px; align=center"><span class="badge proteins-label">P {{meal.blockProteins | number:1}}</span>&nbsp;<span class="badge fats-label">G {{meal.blockFats | number:1}}</span>&nbsp;<span class="badge carbohydrates-label">C {{meal.blockCarbohydrates | number:1}}</span></td></tr>
-              <tr><td style="padding-bottom: 5px; align=center"><span ng-repeat="tag in meal.tags"> <span class="badge h4z-tags-badge">{{tag.text}}</span>&nbsp;</span></td></tr>
+              <tr><td style="padding-bottom: 5px; text-align:center"><span class="badge h4z-calories-label">{{meal.totCalories}}</span> calorie&nbsp;&nbsp;<span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
+              <tr><td style="padding-bottom: 5px; text-align:center"><span class="badge proteins-label">P {{meal.blockProteins | number:1}}</span>&nbsp;<span class="badge fats-label">G {{meal.blockFats | number:1}}</span>&nbsp;<span class="badge carbohydrates-label">C {{meal.blockCarbohydrates | number:1}}</span></td></tr>
+              <tr><td style="padding-bottom: 5px; text-align:center"><span ng-repeat="tag in meal.tags"> <span class="badge h4z-tags-badge">{{tag.text}}</span>&nbsp;</span></td></tr>
             </table>
           </div>
           <div class="media-body">

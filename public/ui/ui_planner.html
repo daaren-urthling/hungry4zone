@@ -61,3 +61,48 @@
   </div>
 
 </div> <!-- /container -->
+
+<script type="text/ng-template" id="ui_dailyPlan.html">
+  <div class="modal-header" style="background-color:mintcream">
+    <div style="display:inline-block"><h3 class="modal-title">{{dayName}}</h3></div>
+    <div class="h4z-div-right-inline"><button class="btn btn-default" type="button" ng-click="onCloseClicked()">Chiudi</button></div>
+    <!-- <button class="btn btn-default" type="button" ng-click="onCloseClicked()">Chiudi</button>-->
+  </div>
+  <div class="modal-body">
+   <table>
+   <tr ng-repeat="meal in dailyPlan.meals">
+     <td width="5%" style="border-right: 1px solid">
+     <div class="h4z-vertical-text"><h4>{{meal.kind}}</h4></div>
+     </td>
+     <td style="padding:3px">
+      <h4 class="h4z-meal-title" style="margin-top:0;"><span style="display:inline-block; float:left; font-size:16px" ng-show="meal.meal.userId" class="text-info glyphicon glyphicon-user" aria-hidden="true">&nbsp;</span>{{meal.meal.name}}</h4>
+       <div class="media">
+        <div class="media-left">
+          <table>
+            <tr><td style="vertical-align:top; height:150px"><img class="media-object h4z-img-responsive" ng-src="{{(meal.meal.bigImageURL) ? meal.meal.bigImageURL : noImage}}" style="margin:auto;"/></td></tr>
+            <tr><td style="padding-bottom: 5px; text-align:center"><span class="badge h4z-calories-label">{{meal.meal.totCalories}}</span> calorie&nbsp;&nbsp;<span class="badge">{{meal.meal.blocks}}</span> blocchi</td></tr>
+            <tr><td style="padding-bottom: 5px; text-align:center"><span class="badge proteins-label">P {{meal.meal.blockProteins | number:1}}</span>&nbsp;<span class="badge fats-label">G {{meal.meal.blockFats | number:1}}</span>&nbsp;<span class="badge carbohydrates-label">C {{meal.meal.blockCarbohydrates | number:1}}</span></td></tr>
+            <tr><td style="padding-bottom: 5px; text-align:center"><span ng-repeat="tag in meal.meal.tags"> <span class="badge h4z-tags-badge">{{tag.text}}</span>&nbsp;</span></td></tr>
+          </table>
+        </div>
+        <div class="media-body">
+          <table>
+            <tr ng-repeat="mealItem in meal.meal.mealItems">
+              <td class="text-center" width=15><image width=15 ng-src="{{sourceImage(mealItem.food)}}"></td>
+              <td style="vertical-align:top" align="right" width="60px">{{mealItem.qty}} gr. </td>
+              <td align="left">{{mealItem.food.name}}</td>
+            </tr>
+          </table>
+        </div>
+        <div style="float:right">
+          <a ng-show="meal.meal.recipeURL" ng-href="{{meal.meal.recipeURL}}" target="_blank">
+            <span style="display:inline-block; font-size:16px; color:inherit"  class="text-info glyphicon glyphicon-cutlery" aria-hidden="true"></span>
+            &nbsp;Vedi la ricetta
+          </a>
+        </div>
+       </div>
+     </td>
+   </tr>
+   </table>
+  </div>
+ </script>

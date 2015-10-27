@@ -2,7 +2,7 @@
 // PlannerController - controller for ui_planner.html
 //=============================================================================
 
-app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$location', '$sessionStorage', '$route', function ($scope, DailyPlan, SharedInfos, $location, $sessionStorage, $route) {
+app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$location', '$sessionStorage', '$route', '$modal', function ($scope, DailyPlan, SharedInfos, $location, $sessionStorage, $route, $modal) {
 
   $scope.dayNames = ["Sabato", "Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"] ;
   $scope.mealKinds = [ { name : "Colazione", short : false }, { name : "Spuntino", short : true }, { name : "Pranzo", short : false }, { name : "Spuntino", short : true }, { name : "Cena", short : false } ];
@@ -101,6 +101,27 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   $scope.onDailyDetailClicked = function($index, $event) {
     if ($event)
       $event.stopPropagation();
+
+    var modalInstance = $modal.open({
+      animation: false,
+      templateUrl: 'ui_dailyPlan.html',
+      controller: 'DailyPlanController',
+      size : 'md',
+      resolve: {
+        dailyPlan: function () {
+          return $scope.thisWeek[$index];
+        },
+        dayName: function ( ) {
+          return $scope.dayNames[$index];
+        }
+      }
+    });
+
+    modalInstance.result.then(function (result) {
+      switch (result.action) {
+      }
+    }, function () {
+    });
   };
 
   //-----------------------------------------------------------------------------
@@ -130,6 +151,28 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   //-----------------------------------------------------------------------------
   $scope.onCloseAlert = function(){
     $scope.alert = null;
+  };
+
+}]);
+
+//=============================================================================
+// DailyPlanController - controller for ui_dailyPlan.html
+//=============================================================================
+
+app.controller('DailyPlanController', ['$scope', 'Foods', '$modalInstance', 'dailyPlan', 'dayName', function ($scope, Foods, $modalInstance, dailyPlan, dayName) {
+
+  $scope.dailyPlan = dailyPlan;
+  $scope.dayName = dayName;
+  $scope.noImage = 'images/no-image-md.png';
+
+  //-----------------------------------------------------------------------------
+  $scope.sourceImage = function(food)  {
+    return Foods.sourceImage(food);
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onCloseClicked = function () {
+    $modalInstance.dismiss('close');
   };
 
 }]);
