@@ -305,6 +305,12 @@ app.factory('DailyPlan', ['$resource', 'Meals', function($resource, Meals){
       Meals.get({id: id}, function success(result) {
         dailyPlan.meals[idx].meal = result;
         Meals.reconnectFoods(dailyPlan.meals[idx].meal);
+        if (dailyPlan.meals[idx].imageCoord) {
+          Picasa.getImageURL(dailyPlan.meals[idx].imageCoord, [128, 200]).then(function(imageURLs) {
+            dailyPlan.meals[idx].imageURL = imageURLs[0];
+            dailyPlan.meals[idx].bigImageURL = imageURLs[1];
+          });
+        }
       });
     };
 
