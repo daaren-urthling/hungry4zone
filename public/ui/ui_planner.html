@@ -70,7 +70,7 @@
   </div>
   <div class="modal-body">
    <table>
-   <tr ng-repeat="meal in dailyPlan.meals">
+   <tr ng-repeat="meal in dailyPlan.meals | kindSort:mealKinds">
      <td width="5%" style="border-right: 1px solid">
      <div class="h4z-vertical-text"><h4>{{meal.kind}}</h4></div>
      </td>

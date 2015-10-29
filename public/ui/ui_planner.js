@@ -113,6 +113,9 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
         },
         dayName: function ( ) {
           return $scope.dayNames[$index];
+        },
+        mealKinds: function ( ) {
+          return $scope.mealKinds;
         }
       }
     });
@@ -159,10 +162,11 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
 // DailyPlanController - controller for ui_dailyPlan.html
 //=============================================================================
 
-app.controller('DailyPlanController', ['$scope', 'Foods', '$modalInstance', 'dailyPlan', 'dayName', function ($scope, Foods, $modalInstance, dailyPlan, dayName) {
+app.controller('DailyPlanController', ['$scope', 'Foods', '$modalInstance', 'dailyPlan', 'dayName', 'mealKinds', function ($scope, Foods, $modalInstance, dailyPlan, dayName, mealKinds) {
 
   $scope.dailyPlan = dailyPlan;
   $scope.dayName = dayName;
+  $scope.mealKinds = mealKinds;
   $scope.noImage = 'images/no-image-md.png';
 
   //-----------------------------------------------------------------------------
@@ -178,7 +182,7 @@ app.controller('DailyPlanController', ['$scope', 'Foods', '$modalInstance', 'dai
 }]);
 
 //=============================================================================
-// h4zMealFor - drective to keep the meal cells updated when the data model changes
+// h4zMealFor - directive to keep the meal cells updated when the data model changes
 //=============================================================================
 app.directive('h4zMealFor',[ function() {
   return {
@@ -187,8 +191,22 @@ app.directive('h4zMealFor',[ function() {
       var splits = attrs.h4zMealFor.split("=");
       scope.$watch(splits[1], function (val) {
         scope.$eval(attrs.h4zMealFor);
-        // console.log(scope.day, scope.$parent.kind.name, scope.meal ? scope.meal.name : "manca");
       });
     }
   };
 }]);
+
+//=============================================================================
+// kindSort - filter for sorting dailyPlan by kind
+//=============================================================================
+app.filter('kindSort', function() {
+    return function(input, mealKinds) {
+        var result = [];
+        for (var k in mealKinds) {
+          m = DailyPlan.indexOf(input, mealKinds[k].name);
+          if (m >= 0)
+            result.push(input[m]);
+        }
+        return result;
+    };
+});

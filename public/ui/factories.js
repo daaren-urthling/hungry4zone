@@ -265,18 +265,30 @@ app.factory('DailyPlan', ['$resource', 'Meals', function($resource, Meals){
   DailyPlan.prototype = Object.create(dailyPlanResource.prototype);
 
   //-----------------------------------------------------------------------------
-  DailyPlan.indexOf = function(dailyPlan, kind) {
-    for (m = 0; m < dailyPlan.meals.length; m ++) {
-      if (dailyPlan.meals[m].kind === kind)
+  DailyPlan.indexOf = function(plan, kind) {
+    if (!angular.isArray(plan)) {
+      meals = plan.meals;
+    }
+    else {
+      meals = plan;
+    }
+    for (m = 0; m < meals.length; m ++) {
+      if (meals[m].kind === kind)
         return m;
     }
   };
 
   //-----------------------------------------------------------------------------
-  DailyPlan.mealFor = function(dailyPlan, kind) {
-    m = DailyPlan.indexOf(dailyPlan, kind);
+  DailyPlan.mealFor = function(plan, kind) {
+    if (!angular.isArray(plan)) {
+      meals = plan.meals;
+    }
+    else {
+      meals = plan;
+    }
+    m = DailyPlan.indexOf(meals, kind);
     if (m >= 0)
-        return dailyPlan.meals[m].meal;
+        return meals[m].meal;
   };
 
   // wrap the parent resource functions to call them easily
