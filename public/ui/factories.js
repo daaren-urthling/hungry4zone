@@ -247,7 +247,7 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
 //=============================================================================
 // DailyPlan factory
 //=============================================================================
-app.factory('DailyPlan', ['$resource', 'Meals', function($resource, Meals){
+app.factory('DailyPlan', ['$resource', 'Meals', 'Picasa', function($resource, Meals, Picasa){
 
   dailyPlanResource = $resource('/dailyPlan/:id', null, {
     'update': { method:'PUT' },
@@ -305,10 +305,10 @@ app.factory('DailyPlan', ['$resource', 'Meals', function($resource, Meals){
       Meals.get({id: id}, function success(result) {
         dailyPlan.meals[idx].meal = result;
         Meals.reconnectFoods(dailyPlan.meals[idx].meal);
-        if (dailyPlan.meals[idx].imageCoord) {
-          Picasa.getImageURL(dailyPlan.meals[idx].imageCoord, [128, 200]).then(function(imageURLs) {
-            dailyPlan.meals[idx].imageURL = imageURLs[0];
-            dailyPlan.meals[idx].bigImageURL = imageURLs[1];
+        if (dailyPlan.meals[idx].meal.imageCoord) {
+          Picasa.getImageURL(dailyPlan.meals[idx].meal.imageCoord, [128, 200]).then(function(imageURLs) {
+            dailyPlan.meals[idx].meal.imageURL = imageURLs[0];
+            dailyPlan.meals[idx].meal.bigImageURL = imageURLs[1];
           });
         }
       });
