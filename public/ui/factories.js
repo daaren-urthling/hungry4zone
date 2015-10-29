@@ -195,6 +195,7 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
   // wrap the parent resource functions to call them easily
   //-----------------------------------------------------------------------------
   Meals.search = mealResource.search;
+  Meals.get = mealResource.get;
 
   //-----------------------------------------------------------------------------
   Meals.reconnectFoods = function(meal) {
@@ -243,6 +244,73 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
   return Meals;
 }]);
 
+//=============================================================================
+// DailyPlan factory
+//=============================================================================
+app.factory('DailyPlan', ['$resource', 'Meals', function($resource, Meals){
+
+  dailyPlanResource = $resource('/dailyPlan/:id', null, {
+    'update': { method:'PUT' },
+    'search': { method:'GET', url: '/dailyPlan/search', params: {userId: '@userId', start: '@start', end:'@end'}, isArray:true },
+  });
+
+  //-----------------------------------------------------------------------------
+  DailyPlan = function() {
+    dailyPlanResource.call(this, {
+      date : new Date(),
+      meals : [],
+      notes : ""
+    });
+  };
+  DailyPlan.prototype = Object.create(dailyPlanResource.prototype);
+
+  //-----------------------------------------------------------------------------
+  DailyPlan.indexOf = function(dailyPlan, kind) {
+    for (m = 0; m < dailyPlan.meals.length; m ++) {
+      if (dailyPlan.meals[m].kind === kind)
+        return m;
+    }
+  };
+
+  //-----------------------------------------------------------------------------
+  DailyPlan.mealFor = function(dailyPlan, kind) {
+    m = DailyPlan.indexOf(dailyPlan, kind);
+    if (m >= 0)
+        return dailyPlan.meals[m].meal;
+  };
+
+  // wrap the parent resource functions to call them easily
+  //-----------------------------------------------------------------------------
+  DailyPlan.query = dailyPlanResource.query;
+  DailyPlan.search = dailyPlanResource.search;
+  DailyPlan.save = dailyPlanResource.save;
+  DailyPlan.update = dailyPlanResource.update;
+
+  //-----------------------------------------------------------------------------
+  DailyPlan.reconnectMeals = function(dailyPlan) {
+    // avoid in-loop function declaration
+    var getMeal = function(id, idx) {
+      Meals.get({id: id}, function success(result) {
+        dailyPlan.meals[idx].meal = result;
+        Meals.reconnectFoods(dailyPlan.meals[idx].meal);
+      });
+    };
+
+    dailyPlan.meals.forEach(function(meal, idx){
+      if (!meal.meal) return;
+      if (meal.meal._id) {
+        id = meal.meal._id;
+      } else if (typeof meal.meal === "string") {
+        id = meal.meal;
+      } else {
+        return;
+      }
+      getMeal(id, idx);
+    });
+  };
+
+  return DailyPlan;
+}]);
 
 // Merge function, if angular < 1.4 is used
 //-----------------------------------------------------------------------------

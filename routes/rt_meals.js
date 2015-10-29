@@ -17,6 +17,15 @@ router.get('/', function(req, res, next) {
   });
 });
 
+// get            (GET /:id)
+//-----------------------------------------------------------------------------
+router.get('/:id', function(req, res, next) {
+  Meal.findById(req.params.id, function (err, meal) {
+    if (err) return next(err);
+    res.json(meal);
+  });
+});
+
 // search         (GET /search/:name)
 //-----------------------------------------------------------------------------
 router.get('/search/:name', function(req, res, next) {

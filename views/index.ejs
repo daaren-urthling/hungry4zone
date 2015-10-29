@@ -70,7 +70,7 @@
     </div>
 
     <!-- Libraries - uncompressed version -->
-    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-resource.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-touch.js"></script>
@@ -78,10 +78,10 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.0.0/ng-tags-input.js"></script>
     <script src="/javascripts/ui-bootstrap-tpls-0.13.3.min.js"></script>
     <script src="/javascripts/raphael-2.1.4.min.js"></script>
-    <script src="/javascripts/justgage.1.0.1.min.js"></script> -->
+    <script src="/javascripts/justgage.1.0.1.min.js"></script>
 
     <!-- Libraries - minified version for production -->
-    <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
+    <!-- <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-route.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-resource.min.js"></script>
     <script src="https://ajax.googleapis.com/ajax/libs/angularjs/1.4.4/angular-touch.min.js"></script>
@@ -89,7 +89,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/ng-tags-input/3.0.0/ng-tags-input.min.js"></script>
     <script src="/javascripts/ui-bootstrap-tpls-0.13.3.js"></script>
     <script src="/javascripts/raphael-2.1.4.min.js"></script>
-    <script src="/javascripts/justgage.1.0.1.min.js"></script>
+    <script src="/javascripts/justgage.1.0.1.min.js"></script> -->
 
     <script>
       //---------------
@@ -126,7 +126,7 @@
     <script>
       app.run(function($rootScope, $sessionStorage, $location, SharedInfos, Users) {
         $rootScope.$on( "$routeChangeStart", function(event, next, current) {
-          if (next.originalPath === "/meal") {
+          if (next.originalPath === "/meal" || next.originalPath === "/planner") {
             // no logged user, redirect to /login
             if (!$sessionStorage.loggedUser) {
               SharedInfos.set("alert", { "type" : "warning", "msg" : "Per aprire questa pagina devi prima effettuare l'accesso"});
