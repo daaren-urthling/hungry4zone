@@ -43,7 +43,7 @@
           </td>
 
           <td ng-show="kind.short" width="10px" height="20px" class="h4z-planner-titles">&nbsp;</td>
-          <td ng-show="kind.short" width="14%" ng-repeat="day in dayNames" style="text-align:center; vertical-align:middle" ng-style="{{todayStyle($index,'td')}}">
+          <td ng-show="kind.short" width="14%" ng-repeat="day in dayNames" style="text-align:center; vertical-align:middle" ng-style="{{todayStyle($index,'td')}}" ng-click="onShortMealClicked($index, kind.name, $event)" >
             <em>{{kind.name}}</em>
           </td>
       </tr>

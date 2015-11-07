@@ -86,6 +86,15 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   };
 
   //-----------------------------------------------------------------------------
+  $scope.onShortMealClicked = function($index, kind, $event) {
+    if ($event)
+      $event.stopPropagation();
+    SharedInfos.set("showInfo", { kind : kind });
+    SharedInfos.set("alert", { "type" : "success", "msg" : 'Scegli cosa vuoi ' + $scope.dayNames[$index] + ' per ' + kind});
+    $location.url('/mealsGallery');
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.onRemoveMealClicked = function($index, kind, $event) {
     if ($event)
       $event.stopPropagation();

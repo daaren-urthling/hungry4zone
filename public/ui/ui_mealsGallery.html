@@ -24,13 +24,16 @@
         </div>
       </form>
     </div>
-    <div align="right" class="hidden-xs col-lg-3 col-md-3 col-sm-4" ng-show="!pickInfo">
+    <div align="right" class="hidden-xs col-lg-3 col-md-3 col-sm-4" ng-show="!pickInfo && !showInfo">
       <br/>
       <a role="button" class="btn btn-default" href="#/calculator"><span class="text-muted glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Aggiungi una ricetta</a>
     </div>
     <div align="right" class="btn-group hidden-xs col-lg-3 col-md-3 col-sm-4" ng-show="pickInfo">
         <button style="margin-top:20px" class="btn btn-primary" ng-disabled="!pickInfo.meal" ng-click="onPickConfirmClicked()">Conferma</button>
         <button style="margin-top:20px" class="btn btn-default" ng-click="onPickCancelClicked()">Annulla</button>
+    </div>
+    <div align="right" class="btn-group hidden-xs col-lg-3 col-md-3 col-sm-4" ng-show="showInfo">
+      <button style="margin-top:20px" class="btn btn-default" ng-click="onShowCancelClicked()">Chiudi</button>
     </div>
   </div>
   <div class="row" ng-show="alert">
@@ -61,7 +64,7 @@
           <tr><td class="h4z-meal-right-pane" colspan=3 style="vertical-align:top; height:100px; padding-right:10px;padding-left:10px;"><img class="media-object" ng-src="{{(meal.imageURL) ? meal.imageURL : noImage}}"/></td></tr>
             <tr><td class="h4z-meal-right-pane small" colspan=3 align="center"><span class="badge h4z-calories-label">{{meal.totCalories}}</span> calorie&nbsp;<span class="badge">{{meal.blocks}}</span> blocchi</td></tr>
             <tr height=40px><td class="h4z-meal-right-pane small text-info" colspan=3 align="center"><em>{{tagsList(meal)}}</em></td></tr>
-            <tr height="100%" ng-show="!pickInfo">
+            <tr height="100%" ng-show="!pickInfo && !showInfo">
               <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-duplicate" aria-hidden="true" ng-click="onDuplicateClicked(meal, $event)"></span></td>
               <td width="30px" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-pencil " aria-hidden="true" ng-click="onEditClicked(meal, $event)" ng-show="isOwner(meal)"></span></td>
               <td align="right" class="h4z-meal-right-pane" style="vertical-align:bottom"><span class="h4z-icon-button text-muted glyphicon glyphicon-remove" aria-hidden="true" ng-click="onRemoveClicked(meal, $index, $event)" ng-show="isOwner(meal)"></span></td>
@@ -129,7 +132,7 @@
   </a>
   </div>
    <div class="modal-footer">
-    <div ng-show="!pickInfo">
+    <div ng-show="!pickInfo && !showInfo">
       <div class="h4z-div-left-inline"><button class="btn btn-default" type="button" ng-click="onActionClicked('duplicate')"><span class="glyphicon glyphicon-duplicate" aria-hidden="true"></span><span class="hidden-xs">&nbsp;&nbsp;Copia</span></button></div>
       <div class="h4z-div-left-inline"><button class="btn btn-default" type="button" ng-click="onActionClicked('edit')" ng-show="isOwner()"><span class="glyphicon glyphicon-pencil" aria-hidden="true"></span><span class="hidden-xs">&nbsp;&nbsp;Modifica</span></button></div>
       <div class="h4z-div-left-inline"><button class="btn btn-default" type="button" ng-click="onActionClicked('remove')" ng-show="isOwner()"><span class="glyphicon glyphicon-remove" aria-hidden="true"></span><span class="hidden-xs">&nbsp;&nbsp;Elimina</span></button></div>
