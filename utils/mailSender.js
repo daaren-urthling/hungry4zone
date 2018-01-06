@@ -11,7 +11,7 @@ function createTransport() {
       service: 'hotmail',
       auth: {
           user: 'Hungry4Zone@outlook.com',
-          pass: 'H4Z2015Recipes'
+          pass: 'H4Z.2015Recipes'
       }
     });
 
