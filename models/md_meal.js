@@ -11,7 +11,8 @@ var MealSchema = new mongoose.Schema({
   userId              : mongoose.Schema.Types.ObjectId,
   imageCoord          : { albumId : String, imageId : String },
   tags                : [ { text : String } ],
-  recipeURL           : String
+  recipeURL           : String,
+  directions          : String
 });
 
 var Meal = mongoose.model('Meal', MealSchema);

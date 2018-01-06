@@ -213,3 +213,12 @@ tags-input .host {
   margin-top:-15px;
   margin-left:-12px;
 }
+
+.h4z-hr-short {
+  margin-top: 5px;
+  margin-bottom: 5px;
+}
+
+.h4z-directions {
+  white-space: pre-wrap;
+}
