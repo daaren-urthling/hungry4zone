@@ -44,6 +44,31 @@ app.service('SharedInfos', function() {
   return shared;
 });
 
+
+//=============================================================================
+// GPhoto service
+//=============================================================================
+app.service('GPhotos', ['$http','$q', function($http, $q) {
+  var gPhotos = {
+    basePath : ''
+  };
+
+  gPhotos.load = function () {
+    var defer = $q.defer();
+
+    gapi.load("client:auth2", function() {
+        gapi.auth2.init({client_id: '94587139140-pc64e02k8lnvg8djd4helqajancr74n5.apps.googleusercontent.com'});
+        console.log('signed in:' + gapi.auth2.getAuthInstance().isSignedIn.get())
+        defer.resolve(); 
+    }
+  );
+
+    return defer.promise;
+  }
+
+  return gPhotos;
+}]);
+
 //=============================================================================
 // Picasa service
 //=============================================================================

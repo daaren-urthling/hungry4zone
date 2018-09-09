@@ -2,7 +2,7 @@
 // ImagePickerController - controller for ui_imagePicker.html
 //=============================================================================
 
-app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'SharedInfos', function ($scope, Picasa, $location, SharedInfos) {
+app.controller('ImagePickerController', ['$scope', 'Picasa', 'GPhotos', '$location', 'SharedInfos', function ($scope, Picasa, GPhotos, $location, SharedInfos) {
 
   $scope.albums = [];
   $scope.images = [];
@@ -24,6 +24,10 @@ app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'Share
     $scope.albums = albums;
   }, function failure (response) {
     $scope.alert = { type : "danger", msg :GetErrorMessage(response) };
+  });
+
+  GPhotos.load().then(function success() {
+    console.log('GPhotos loaded');
   });
 
   $scope.currentPage = 1;

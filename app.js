@@ -93,8 +93,8 @@ if (app.get('env') != 'development') {
 }
 
 //var connectionString = 'mongodb://localhost/hungry4zone';
-//var connectionString = 'mongodb://h4zTemplate:hXfvyP46YPRH79yuPVi54okRyKs8VWO9eivlTlGZ8xY-@ds062797.mongolab.com:62797/h4zTemplate';
-var connectionString = process.env.CUSTOMCONNSTR_MONGOLAB_URI;
+var connectionString = 'mongodb://h4zTemplate:hXfvyP46YPRH79yuPVi54okRyKs8VWO9eivlTlGZ8xY-@ds062797.mongolab.com:62797/h4zTemplate';
+//var connectionString = process.env.CUSTOMCONNSTR_MONGOLAB_URI;
 global.H4ZURL = "hungry4zone.azurewebsites.net";
 
 if (typeof connectionString === "undefined")
