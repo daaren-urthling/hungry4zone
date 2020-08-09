@@ -5,7 +5,7 @@
 app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$location', '$sessionStorage', '$route', '$modal', function ($scope, DailyPlan, SharedInfos, $location, $sessionStorage, $route, $modal) {
 
   $scope.dayNames = ["Sabato", "Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"] ;
-  $scope.mealKinds = [ { name : "Colazione", short : false }, { name : "Spuntino", short : true }, { name : "Pranzo", short : false }, { name : "Spuntino", short : true }, { name : "Cena", short : false } ];
+  $scope.mealKinds = [ { name : "Colazione", short : false }, { name : "1° Spuntino", short : true, tag: "Spuntino" }, { name : "Pranzo", short : false }, { name : "2° Spuntino", short : true, tag: "Spuntino" }, { name : "Cena", short : false } ];
   var today = new Date(); today.setHours(0,0,0,0);
 
   if ($sessionStorage.PlannerController && $sessionStorage.PlannerController.userId === $sessionStorage.loggedUser.id) {
@@ -89,8 +89,9 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   $scope.onShortMealClicked = function($index, kind, $event) {
     if ($event)
       $event.stopPropagation();
-    SharedInfos.set("showInfo", { kind : kind });
-    SharedInfos.set("alert", { "type" : "success", "msg" : 'Scegli cosa vuoi ' + $scope.dayNames[$index] + ' per ' + kind});
+    var mealKind = $scope.mealKinds.find((k) => k.name === kind );
+    SharedInfos.set("pickInfo", { day: $index, kind: kind, meal : DailyPlan.mealFor($scope.thisWeek[$index], kind), tag: mealKind.tag });
+    SharedInfos.set("alert", { "type" : "success", "msg" : 'Scegli cosa vuoi ' + $scope.dayNames[$index] + ' per ' + kind + ', poi aggiungilo al planner cliccando su "Conferma"'});
     $location.url('/mealsGallery');
   };
 

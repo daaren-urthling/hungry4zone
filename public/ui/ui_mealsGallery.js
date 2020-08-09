@@ -26,7 +26,11 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   $scope.tags = [];
   if (SharedInfos.has("pickInfo"))  {
     $scope.pickInfo = SharedInfos.get("pickInfo");
-    $scope.tags.push({ "text" : $scope.pickInfo.kind});
+    if ($scope.pickInfo.tag) {
+      $scope.tags.push({ "text" : $scope.pickInfo.tag});
+    } else {
+      $scope.tags.push({ "text" : $scope.pickInfo.kind});
+    }
   }
 
   if (SharedInfos.has("showInfo"))  {

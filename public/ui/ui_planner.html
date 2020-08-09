@@ -42,9 +42,9 @@
             </div>
           </td>
 
-          <td ng-show="kind.short" width="10px" height="20px" class="h4z-planner-titles">&nbsp;</td>
-          <td ng-show="kind.short" width="14%" ng-repeat="day in dayNames" style="text-align:center; vertical-align:middle" ng-style="{{todayStyle($index,'td')}}" ng-click="onShortMealClicked($index, kind.name, $event)" >
-            <em>{{kind.name}}</em>
+          <td ng-show="kind.short" width="10px" height="20px" class="h4z-planner-titles"><strong>Sp.</strong></td>
+          <td ng-show="kind.short" width="14%" ng-repeat="day in dayNames" h4z-meal-for="meal=mealFor($index, kind.name)" class="h4z-planner-short-meal" ng-style="{{todayStyle($index,'td')}}" ng-click="onShortMealClicked($index, kind.name, $event)" >
+            <em>{{meal ? meal.name : kind.name}}</em>
           </td>
       </tr>
       <tr style="border:0px;">
@@ -71,7 +71,7 @@
   <div class="modal-body">
    <table>
    <tr ng-repeat="meal in dailyPlan.meals | kindSort:mealKinds">
-     <td width="5%" style="border-right: 1px solid">
+     <td width="5%" style="border-right: 1px solid;white-space: nowrap;">
      <div class="h4z-vertical-text"><h4>{{meal.kind}}</h4></div>
      </td>
      <td style="padding:3px">

@@ -191,6 +191,15 @@ tags-input .host {
   text-align: center;
 }
 
+.h4z-planner-short-meal {
+  text-align: center;
+  vertical-align: middle;
+  cursor: pointer;
+  white-space: nowrap;
+  max-width: 1px;
+  overflow-x: hidden;
+}
+
 .h4z-planner-meal-bottom {
   position:absolute;
   bottom: 0;
