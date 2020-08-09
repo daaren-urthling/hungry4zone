@@ -1,3 +1,7 @@
+# MongoDB temporary files
+SampleData/journal/*
+SampleData/mongod.lock
+
 # Logs
 logs
 *.log
