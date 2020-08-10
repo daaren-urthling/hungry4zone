@@ -1,0 +1,83 @@
+[{
+  "_id": {
+    "$oid": "556b0a9e8619d9240e13143e"
+  },
+  "name": "admin",
+  "email": "admin@hungry4zone.com",
+  "salt": "RxLSQHaV+RlfSWub6sA9W6fxnQXZ2VWX3+u/XHG2/pD2K44zHB6GRLs9S8kbIn5uYdVx05cJPZ1+wPRHIor1Q0gWv3mp/Bh8lhBZn64CsQtCGmieP+5j3YBN7PJPJM9Z8zCEFiOwlbpZPpYgV8Yt/OA8v8L9iU+KGtxCYPYpV28=",
+  "hash": "GbKY0xEPpjLuzxvJUujyyV/svkUywFlRCUDJK8VLXYRyO4RgWCP3gcDAozn61BrnjMAY56N5tL72G9edCDWwwsjo5b2exIH3F9e6PIw9OSVeJThXZ/na49tZTo+vCom/g/v5cCtlbUPfRkHejXEP9nALWGygarZhvyIQJEgCV/k=",
+  "isAdmin": true,
+  "created": {
+    "$date": "2015-05-31T13:20:30.983Z"
+  },
+  "__v": 0,
+  "resetPin": ""
+},{
+  "_id": {
+    "$oid": "55d9d19fc67a6a441a0067d6"
+  },
+  "name": "Renée",
+  "email": "renata.pittaluga@yahoo.it",
+  "salt": "HY9EyUE4X8U0X5YV5FlYjDfOuwUMkujILg2yvHzUYF83Lugaz0zz5tpo1JVROYPONQ9AP6wklow0ZQ3dVabtqf1jQzdoIp42+VJM2BxDd0ADAx/V2PzmDSF++EN0EMcaY7mAKXNhKvhGOBpN8YBMqS+C3XpLJirwx2xWxs4Xjlk=",
+  "hash": "LgmPiHxOYh04b4H0MHlzSg8IC8xu60h9swS1W1Zzmhd78nBLssUBW1Dw7XycH9jzgiRUUoygEH1DgAfjjwORywxrSiNsLLgmFk5U9iwR6cZoo8vfAxcc12xWHeoUMlQdf2UDvTIH13+SkE10+dE19hi4+Tf3ND1PzLMPW1Ln0r0=",
+  "isAdmin": false,
+  "created": {
+    "$date": "2015-08-23T13:58:55.224Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "59b047bf57bae9741af9ffcb"
+  },
+  "name": "Iliana Mous",
+  "email": "ilianamous@gmail.com",
+  "salt": "p/eY2c78FKKYhExwsEPEGTQw1tJhhY1Dr4adjvgzLGVG5MeI+hu9fv+YCMknQU1a7WCdsv/Yd/ZhTP7sX4BbCcWmvM/aT2AKsLAHTLxWYqqpOlOTBCoJsWzMxzt96dCCHLwxU8yrN14hnTsyVXgWgof2jBosvQCmnanpzQK2tFs=",
+  "hash": "DkeEm+KY+/Hb2zbOzwK/S6KsfnSUHGqCwsqNGwNTvN2vHbFfK77X/c1RxIjRzYV/yaWonv5NcHpdIIG3JTo099+X/cRyHnZZuyVPfPC7Ed0E3t4AI2Js1De5/0LFvRdzql2ZS7a9CuwE07hsbaTHr8sUNErVvtXOk/XdGEqa/Wg=",
+  "isAdmin": false,
+  "created": {
+    "$date": "2017-09-06T19:08:47.196Z"
+  },
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "556b0b5b8619d9240e13143f"
+  },
+  "name": "Andrea",
+  "email": "andrea_rinaldi@hotmail.it",
+  "salt": "myPz5kElqjLgAgRW5veSZ78KfLBjL4cZPhSrZyi0L4cO/im03VqXejDHssn0mKvHg6uWqP6rvBzwz/ZSLtB9bfrQr4SToDUYVTtVQ4eF5MwN187pf5dxtzX5E/IIeh7ypqrSXy2Felqz3POCIHAU6rduApF+J/SEtFQImIEAPfE=",
+  "hash": "BlV6z1OUK6QiCeeERS25klymmE3ylUudcFgZpf9xOAurXDtVdAolC/7hrvE1Y0c0N5Q1yMHHmuOz/8kxb6cCgyHHBvFSl2GF40ROm0TqDdZH/RPsAhVaOj99EBYgO93/+E52NXdC8r9gGKlP4mi0tUs49YwDf4ubWMLf/B1R+A8=",
+  "isAdmin": false,
+  "created": {
+    "$date": "2015-05-31T13:23:39.220Z"
+  },
+  "__v": 0,
+  "resetPin": ""
+},{
+  "_id": {
+    "$oid": "5a507d16cfa7e22c1ec16cf2"
+  },
+  "name": "Andrea",
+  "email": "severian_it@hotmail.com",
+  "salt": "gsbFVKb326ARobSeme3zsdEWKDRYO1kigvZAl/gL+pcFyRu5eM+5qPAuF7DoEK56IXSozkb79m7Itjmqapuh2drBTWH/YH73mlbDzrUi9x8dEsdx55Sd4Du5v7xUEaHWl0hjr+BmGQkjLPTb+4qZ0dWt9d1+IOes4zDWyD+l20U=",
+  "hash": "y27hCYQnAdu20lWxjYzOf8t/e/ywphD5WtAmksQ1mX9TfGyY0Y2rNcv5gfY2TUGdVvXhymoaiVWP0pm2xQFweOqd1MGGOR3bcZM5v0tAJXiNgujTygN3NJ2SQFSu9/qXNozdnt85K1bIu2rPhrg5vUpDNl6C2+Ggh6KRc5ytfoc=",
+  "isAdmin": false,
+  "created": {
+    "$date": "2018-01-06T07:39:02.613Z"
+  },
+  "__v": 0,
+  "resetPin": ""
+},{
+  "_id": {
+    "$oid": "5b9526d49eb7a0a006e9ffe3"
+  },
+  "name": "Daaren",
+  "email": "daaren.urthling@hotmail.com",
+  "salt": "xjdW4OOtlWPJP7BYGCPdKQJkBWFImQ9teDr8XZGbyhe1sn9p3YrG72DOWe0EebuVpoOXyniTzzbBFo4uAI/xcDIAcD0Ym/BvL08oGPI9u7eZ2bWSf/XPDQp2jM5/e6swHwiGxth90Na5Q3GiTyKek+2rMORmC1C9qBZ9XIP7GUs=",
+  "hash": "Z2sz+jQpMT5pPqaxHTW4KQWXZYrDH+Yh8SFqoScJqvzNs1IzQC1Qyp9hCayR+wiCwVxe0wlRCBnpS78sA44apQn7eB9e3v/9jmqs7Fy/nWHgal169F3F8/ClMyOkrJWBKLIS4zbp0B33463J46YmaeOifB4nPy0HUTE9ukV1Wtk=",
+  "isAdmin": false,
+  "created": {
+    "$date": "2018-09-09T13:57:40.047Z"
+  },
+  "__v": 0,
+  "resetPin": ""
+}]

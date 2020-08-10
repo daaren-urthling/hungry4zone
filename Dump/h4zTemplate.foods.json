@@ -1,0 +1,1673 @@
+[{
+  "_id": {
+    "$oid": "5524456d3f3bb3e8267849a9"
+  },
+  "name": "Albicocche",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 0.4,
+  "fats": 0.1,
+  "carbohydrates": 6.8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5524458f3f3bb3e8267849aa"
+  },
+  "name": "Baccalà ammollato",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 21.6,
+  "fats": 1,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5524458f3f3bb3e8267849ab"
+  },
+  "name": "Basilico",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 3.15,
+  "fats": 0.64,
+  "carbohydrates": 2.65,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5524458f3f3bb3e8267849ac"
+  },
+  "name": "Branzino (spigola)",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 16.5,
+  "fats": 1.5,
+  "carbohydrates": 0.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5524458f3f3bb3e8267849ad"
+  },
+  "name": "Bietole",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.3,
+  "fats": 0.1,
+  "carbohydrates": 2.8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5524458f3f3bb3e8267849ae"
+  },
+  "name": "Bresaola",
+  "type": "carne",
+  "source": 2,
+  "proteins": 32,
+  "fats": 2.6,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5524458f3f3bb3e8267849af"
+  },
+  "name": "Broccoli",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 3,
+  "fats": 0.4,
+  "carbohydrates": 3.1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5524458f3f3bb3e8267849b0"
+  },
+  "name": "Calamari",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 12.6,
+  "fats": 1.7,
+  "carbohydrates": 0.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5524458f3f3bb3e8267849b1"
+  },
+  "name": "Carciofi freschi",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 2.7,
+  "fats": 0.2,
+  "carbohydrates": 2.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5524458f3f3bb3e8267849b2"
+  },
+  "name": "Carciofini sott'olio",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.8,
+  "fats": 5.7,
+  "carbohydrates": 2.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5524458f3f3bb3e8267849b3"
+  },
+  "name": "Carne manzo magra",
+  "type": "carne",
+  "source": 2,
+  "proteins": 20.7,
+  "fats": 5.1,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318259"
+  },
+  "name": "Albume",
+  "type": "uova",
+  "source": 3,
+  "proteins": 10.9,
+  "fats": 0.1,
+  "carbohydrates": 0.8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31825a"
+  },
+  "name": "Cavolini di Bruxelles",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 4.2,
+  "fats": 0.5,
+  "carbohydrates": 4.3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31825b"
+  },
+  "name": "Cipolle",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1,
+  "fats": 0.1,
+  "carbohydrates": 5.7,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31825c"
+  },
+  "name": "Fagiolini",
+  "type": "legumi",
+  "source": 2,
+  "proteins": 2.1,
+  "fats": 0,
+  "carbohydrates": 2.4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31825d"
+  },
+  "name": "Carote",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.2,
+  "fats": 0.2,
+  "carbohydrates": 7.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31825e"
+  },
+  "name": "Ceci in scatola",
+  "type": "legumi",
+  "source": 3,
+  "proteins": 6.9,
+  "fats": 1.7,
+  "carbohydrates": 14.2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31825f"
+  },
+  "name": "Fagioli",
+  "type": "legumi",
+  "source": 2,
+  "proteins": 23.6,
+  "fats": 2.5,
+  "carbohydrates": 51.7,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318260"
+  },
+  "name": "Feta",
+  "type": "latticini",
+  "source": 1,
+  "proteins": 15.6,
+  "fats": 20.2,
+  "carbohydrates": 1.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318261"
+  },
+  "name": "Avocado",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 4.4,
+  "fats": 23,
+  "carbohydrates": 1.8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318262"
+  },
+  "name": "Cavolo nero",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 4.3,
+  "fats": 0.9,
+  "carbohydrates": 9,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318263"
+  },
+  "name": "Crauti",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.8,
+  "fats": 0.09,
+  "carbohydrates": 5.41,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318264"
+  },
+  "name": "Farina Manitoba",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 13,
+  "fats": 1,
+  "carbohydrates": 68,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318265"
+  },
+  "name": "Cavallo",
+  "type": "carne",
+  "source": 2,
+  "proteins": 21.7,
+  "fats": 2.7,
+  "carbohydrates": 0.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318266"
+  },
+  "name": "Cetrioli",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 0.7,
+  "fats": 0.5,
+  "carbohydrates": 1.8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318267"
+  },
+  "name": "Fagioli cannellini",
+  "type": "legumi",
+  "source": 2,
+  "proteins": 7.4,
+  "fats": 0.6,
+  "carbohydrates": 14.4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318269"
+  },
+  "name": "Fragole",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 0.9,
+  "fats": 0.4,
+  "carbohydrates": 5.3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318268"
+  },
+  "name": "Arrosto Maiale Affumicato (lidl)",
+  "type": "carne",
+  "source": 2,
+  "proteins": 20,
+  "fats": 8,
+  "carbohydrates": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31826a"
+  },
+  "name": "Germogli di Soia",
+  "type": "soia",
+  "source": 3,
+  "proteins": 6.2,
+  "fats": 1.4,
+  "carbohydrates": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31826b"
+  },
+  "name": "Mais in scatola",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 3.3,
+  "fats": 1.2,
+  "carbohydrates": 17.8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31826c"
+  },
+  "name": "Melone",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 0.8,
+  "fats": 0.2,
+  "carbohydrates": 7.4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31826d"
+  },
+  "name": "Nocciole",
+  "type": "noci",
+  "source": 3,
+  "proteins": 15,
+  "fats": 62.4,
+  "carbohydrates": 8.2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31826e"
+  },
+  "name": "Pancetta",
+  "type": "carne",
+  "source": 1,
+  "proteins": 8.4,
+  "fats": 69,
+  "carbohydrates": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31826f"
+  },
+  "name": "Patate",
+  "type": "ortaggi",
+  "source": 1,
+  "proteins": 2.1,
+  "fats": 1,
+  "carbohydrates": 18,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318270"
+  },
+  "name": "Piadina",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 7,
+  "fats": 14,
+  "carbohydrates": 50.3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318271"
+  },
+  "name": "Polpo",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 10.6,
+  "fats": 1,
+  "carbohydrates": 1.4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318272"
+  },
+  "name": "Ricottina Santa Lucia Light",
+  "type": "latticini",
+  "source": 2,
+  "proteins": 9,
+  "fats": 6,
+  "carbohydrates": 6.3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318273"
+  },
+  "name": "Salsiccia",
+  "type": "carne",
+  "source": 1,
+  "proteins": 19.43,
+  "fats": 28.36,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318274"
+  },
+  "name": "Succo Red Grape Rauch",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 0.1,
+  "fats": 0,
+  "carbohydrates": 14.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318275"
+  },
+  "name": "Wasa (original)",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 9,
+  "fats": 1.5,
+  "carbohydrates": 61.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318276"
+  },
+  "name": "Yogurt Vaniglia Merano",
+  "type": "latticini",
+  "source": 2,
+  "proteins": 3.6,
+  "fats": 3.5,
+  "carbohydrates": 15.7,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318277"
+  },
+  "name": "Funghi",
+  "type": "funghi",
+  "source": 3,
+  "proteins": 3.1,
+  "fats": 0.34,
+  "carbohydrates": 3.26,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318278"
+  },
+  "name": "Jocca",
+  "type": "latticini",
+  "source": 2,
+  "proteins": 10,
+  "fats": 4.5,
+  "carbohydrates": 3.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d318279"
+  },
+  "name": "Mango",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 1,
+  "fats": 0.2,
+  "carbohydrates": 12.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31827a"
+  },
+  "name": "Minestrone Leggerezza Orogel",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.7,
+  "fats": 0.1,
+  "carbohydrates": 3.2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31827b"
+  },
+  "name": "Olio di Oliva",
+  "type": "grassi",
+  "source": 3,
+  "proteins": 0,
+  "fats": 100,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31827c"
+  },
+  "name": "Passata Pomodoro Alce Nero",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.7,
+  "fats": 0,
+  "carbohydrates": 5.3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31827d"
+  },
+  "name": "Pesche",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 0.8,
+  "fats": 0.1,
+  "carbohydrates": 6.1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447173ca737cc9d31827e"
+  },
+  "name": "Pistacchi",
+  "type": "noci",
+  "source": 1,
+  "proteins": 18.1,
+  "fats": 56.1,
+  "carbohydrates": 8.2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31827f"
+  },
+  "name": "Prosciutto cotto",
+  "type": "carne",
+  "source": 2,
+  "proteins": 22.2,
+  "fats": 4.4,
+  "carbohydrates": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318281"
+  },
+  "name": "Simmenthal",
+  "type": "carne",
+  "source": 2,
+  "proteins": 11.5,
+  "fats": 1.5,
+  "carbohydrates": 0.2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318280"
+  },
+  "name": "Rucola",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 2.6,
+  "fats": 0.3,
+  "carbohydrates": 3.9,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318282"
+  },
+  "name": "Tonno Affumicato",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 33.5,
+  "fats": 1.1,
+  "carbohydrates": 0.1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318283"
+  },
+  "name": "Yogurt Greco Mevgal 0%",
+  "type": "latticini",
+  "source": 2,
+  "proteins": 8,
+  "fats": 0,
+  "carbohydrates": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318284"
+  },
+  "name": "Zucchine",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.3,
+  "fats": 0.1,
+  "carbohydrates": 1.4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318285"
+  },
+  "name": "Gallette di riso",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 8.8,
+  "fats": 1.5,
+  "carbohydrates": 82,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318286"
+  },
+  "name": "Kebab Tacchino AIA",
+  "type": "carne",
+  "source": 3,
+  "proteins": 22,
+  "fats": 8.5,
+  "carbohydrates": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318288"
+  },
+  "name": "Minestrone Orogel",
+  "type": "ortaggi",
+  "source": 2,
+  "proteins": 2.4,
+  "fats": 0.5,
+  "carbohydrates": 6.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318287"
+  },
+  "name": "Marmellata Mirtilli Rigoni",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 0.7,
+  "fats": 0,
+  "carbohydrates": 37.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318289"
+  },
+  "name": "Olive Nere",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.6,
+  "fats": 25.1,
+  "carbohydrates": 0.8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31828a"
+  },
+  "name": "Pasta di Semola",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 10.8,
+  "fats": 0.3,
+  "carbohydrates": 82.8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31828b"
+  },
+  "name": "Pesto",
+  "type": "ortaggi",
+  "source": 1,
+  "proteins": 6.79,
+  "fats": 35.11,
+  "carbohydrates": 1.4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31828c"
+  },
+  "name": "Pollo - Coscia",
+  "type": "carne",
+  "source": 3,
+  "proteins": 17.9,
+  "fats": 6.5,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31828d"
+  },
+  "name": "Prosciutto crudo (sgrassato)",
+  "type": "carne",
+  "source": 2,
+  "proteins": 30.5,
+  "fats": 5.1,
+  "carbohydrates": 0.3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31828e"
+  },
+  "name": "Salmone affumicato",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 23,
+  "fats": 7.1,
+  "carbohydrates": 0.3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318290"
+  },
+  "name": "Tonno al Naturale",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 24,
+  "fats": 0.5,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31828f"
+  },
+  "name": "Speck",
+  "type": "carne",
+  "source": 2,
+  "proteins": 28.3,
+  "fats": 20.9,
+  "carbohydrates": 0.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318291"
+  },
+  "name": "Yogurt Greco Mevgal Extra",
+  "type": "latticini",
+  "source": 2,
+  "proteins": 4.8,
+  "fats": 10,
+  "carbohydrates": 3.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318292"
+  },
+  "name": "Finocchi",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.2,
+  "fats": 0,
+  "carbohydrates": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318293"
+  },
+  "name": "Gamberetti",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 13.6,
+  "fats": 0.6,
+  "carbohydrates": 2.9,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318294"
+  },
+  "name": "Lattuga",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.8,
+  "fats": 0.4,
+  "carbohydrates": 2.2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318295"
+  },
+  "name": "Mele",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 0.4,
+  "fats": 0.1,
+  "carbohydrates": 10.7,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318296"
+  },
+  "name": "Nespole",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 0.4,
+  "fats": 0.4,
+  "carbohydrates": 6.1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318297"
+  },
+  "name": "Olive Verdi",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 0.01,
+  "fats": 15,
+  "carbohydrates": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318298"
+  },
+  "name": "Pasta Voiello",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 14.5,
+  "fats": 2,
+  "carbohydrates": 69.2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d318299"
+  },
+  "name": "Piadella Mulino Bianco",
+  "type": "cereali",
+  "source": 2,
+  "proteins": 7,
+  "fats": 12.3,
+  "carbohydrates": 49.7,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31829a"
+  },
+  "name": "Pollo - Petto",
+  "type": "carne",
+  "source": 3,
+  "proteins": 22.2,
+  "fats": 0.9,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31829b"
+  },
+  "name": "Purea di Mele",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 0.4,
+  "fats": 0.2,
+  "carbohydrates": 15.3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31829c"
+  },
+  "name": "Salmone fresco",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 21,
+  "fats": 11,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31829d"
+  },
+  "name": "Stoccafisso (ammollato)",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 20.7,
+  "fats": 0.9,
+  "carbohydrates": 0.3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31829e"
+  },
+  "name": "Tortilla",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 8.5,
+  "fats": 5.9,
+  "carbohydrates": 50.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d31829f"
+  },
+  "name": "Yogurt Naturale Tigullio",
+  "type": "latticini",
+  "source": 2,
+  "proteins": 3.8,
+  "fats": 3.8,
+  "carbohydrates": 4.8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182a0"
+  },
+  "name": "Cavolo",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 2.1,
+  "fats": 0.1,
+  "carbohydrates": 2.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182a2"
+  },
+  "name": "Farina 00",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 11.5,
+  "fats": 1,
+  "carbohydrates": 76.9,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182a1"
+  },
+  "name": "Coda di Rospo",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 12.8,
+  "fats": 1,
+  "carbohydrates": 0.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182a3"
+  },
+  "name": "Frutti Rossi",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 1.18,
+  "fats": 0.4,
+  "carbohydrates": 7.1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182a4"
+  },
+  "name": "Insalatina acetelli Saclà",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 0.4,
+  "fats": 0.3,
+  "carbohydrates": 1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182a5"
+  },
+  "name": "Mandorle",
+  "type": "noci",
+  "source": 3,
+  "proteins": 22,
+  "fats": 55.3,
+  "carbohydrates": 4.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182a6"
+  },
+  "name": "Merluzzo",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 17,
+  "fats": 0.3,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182a7"
+  },
+  "name": "Noci",
+  "type": "noci",
+  "source": 3,
+  "proteins": 14,
+  "fats": 66,
+  "carbohydrates": 12,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182a8"
+  },
+  "name": "Parmigiano",
+  "type": "latticini",
+  "source": 1,
+  "proteins": 36,
+  "fats": 26,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182a9"
+  },
+  "name": "Peperoni",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 0.9,
+  "fats": 0.3,
+  "carbohydrates": 4.2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182aa"
+  },
+  "name": "Piselli surgelati",
+  "type": "legumi",
+  "source": 1,
+  "proteins": 5.7,
+  "fats": 0.4,
+  "carbohydrates": 7.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182ab"
+  },
+  "name": "Pomodori",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.2,
+  "fats": 0.2,
+  "carbohydrates": 2.8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182ac"
+  },
+  "name": "Riso",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 7,
+  "fats": 0.6,
+  "carbohydrates": 87.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182ad"
+  },
+  "name": "Sedano",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 2.3,
+  "fats": 0.2,
+  "carbohydrates": 2.4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182ae"
+  },
+  "name": "Tacchino - fesa",
+  "type": "carne",
+  "source": 3,
+  "proteins": 23.7,
+  "fats": 1.2,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182af"
+  },
+  "name": "Wurstel Pollo",
+  "type": "carne",
+  "source": 1,
+  "proteins": 12.9,
+  "fats": 16.7,
+  "carbohydrates": 3.1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552447183ca737cc9d3182b0"
+  },
+  "name": "Melanzane",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.1,
+  "fats": 0.4,
+  "carbohydrates": 2.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552a2c9d5eaa67789389dfe5"
+  },
+  "name": "Fave",
+  "type": "ortaggi",
+  "source": 2,
+  "proteins": 5.4,
+  "fats": 0,
+  "carbohydrates": 4.2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552a2cf05eaa67789389dfe6"
+  },
+  "name": "Salame nostrano",
+  "type": "carne",
+  "source": 1,
+  "proteins": 27.3,
+  "fats": 28.5,
+  "carbohydrates": 1.1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552a2d7e5eaa67789389dfe7"
+  },
+  "name": "Pecorino",
+  "type": "latticini",
+  "source": 1,
+  "proteins": 28.5,
+  "fats": 28,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552b755fcd3397942d910c8a"
+  },
+  "name": "Primo Sale",
+  "type": "latticini",
+  "source": 1,
+  "proteins": 16.47,
+  "fats": 20.06,
+  "carbohydrates": 1.9,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552bd1a55c1711d025f0fcc9"
+  },
+  "name": "Acciughe o Alici",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 16.8,
+  "fats": 2.6,
+  "carbohydrates": 1.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "552bd25ad7f4b678a552aa31"
+  },
+  "name": "Acciughe o Alici sotto sale",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 25,
+  "fats": 3.1,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "55433b220eaf66a074baf32c"
+  },
+  "name": "Fette Biscottate Panmonviso",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 7.8,
+  "fats": 11.7,
+  "carbohydrates": 74.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5543b9265f7f28c4518b809f"
+  },
+  "name": "Albicocche secche",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 4.8,
+  "fats": 0.7,
+  "carbohydrates": 43.4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5543b9655f7f28c4518b80a0"
+  },
+  "name": "Pomodori secchi",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 14.1,
+  "fats": 3,
+  "carbohydrates": 43.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "554f167b1742d6108979080b"
+  },
+  "name": "Alghe di mare (Wakame)",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 24.1,
+  "fats": 4,
+  "carbohydrates": 41.8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "554f217a1742d6108979080c"
+  },
+  "name": "Pasta di riso",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 7,
+  "fats": 1,
+  "carbohydrates": 82,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "55635c914f993be0326b60f9"
+  },
+  "name": "Crackers \"buoni cosí\" Galbusera",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 9.4,
+  "fats": 12.6,
+  "carbohydrates": 70.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "55a0c983f63e49e813425acd"
+  },
+  "name": "Bistecchine di soia Valsoia",
+  "type": "legumi",
+  "source": 3,
+  "proteins": 12,
+  "fats": 8,
+  "carbohydrates": 8.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "55b153aa12e136541d0a7391"
+  },
+  "name": "Pangrattato",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 13.35,
+  "fats": 5.3,
+  "carbohydrates": 71.98,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "55b643efc0f7a8503c20ae41"
+  },
+  "name": "Polpo (carpaccio)",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 21.2,
+  "fats": 2,
+  "carbohydrates": 2.8,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "55eaf3d8099b8654227b02d3"
+  },
+  "name": "Sfilacci di cavallo",
+  "type": "carne",
+  "source": 2,
+  "proteins": 35.84,
+  "fats": 4.71,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "55f343263b0ddedc0ea12b3a"
+  },
+  "name": "Seppioline (surgelate)",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 14.1,
+  "fats": 0.4,
+  "carbohydrates": 0.7,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "55f3f7ee1fbd151c14ecb51b"
+  },
+  "name": "Farina di ceci",
+  "type": "cereali",
+  "source": 2,
+  "proteins": 21.8,
+  "fats": 4.9,
+  "carbohydrates": 54.3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5602fa26145941d412d439d9"
+  },
+  "name": "Zucca",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.1,
+  "fats": 0.1,
+  "carbohydrates": 3.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "563287e4adcb8cc00e4cd02c"
+  },
+  "name": "Cavolfiore",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 3.2,
+  "fats": 0.2,
+  "carbohydrates": 2.7,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "563dd02df952360c666497d5"
+  },
+  "name": "Latte di mandorle",
+  "type": "noci",
+  "source": 2,
+  "proteins": 1.5,
+  "fats": 3.9,
+  "carbohydrates": 11.9,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "566dd02d88c74f880cae1068"
+  },
+  "name": "zucchero di canna",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 0,
+  "fats": 0,
+  "carbohydrates": 101.3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "566dd08488c74f880cae1069"
+  },
+  "name": "olio di semi",
+  "type": "grassi",
+  "source": 1,
+  "proteins": 0,
+  "fats": 100,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "566dd18288c74f880cae106a"
+  },
+  "name": "Aceto",
+  "type": "frutta",
+  "source": 2,
+  "proteins": 0.4,
+  "fats": 0,
+  "carbohydrates": 0.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "56894c1b2a29f11c1e0072fb"
+  },
+  "name": "Lenticchie",
+  "type": "legumi",
+  "source": 3,
+  "proteins": 25,
+  "fats": 2.5,
+  "carbohydrates": 54,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "56895cad959ce07c1be739d8"
+  },
+  "name": "Arachidi",
+  "type": "noci",
+  "source": 1,
+  "proteins": 29,
+  "fats": 50,
+  "carbohydrates": 8.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "571f5143d0abca986a0fd415"
+  },
+  "name": "spatzle",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 5.5,
+  "fats": 1.8,
+  "carbohydrates": 28,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "57656693719119b44c68572f"
+  },
+  "name": "Quinoa",
+  "type": "cereali",
+  "source": 2,
+  "proteins": 14.8,
+  "fats": 5,
+  "carbohydrates": 58.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "576566c1719119b44c685730"
+  },
+  "name": "Quinoa rossa",
+  "type": "cereali",
+  "source": 2,
+  "proteins": 12.1,
+  "fats": 7.6,
+  "carbohydrates": 66.1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "57665c535e4b12d43f41b727"
+  },
+  "name": "Mozzarella",
+  "type": "latticini",
+  "source": 1,
+  "proteins": 18,
+  "fats": 17,
+  "carbohydrates": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "57777c58c4b21a1c53126003"
+  },
+  "name": "Mozzarella di bufala",
+  "type": "latticini",
+  "source": 2,
+  "proteins": 14,
+  "fats": 21,
+  "carbohydrates": 0.5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "57777c73c4b21a1c53126004"
+  },
+  "name": "Mozzarella light",
+  "type": "latticini",
+  "source": 2,
+  "proteins": 19,
+  "fats": 9,
+  "carbohydrates": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "578a00fe6f2e0494312cbfe2"
+  },
+  "name": "Cozze (sgusciate)",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 11.7,
+  "fats": 2.7,
+  "carbohydrates": 3.4,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5909eff4f4f3e7dc2fb96cd3"
+  },
+  "name": "Cime di rapa",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 2.9,
+  "fats": 0.3,
+  "carbohydrates": 2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "590c7aa9583cce3c5f5e89e4"
+  },
+  "name": "Asparagi",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 3.6,
+  "fats": 0.2,
+  "carbohydrates": 3.3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "590c7f5ebb3a3de0212bd598"
+  },
+  "name": "Amido di mais",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 0.26,
+  "fats": 0.05,
+  "carbohydrates": 91.27,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "590d86ee1796ce0424913f14"
+  },
+  "name": "capperi sott'aceto",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 2.6,
+  "fats": 0.1,
+  "carbohydrates": 2.1,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5998139cae0c27601bd6e406"
+  },
+  "name": "Fichi",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 0.9,
+  "fats": 0.2,
+  "carbohydrates": 11.2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "59a2b08edfce7cec1bd940a4"
+  },
+  "name": "Porri",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 2.1,
+  "fats": 0.1,
+  "carbohydrates": 5.2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "59a2b0e0dfce7cec1bd940a5"
+  },
+  "name": "Pane comune",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 8.1,
+  "fats": 0.2,
+  "carbohydrates": 64.7,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "59a2b168dfce7cec1bd940a6"
+  },
+  "name": "Pomodori pelati",
+  "type": "ortaggi",
+  "source": 3,
+  "proteins": 1.2,
+  "fats": 0.5,
+  "carbohydrates": 3,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "59a2b539dfce7cec1bd940ae"
+  },
+  "name": "Pinoli",
+  "type": "noci",
+  "source": 3,
+  "proteins": 29.6,
+  "fats": 47.8,
+  "carbohydrates": 5,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "59aab26875d278dc1c6b84d0"
+  },
+  "name": "Totani (calamari)",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 13.1,
+  "fats": 1.5,
+  "carbohydrates": 0.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "59aab4eb75d278dc1c6b84d1"
+  },
+  "name": "Scamorza affumicata",
+  "type": "latticini",
+  "source": 1,
+  "proteins": 22,
+  "fats": 21.5,
+  "carbohydrates": 1.2,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "59aac18116fc78bc22c601ba"
+  },
+  "name": "Cocktail di Mare Gelo House",
+  "type": "pesce",
+  "source": 3,
+  "proteins": 12.22,
+  "fats": 1.4,
+  "carbohydrates": 1.61,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "59aac2f216fc78bc22c601cd"
+  },
+  "name": "Hamburger di pollo",
+  "type": "carne",
+  "source": 2,
+  "proteins": 17,
+  "fats": 7.1,
+  "carbohydrates": 0,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5a4e98ae72baae5810abfb01"
+  },
+  "name": "Fichi Secchi",
+  "type": "frutta",
+  "source": 3,
+  "proteins": 3.5,
+  "fats": 2.7,
+  "carbohydrates": 58,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f2550753a78b42c0e1bb1c8"
+  },
+  "name": "Kellogg's All-Bran Prebiotic",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 15,
+  "fats": 16,
+  "carbohydrates": 42,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f25540d3a78b42c0e1bb1d7"
+  },
+  "name": "Latte di mandorle Carrefour bio",
+  "type": "noci",
+  "source": 2,
+  "proteins": 1.9,
+  "fats": 5,
+  "carbohydrates": 4.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f2555c23a78b42c0e1bb1d8"
+  },
+  "name": "Corn Flakes",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 7,
+  "fats": 0.9,
+  "carbohydrates": 84,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f26ac0e811c822436c037cc"
+  },
+  "name": "Semolino",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 11.5,
+  "fats": 0.5,
+  "carbohydrates": 77.6,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f26cadaffe10f381de64e8b"
+  },
+  "name": "Wasa (integrale)",
+  "type": "cereali",
+  "source": 1,
+  "proteins": 10,
+  "fats": 1.5,
+  "carbohydrates": 59,
+  "__v": 0
+},{
+  "_id": {
+    "$oid": "5f295e920301351c3dae8a91"
+  },
+  "name": "barrette sglut",
+  "type": "noci",
+  "source": 1,
+  "proteins": 26.7,
+  "fats": 26.4,
+  "carbohydrates": 32.7,
+  "__v": 0
+}]
