@@ -40,17 +40,28 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
     });
   }
 
-
   $sessionStorage.PlannerController = { userId: $sessionStorage.loggedUser.id, thisWeek : $scope.thisWeek, startDate : $scope.startDate, endDate : $scope.endDate };
 
   if (SharedInfos.has("pickInfo"))  {
     pickInfo = SharedInfos.get("pickInfo");
-    dailyPlan = $scope.thisWeek[pickInfo.day];
-    m = DailyPlan.indexOf(dailyPlan, pickInfo.kind);
+    assignDailyMeal(pickInfo.day, pickInfo.kind, pickInfo.meal);
+  }
+  if (SharedInfos.has("dailyInfo"))  {
+    dailyInfo = SharedInfos.get("dailyInfo");
+    if (SharedInfos.has("mealInfo")) {
+      mealInfo = SharedInfos.get("mealInfo");
+      assignDailyMeal(dailyInfo.day, dailyInfo.kind, mealInfo.meal);
+    }
+  }
+
+  //-----------------------------------------------------------------------------
+  function assignDailyMeal(day, kind, meal) {
+    dailyPlan = $scope.thisWeek[day];
+    m = DailyPlan.indexOf(dailyPlan, kind);
     if (m >= 0)
-      dailyPlan.meals[m].meal = pickInfo.meal;
+      dailyPlan.meals[m].meal = meal;
     else
-      dailyPlan.meals.push({ kind : pickInfo.kind, meal : pickInfo.meal});
+      dailyPlan.meals.push({ kind : kind, meal : meal});
 
     store(dailyPlan);
   }
@@ -108,6 +119,24 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   };
 
   //-----------------------------------------------------------------------------
+  $scope.onEditClicked = function(meal, kind, index){
+    SharedInfos.set("mealInfo", { meal: meal, action : "edit", noRemove: true });
+    SharedInfos.set("dailyInfo", { day: index, kind : kind });
+    SharedInfos.set("returnTo", "/planner");
+    $location.url('/meal');
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onDuplicateClicked = function(meal, kind, index){
+    SharedInfos.set("alert", { "type" : "success", "msg" : 'Crea un nuovo pasto con ingredienti simili a "' + meal.name + '", poi aggiungilo al tuo ricettario ed al planner cliccando su "Salva"'});
+    // clone the meal to not change the plan if canceled
+    SharedInfos.set("mealInfo", { meal: jQuery.extend(true, {}, meal), action : "new" });
+    SharedInfos.set("dailyInfo", { day: index, kind : kind });
+    SharedInfos.set("returnTo", "/planner");
+    $location.url('/calculator');
+  };
+
+  //-----------------------------------------------------------------------------
   $scope.onDailyDetailClicked = function($index, $event) {
     if ($event)
       $event.stopPropagation();
@@ -133,7 +162,18 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
     modalInstance.result.then(function (result) {
       switch (result.action) {
       }
-    }, function () {
+    }, function (result) {
+      switch (result.action) {
+        case 'close': return;
+        case 'duplicate':  {
+          $scope.onDuplicateClicked(result.meal.meal, result.meal.kind, $index);
+          return;
+        }
+        case 'edit': {
+          $scope.onEditClicked(result.meal.meal, result.meal.kind, $index);
+          return;
+        }
+      }      
     });
   };
 
@@ -172,7 +212,7 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
 // DailyPlanController - controller for ui_dailyPlan.html
 //=============================================================================
 
-app.controller('DailyPlanController', ['$scope', 'Foods', '$modalInstance', 'dailyPlan', 'dayName', 'mealKinds', function ($scope, Foods, $modalInstance, dailyPlan, dayName, mealKinds) {
+app.controller('DailyPlanController', ['$scope', 'Foods', '$modalInstance', 'dailyPlan', 'dayName', 'mealKinds', '$sessionStorage', function ($scope, Foods, $modalInstance, dailyPlan, dayName, mealKinds, $sessionStorage) {
 
   $scope.dailyPlan = dailyPlan;
   $scope.dayName = dayName;
@@ -189,6 +229,29 @@ app.controller('DailyPlanController', ['$scope', 'Foods', '$modalInstance', 'dai
     $modalInstance.dismiss('close');
   };
 
+  //-----------------------------------------------------------------------------
+  $scope.onDuplicateClicked = function (meal, $event) {
+    if ($event)
+    $event.stopPropagation();
+    $modalInstance.dismiss({action: 'duplicate', meal: meal });
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onEditClicked = function (meal, $event) {
+    if ($event)
+    $event.stopPropagation();
+    $modalInstance.dismiss({action: 'edit', meal: meal });
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.isOwner = function(meal) {
+    return  $sessionStorage.loggedUser &&
+            (
+              $sessionStorage.loggedUser.isAdmin ||
+              meal.userId === $sessionStorage.loggedUser.id
+            );
+  };
+  
 }]);
 
 //=============================================================================

@@ -237,3 +237,7 @@ tags-input .host {
 .h4z-directions {
   white-space: pre-wrap;
 }
+
+.ml-10 {
+  margin-left: 10px;
+}

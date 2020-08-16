@@ -9,25 +9,19 @@ app.controller('CalculatorController', ['$scope', 'Meals', 'Foods', 'FoodTypes',
     mealInfo = SharedInfos.get("mealInfo");
     $scope.meal = mealInfo.meal;
     $scope.isNew = (mealInfo.action === "new");
-    $scope.foods = Foods.query({}, function success() {
-      Meals.reconnectFoods($scope.meal);
-      recalculate();
-      Meals.adjustTail($scope.meal);
-    });
+    $scope.noRemove = mealInfo.noRemove;
   } else if ($sessionStorage.CalculatorController) {
     $scope.meal = $sessionStorage.CalculatorController.meal;
     $scope.isNew = $sessionStorage.CalculatorController.isNew;
-    $scope.foods = Foods.query({}, function success() {
-      Meals.reconnectFoods($scope.meal);
-      recalculate();
-      Meals.adjustTail($scope.meal);
-    });
   } else {
     $scope.meal = new Meals();
     $scope.isNew = true;
-    Meals.adjustTail($scope.meal);
-    $scope.foods = Foods.query();
   }
+  $scope.foods = Foods.query({}, function success() {
+    Meals.reconnectFoods($scope.meal);
+    recalculate();
+    Meals.adjustTail($scope.meal);
+  });
 
   $sessionStorage.CalculatorController = { meal : $scope.meal, isNew : $scope.isNew };
 
@@ -143,11 +137,20 @@ app.controller('CalculatorController', ['$scope', 'Meals', 'Foods', 'FoodTypes',
   //-----------------------------------------------------------------------------
   $scope.onMealSaveClicked = function(){
     Meals.removeTail($scope.meal);
-    SharedInfos.set("mealInfo", { meal: $scope.meal, action : ($scope.isNew ? "new" : "edit") });
+    SharedInfos.set("mealInfo", { meal: $scope.meal, action : ($scope.isNew ? "new" : "edit"), noRemove: $scope.noRemove});
+
     // passing the meal to the meal editor the cache is no longer needed
     delete $sessionStorage.CalculatorController;
     $location.url('/meal');
   };
+
+  //-----------------------------------------------------------------------------
+  $scope.onCancelClicked = function(){
+    if (SharedInfos.has("returnTo")) {
+      var returnTo = SharedInfos.get("returnTo");
+      $location.url(returnTo);
+    }
+  }
 
   //-----------------------------------------------------------------------------
   $scope.onCloseAlert = function(){

@@ -83,6 +83,10 @@
             <tr><td style="padding-bottom: 5px; text-align:center"><span class="badge h4z-calories-label">{{meal.meal.totCalories}}</span> calorie&nbsp;&nbsp;<span class="badge">{{meal.meal.blocks}}</span> blocchi</td></tr>
             <tr><td style="padding-bottom: 5px; text-align:center"><span class="badge proteins-label">P {{meal.meal.blockProteins | number:1}}</span>&nbsp;<span class="badge fats-label">G {{meal.meal.blockFats | number:1}}</span>&nbsp;<span class="badge carbohydrates-label">C {{meal.meal.blockCarbohydrates | number:1}}</span></td></tr>
             <tr><td style="padding-bottom: 5px; text-align:center"><span ng-repeat="tag in meal.meal.tags"> <span class="badge h4z-tags-badge">{{tag.text}}</span>&nbsp;</span></td></tr>
+            <tr><td style="padding-bottom: 5px; text-align:center">
+              <span class="h4z-icon-button text-muted glyphicon glyphicon-duplicate" aria-hidden="true" ng-click="onDuplicateClicked(meal, $event)"></span>
+              <span class="h4z-icon-button text-muted glyphicon glyphicon-pencil ml-10" aria-hidden="true" ng-click="onEditClicked(meal, $event)" ng-show="isOwner(meal)"></span>
+            </tr>
           </table>
         </div>
         <div class="media-body">

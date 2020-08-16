@@ -10,6 +10,7 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
     mealInfo = SharedInfos.get("mealInfo");
     $scope.meal = mealInfo.meal;
     $scope.isNew = (mealInfo.action === "new");
+    $scope.canRemove = !mealInfo.noRemove;
     if ($scope.isNew) {
       if ($sessionStorage.loggedUser)
         if ($sessionStorage.loggedUser.isAdmin)
@@ -23,12 +24,13 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
   } else if ($sessionStorage.MealController) {
     $scope.meal = $sessionStorage.MealController.meal;
     $scope.isNew = $sessionStorage.MealController.isNew;
+    $scope.canRemove = $sessionStorage.canRemove;
   } else {
     $scope.isNew = true;
     $scope.meal = new Meals();
   }
 
-  $sessionStorage.MealController = { meal : $scope.meal, isNew : $scope.isNew };
+  $sessionStorage.MealController = { meal: $scope.meal, isNew: $scope.isNew, canRemove: $scope.canRemove };
 
   if (SharedInfos.has("imagePickerInfo"))  {
     imagePickerInfo = SharedInfos.get("imagePickerInfo");
@@ -55,6 +57,23 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
       });
   };
 
+  function returnToDefaultPage(cancel) {
+    if (SharedInfos.has("returnTo")) {
+      var returnTo = SharedInfos.get("returnTo");
+      if (!cancel) {
+        SharedInfos.set("mealInfo", { meal: $scope.meal, action : ($scope.isNew ? "new" : "edit") });
+      }
+      $location.url(returnTo);
+    } else {
+      if ($scope.isNew) {
+        SharedInfos.set("mealInfo", { meal: $scope.meal, action : "new" });
+        $location.url('/calculator');
+      }
+      else
+        $location.url('/mealsGallery');
+    }
+  }
+
   //-----------------------------------------------------------------------------
   $scope.onAddClicked = function(){
     if(!$scope.meal.name || $scope.meal.name.length < 1)
@@ -66,7 +85,13 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
     Meals.save($scope.meal, function success(result) {
         SharedInfos.set("alert", { "type" : "success", "msg" : "inserito un nuovo pasto: " + $scope.meal.name});
         delete $sessionStorage.MealController;
-        $location.url('/mealsGallery');
+        // retrieve the new meal id
+        Meals.search({name: $scope.meal.name }, function(result) { // success
+          $scope.meal._id  = result._id;
+          returnToDefaultPage();
+        }, function(httpResponse) { // failure
+          $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
+        });
     }, function failure(httpResponse) {
         $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
@@ -83,7 +108,7 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
     Meals.update({id: $scope.meal._id}, $scope.meal, function success(){
       SharedInfos.set("alert", { "type" : "success", "msg" : "Pasto modificato: " + $scope.meal.name});
       delete $sessionStorage.MealController;
-      $location.url('/mealsGallery/');
+      returnToDefaultPage();
     }, function failure(httpResponse) {
         $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
@@ -94,7 +119,7 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
     Meals.remove({id: $scope.meal._id}, function success(){
       SharedInfos.set("alert", { "type" : "warning", "msg" : "Pasto eliminato: " + $scope.meal.name});
       delete $sessionStorage.MealController;
-      $location.url('/mealsGallery');
+      returnToDefaultPage();
     }, function failure(httpResponse) {
         $scope.alert = { type : "danger", msg :GetErrorMessage(httpResponse) };
     });
@@ -104,17 +129,12 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
   $scope.onCancelClicked = function(){
     // after cancel the cache is no longer needed
     delete $sessionStorage.MealController;
-    if ($scope.isNew) {
-      SharedInfos.set("mealInfo", { meal: $scope.meal, action : "new" });
-      $location.url('/calculator');
-    }
-    else
-      $location.url('/mealsGallery');
+    returnToDefaultPage(true);
   };
 
   //-----------------------------------------------------------------------------
   $scope.onChangeIngredientsClicked = function(){
-    SharedInfos.set("mealInfo", { meal: $scope.meal, action : "edit" });
+    SharedInfos.set("mealInfo", { meal: $scope.meal, action : "edit", noRemove: !$scope.canRemove });
     SharedInfos.set("alert", { "type" : "success", "msg" : 'Modifica gli alimenti di "' + $scope.meal.name + '", poi aggiorna il tuo ricettario cliccando su "Continua"'});
     $location.url('/calculator');
   };
