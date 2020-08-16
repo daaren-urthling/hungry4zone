@@ -33,11 +33,6 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
     }
   }
 
-  if (SharedInfos.has("showInfo"))  {
-    $scope.showInfo = SharedInfos.get("showInfo");
-    $scope.tags.push({ "text" : $scope.showInfo.kind});
-  }
-
   $scope.currentPage = 1;
   $scope.itemsPerPage = 6;
   $scope.firstVisibleItem = 0;
@@ -162,9 +157,6 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
           },
           pickInfo: function () {
             return $scope.pickInfo;
-          },
-          showInfo: function () {
-            return $scope.showInfo;
           }
         }
       });
@@ -195,13 +187,12 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
 // MealsCarouselController - controller for ui_mealCarousel.html
 //=============================================================================
 
-app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 'meals', 'isOwner', 'pickInfo', 'showInfo', function ($scope, Foods, $modalInstance, meals, isOwner, pickInfo, showInfo) {
+app.controller('MealsCarouselController', ['$scope', 'Foods', '$modalInstance', 'meals', 'isOwner', 'pickInfo', function ($scope, Foods, $modalInstance, meals, isOwner, pickInfo) {
 
   $scope.meals = meals;
   $scope.noImage = 'images/no-image-md.png';
   $scope.servings = 1;
   $scope.pickInfo = pickInfo;
-  $scope.showInfo = showInfo;
 
   //-----------------------------------------------------------------------------
   function currentMeal() {
