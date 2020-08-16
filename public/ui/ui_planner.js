@@ -5,7 +5,13 @@
 app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$location', '$sessionStorage', '$route', '$modal', function ($scope, DailyPlan, SharedInfos, $location, $sessionStorage, $route, $modal) {
 
   $scope.dayNames = ["Sabato", "Domenica", "Lunedì", "Martedì", "Mercoledì", "Giovedì", "Venerdì"] ;
-  $scope.mealKinds = [ { name : "Colazione", short : false }, { name : "1° Spuntino", short : true, tag: "Spuntino" }, { name : "Pranzo", short : false }, { name : "2° Spuntino", short : true, tag: "Spuntino" }, { name : "Cena", short : false } ];
+  $scope.mealKinds = [ 
+    { name : "Colazione", short : false }, 
+    { name : "1° Spuntino", short : true, tag: "Spuntino" }, 
+    { name : "Pranzo", short : false }, 
+    { name : "2° Spuntino", short : true, tag: "Spuntino" }, 
+    { name : "Cena", short : false } 
+  ];
   var today = new Date(); today.setHours(0,0,0,0);
 
   if ($sessionStorage.PlannerController && $sessionStorage.PlannerController.userId === $sessionStorage.loggedUser.id) {
@@ -58,10 +64,16 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   function assignDailyMeal(day, kind, meal) {
     dailyPlan = $scope.thisWeek[day];
     m = DailyPlan.indexOf(dailyPlan, kind);
-    if (m >= 0)
+    if (meal !== null) {
+      if (m >= 0)
       dailyPlan.meals[m].meal = meal;
     else
       dailyPlan.meals.push({ kind : kind, meal : meal});
+    } else {
+      if (m >= 0) {
+        dailyPlan.meals.splice(m,1);
+      }      
+    }
 
     store(dailyPlan);
   }
@@ -91,17 +103,8 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
   $scope.onChangeMealClicked = function($index, kind, $event) {
     if ($event)
       $event.stopPropagation();
-    SharedInfos.set("pickInfo", { day: $index, kind : kind, meal : DailyPlan.mealFor($scope.thisWeek[$index], kind) });
-    SharedInfos.set("alert", { "type" : "success", "msg" : 'Scegli cosa vuoi ' + $scope.dayNames[$index] + ' per ' + kind + ', poi aggiungilo al planner cliccando su "Conferma"'});
-    $location.url('/mealsGallery');
-  };
-
-  //-----------------------------------------------------------------------------
-  $scope.onShortMealClicked = function($index, kind, $event) {
-    if ($event)
-      $event.stopPropagation();
     var mealKind = $scope.mealKinds.find((k) => k.name === kind );
-    SharedInfos.set("pickInfo", { day: $index, kind: kind, meal : DailyPlan.mealFor($scope.thisWeek[$index], kind), tag: mealKind.tag });
+    SharedInfos.set("pickInfo", { day: $index, kind : kind, meal : DailyPlan.mealFor($scope.thisWeek[$index], kind), tag: mealKind.tag });
     SharedInfos.set("alert", { "type" : "success", "msg" : 'Scegli cosa vuoi ' + $scope.dayNames[$index] + ' per ' + kind + ', poi aggiungilo al planner cliccando su "Conferma"'});
     $location.url('/mealsGallery');
   };

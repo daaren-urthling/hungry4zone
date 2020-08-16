@@ -43,7 +43,7 @@
           </td>
 
           <td ng-show="kind.short" width="10px" height="20px" class="h4z-planner-titles"><strong>Sp.</strong></td>
-          <td ng-show="kind.short" width="14%" ng-repeat="day in dayNames" h4z-meal-for="meal=mealFor($index, kind.name)" class="h4z-planner-short-meal" ng-style="{{todayStyle($index,'td')}}" ng-click="onShortMealClicked($index, kind.name, $event)" >
+          <td ng-show="kind.short" width="14%" ng-repeat="day in dayNames" h4z-meal-for="meal=mealFor($index, kind.name)" class="h4z-planner-short-meal" ng-style="{{todayStyle($index,'td')}}" ng-click="onChangeMealClicked($index, kind.name, $event)" >
             <em>{{meal ? meal.name : kind.name}}</em>
           </td>
       </tr>
