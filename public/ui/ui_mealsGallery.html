@@ -7,6 +7,10 @@
       <br/>
       <a role="button" class="btn btn-default" href="#/calculator"><span class="text-muted glyphicon glyphicon-plus" aria-hidden="true"></a>
     </div>
+    <div align="right" class="btn-group visible-xs col-xs-6 mb-15" ng-show="pickInfo">
+        <button class="btn btn-primary" ng-click="onPickConfirmClicked()">Conferma</button>
+        <button class="btn btn-default" ng-click="onPickCancelClicked()">Annulla</button>
+    </div>
     <div class="col-lg-7 col-md-7 col-sm-5 col-xs-12">
       <form class="form-inline row" role="form" >
         <br class="hidden-xs" />
