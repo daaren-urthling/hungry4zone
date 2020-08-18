@@ -123,7 +123,7 @@ app.controller('PlannerController', ['$scope', 'DailyPlan', 'SharedInfos', '$loc
 
   //-----------------------------------------------------------------------------
   $scope.onEditClicked = function(meal, kind, index){
-    SharedInfos.set("mealInfo", { meal: meal, action : "edit", noRemove: true });
+    SharedInfos.set("mealInfo", { meal: jQuery.extend(true, {}, meal), action : "edit", noRemove: true });
     SharedInfos.set("dailyInfo", { day: index, kind : kind });
     SharedInfos.set("returnTo", "/planner");
     $location.url('/meal');

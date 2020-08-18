@@ -94,7 +94,13 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   $scope.onEditClicked = function(meal, $event){
     if ($event)
       $event.stopPropagation();
-    SharedInfos.set("mealInfo", { meal: meal, action : "edit" });
+    if ($scope.pickInfo) {
+      SharedInfos.set("dailyInfo", { day: $scope.pickInfo.day, kind : $scope.pickInfo.kind });
+      SharedInfos.set("mealInfo", { meal: jQuery.extend(true, {}, meal), action : "edit", noRemove: true  });
+      SharedInfos.set("returnTo", "/planner");
+    } else {
+      SharedInfos.set("mealInfo", { meal: meal, action : "edit"  });
+    }
     $location.url('/meal');
   };
 
@@ -102,8 +108,15 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   $scope.onDuplicateClicked = function(meal, $event){
     if ($event)
       $event.stopPropagation();
-    SharedInfos.set("mealInfo", { meal: meal, action : "new" });
-    SharedInfos.set("alert", { "type" : "success", "msg" : 'Crea un nuovo pasto con ingredienti simili a "' + meal.name + '", poi aggiungilo al tuo ricettario cliccando su "Salva"'});
+    if ($scope.pickInfo) {
+      SharedInfos.set("alert", { "type" : "success", "msg" : 'Crea un nuovo pasto con ingredienti simili a "' + meal.name + '", poi aggiungilo al tuo ricettario e al planner cliccando su "Salva"'});
+      SharedInfos.set("mealInfo", { meal: jQuery.extend(true, {}, meal), action : "new" });
+      SharedInfos.set("dailyInfo", { day: $scope.pickInfo.day, kind : $scope.pickInfo.kind });
+      SharedInfos.set("returnTo", "/planner");
+    } else {
+      SharedInfos.set("alert", { "type" : "success", "msg" : 'Crea un nuovo pasto con ingredienti simili a "' + meal.name + '", poi aggiungilo al tuo ricettario cliccando su "Salva"'});
+      SharedInfos.set("mealInfo", { meal: meal, action : "new" });
+    } 
     $location.url('/calculator');
   };
 
