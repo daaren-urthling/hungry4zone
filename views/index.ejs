@@ -25,7 +25,6 @@
   </head>
 
   <body>
-
     <nav class="navbar navbar-inverse navbar-fixed-top" ng-controller="NavbarController">
       <div class="container">
         <div class="navbar-header">
@@ -206,5 +205,15 @@
      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.4/js/bootstrap.min.js"></script>
     <!-- IE10 viewport hack for Surface/desktop Windows 8 bug -->
     <!-- // <script src="../../assets/js/ie10-viewport-bug-workaround.js"></script> -->
+
+    <script>
+      // https://stackoverflow.com/questions/16680543/hide-twitter-bootstrap-nav-collapse-on-click
+      $('.nav a').on('click', function(){
+        if ($('.navbar-toggle').css('display') != 'none') {
+          $('.navbar-toggle').click();
+        }
+      });
+    </script>
+
   </body>
 </html>
