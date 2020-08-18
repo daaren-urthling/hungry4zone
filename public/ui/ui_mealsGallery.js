@@ -80,6 +80,17 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
   };
 
   //-----------------------------------------------------------------------------
+  $scope.onAddRecipeClicked = function(){
+    if ($scope.pickInfo) {
+      SharedInfos.set("dailyInfo", { day: $scope.pickInfo.day, kind : $scope.pickInfo.kind });
+      SharedInfos.set("returnTo", "/planner");
+    } else {
+      SharedInfos.set("returnTo", "/mealsGallery");
+    }
+    $location.url('/calculator');
+  }
+
+  //-----------------------------------------------------------------------------
   $scope.onEditClicked = function(meal, $event){
     if ($event)
       $event.stopPropagation();

@@ -3,15 +3,15 @@
     <div class="col-lg-2 col-md-2 col-sm-3 col-xs-10">
       <h2>Ricettario</h2>
     </div>
-    <div align="right" class="visible-xs-block col-xs-2" ng-show="!pickInfo">
+    <div align="right" class="visible-xs-block col-xs-2">
       <br/>
-      <a role="button" class="btn btn-default" href="#/calculator"><span class="text-muted glyphicon glyphicon-plus" aria-hidden="true"></a>
+      <button class="btn btn-default" ng-click="onAddRecipeClicked()"><span class="text-muted glyphicon glyphicon-plus" aria-hidden="true"></button>
     </div>
     <div align="right" class="btn-group visible-xs col-xs-6 mb-15" ng-show="pickInfo">
         <button class="btn btn-primary" ng-click="onPickConfirmClicked()">Conferma</button>
         <button class="btn btn-default" ng-click="onPickCancelClicked()">Annulla</button>
     </div>
-    <div class="col-lg-7 col-md-7 col-sm-5 col-xs-12">
+    <div class="col-lg-6 col-md-6 col-sm-5 col-xs-12">
       <form class="form-inline row" role="form" >
         <br class="hidden-xs" />
         <div class="form-group col-sm-6 row" >
@@ -28,13 +28,12 @@
         </div>
       </form>
     </div>
-    <div align="right" class="hidden-xs col-lg-3 col-md-3 col-sm-4" ng-show="!pickInfo">
-      <br/>
-      <a role="button" class="btn btn-default" href="#/calculator"><span class="text-muted glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Aggiungi una ricetta</a>
-    </div>
-    <div align="right" class="btn-group hidden-xs col-lg-3 col-md-3 col-sm-4" ng-show="pickInfo">
-        <button style="margin-top:20px" class="btn btn-primary" ng-click="onPickConfirmClicked()">Conferma</button>
-        <button style="margin-top:20px" class="btn btn-default" ng-click="onPickCancelClicked()">Annulla</button>
+    <div align="right" class="hidden-xs col-lg-4 col-md-4 col-sm-4">
+      <div align="right" class="btn-group" ng-show="pickInfo">
+          <button class="btn btn-primary mt-20" ng-click="onPickConfirmClicked()">Conferma</button>
+          <button class="btn btn-default mt-20" ng-click="onPickCancelClicked()">Annulla</button>
+      </div>
+      <button class="btn btn-default mt-20" ng-click="onAddRecipeClicked()"><span class="text-muted glyphicon glyphicon-plus" aria-hidden="true"></span>&nbsp;Nuova ricetta</button>
     </div>
   </div>
   <div class="row" ng-show="alert">
