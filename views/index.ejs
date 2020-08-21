@@ -90,6 +90,28 @@
     <script src="/javascripts/raphael-2.1.4.min.js"></script>
     <script src="/javascripts/justgage.1.0.1.min.js"></script> -->
 
+  <!-- The core Firebase JS SDK is always required and must be listed first -->
+  <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-app.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-storage.js"></script>
+  <script src="https://www.gstatic.com/firebasejs/7.18.0/firebase-analytics.js"></script>
+
+  <script>
+    // Your web app's Firebase configuration
+    var firebaseConfig = {
+      apiKey: "AIzaSyAUuWFDZ7RjsgCdEVXXH9mMqlROeakSllI",
+      authDomain: "hungry4zone-ff734.firebaseapp.com",
+      databaseURL: "https://hungry4zone-ff734.firebaseio.com",
+      projectId: "hungry4zone-ff734",
+      storageBucket: "hungry4zone-ff734.appspot.com",
+      messagingSenderId: "877561491154",
+      appId: "1:877561491154:web:43d2a7a7d6ecb1e1a7c70b",
+      measurementId: "G-HRS57FR7DN"
+    };
+    // Initialize Firebase
+    firebase.initializeApp(firebaseConfig);
+    firebase.analytics();
+  </script>
+
     <script>
       //---------------
       // Main app

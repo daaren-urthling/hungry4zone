@@ -2,7 +2,7 @@
 // ImagePickerController - controller for ui_imagePicker.html
 //=============================================================================
 
-app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'SharedInfos', function ($scope, Picasa, $location, SharedInfos) {
+app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'SharedInfos', 'FireStorage', function ($scope, Picasa, $location, SharedInfos, FireStorage) {
 
   $scope.albums = [];
   $scope.images = [];
@@ -20,7 +20,7 @@ app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'Share
     imagePickerInfo = { returnTo : "/" };
   }
 
-  Picasa.getAlbumList().then(function success(albums) {
+  FireStorage.getAlbumList().then(function success(albums) {
     $scope.albums = albums;
   }, function failure (response) {
     $scope.alert = { type : "danger", msg :GetErrorMessage(response) };
@@ -57,9 +57,17 @@ app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'Share
   $scope.onAlbumClicked = function($index, album){
     $scope.albumIdx = $index;
     $scope.albumName = ": " + album.name;
-    Picasa.getImageList(album).then(function success(result) {
+    FireStorage.getImageList(album).then(function success(result) {
         $scope.images = result;
         $scope.imageIdx = -1;
+        $scope.images.forEach( image => {
+          FireStorage.getImageURL(image.imageCoord, FireStorage.SZ_LARGE).then(function success(result) {
+            image.img = result;
+          }, function failure (response) {
+            $scope.alert = { type : "danger", msg :GetErrorMessage(response) };
+          });
+        });
+    
       }, function failure (response) {
         $scope.alert = { type : "danger", msg :GetErrorMessage(response) };
     });
@@ -81,6 +89,11 @@ app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'Share
   //-----------------------------------------------------------------------------
   $scope.onCancelClicked = function(){
     $location.url(imagePickerInfo.returnTo);
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onCloseAlert = function(){
+    $scope.alert = null;
   };
 
 }]);

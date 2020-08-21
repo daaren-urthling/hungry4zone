@@ -2,7 +2,7 @@
 // MealController - controller for ui_meal.html
 //=============================================================================
 
-app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals', '$sessionStorage', 'Picasa', 'MealTags', function ($scope, SharedInfos, $location, Meals, $sessionStorage, Picasa, MealTags) {
+app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals', '$sessionStorage', 'Picasa', 'MealTags', 'FireStorage', function ($scope, SharedInfos, $location, Meals, $sessionStorage, Picasa, MealTags, FireStorage) {
 
   $scope.noImage = 'images/no-image-big.png';
 
@@ -38,8 +38,9 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
   }
 
   if ($scope.meal.imageCoord) {
-    Picasa.getImageURL($scope.meal.imageCoord, 288).then(function success(imageUrl) {
-      $scope.imageURL = imageUrl;
+    // Picasa.getImageURL($scope.meal.imageCoord, 288).then(function success(imageUrl) {
+    FireStorage.getImageURL($scope.meal.imageCoord, FireStorage.SZ_LARGE).then(function success(imageUrl) {
+        $scope.imageURL = imageUrl;
     }, function failure(response) {
       console.log(response);
     });

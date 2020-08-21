@@ -141,3 +141,84 @@ app.service('MealTags', function() {
 
   return tags;
 });
+
+//=============================================================================
+// FireStorage service
+//=============================================================================
+app.service('FireStorage', ['$q', function($q) {
+  var fireStorage = {
+    SZ_SMALL: "_128x89",
+    SZ_MEDIUM: "_200x142",
+    SZ_LARGE: "_280x200"
+  };
+
+  function fileExt(fileName) {
+    return fileName.substring(fileName.lastIndexOf('.') + 1, fileName.length);
+  }
+
+  function baseName(fileName) {
+    return fileName.substring(0, fileName.lastIndexOf('.'));
+  }
+
+  //-----------------------------------------------------------------------------
+  fireStorage.getAlbumList = function () {
+    var defer = $q.defer();
+
+    firebase.storage().ref().child('recipes/').listAll().then(function(res) {
+      albumList = [];
+      res.prefixes.forEach(prefix => {
+        albumList.push({ name: prefix.name, id: prefix.name });
+      });
+      defer.resolve(albumList);
+    }, function (response) {
+      defer.reject(response);
+    });    
+
+    return defer.promise;
+  };
+
+  //-----------------------------------------------------------------------------
+  fireStorage.getImageList = function (album) {
+    var defer = $q.defer();
+
+    firebase.storage().ref().child('recipes/' + album.id).listAll().then(function(res) {
+      imageList = [];
+      res.items.forEach(item => {
+        var bn = baseName(item.name);
+        if (bn.endsWith(fireStorage.SZ_LARGE) || bn.endsWith(fireStorage.SZ_MEDIUM) || bn.endsWith(fireStorage.SZ_SMALL))
+          return;
+
+        imageList.push({ 
+          name: item.name, 
+          caption: item.name, 
+          imageCoord : { albumId : album.id, imageId : item.name } 
+        });
+        console.log(item.name);
+      });
+      defer.resolve(imageList);
+    }, function (response) {
+      defer.reject(response);
+    });    
+
+    return defer.promise;
+  };
+
+  //-----------------------------------------------------------------------------
+  fireStorage.getImageURL = function (imageCoord, size) {
+    if (size != fireStorage.SZ_LARGE && size != fireStorage.SZ_SMALL && size != fireStorage.SZ_MEDIUM)
+      throw "bad requested size";
+    var defer = $q.defer();
+
+    var imageName = baseName(imageCoord.imageId) + size + '.' + fileExt(imageCoord.imageId); 
+
+    var image = firebase.storage().ref('recipes/' + imageCoord.albumId + '/' + imageName); 
+    image.getDownloadURL().then(function(url) {
+      console.log(url);
+      defer.resolve(url);
+    });
+
+    return defer.promise;
+  };
+
+  return fireStorage;
+}]);
