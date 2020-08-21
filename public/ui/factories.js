@@ -247,7 +247,7 @@ app.factory('Meals', ['$resource', 'MealItems', '$http', 'Foods', function($reso
 //=============================================================================
 // DailyPlan factory
 //=============================================================================
-app.factory('DailyPlan', ['$resource', 'Meals', 'Picasa', function($resource, Meals, Picasa){
+app.factory('DailyPlan', ['$resource', 'Meals', 'FireStorage', function($resource, Meals, FireStorage){
 
   dailyPlanResource = $resource('/dailyPlan/:id', null, {
     'update': { method:'PUT' },
@@ -306,9 +306,11 @@ app.factory('DailyPlan', ['$resource', 'Meals', 'Picasa', function($resource, Me
         dailyPlan.meals[idx].meal = result;
         Meals.reconnectFoods(dailyPlan.meals[idx].meal);
         if (dailyPlan.meals[idx].meal.imageCoord) {
-          Picasa.getImageURL(dailyPlan.meals[idx].meal.imageCoord, [128, 200]).then(function(imageURLs) {
-            dailyPlan.meals[idx].meal.imageURL = imageURLs[0];
-            dailyPlan.meals[idx].meal.bigImageURL = imageURLs[1];
+          FireStorage.getImageURL(dailyPlan.meals[idx].meal.imageCoord, FireStorage.SZ_SMALL).then(function(imageURL) {
+            dailyPlan.meals[idx].meal.imageURL = imageURL;
+          });
+          FireStorage.getImageURL(dailyPlan.meals[idx].meal.imageCoord, FireStorage.SZ_MEDIUM).then(function(imageURL) {
+            dailyPlan.meals[idx].meal.bigImageURL = imageURL;
           });
         }
       });
