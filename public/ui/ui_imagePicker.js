@@ -2,7 +2,7 @@
 // ImagePickerController - controller for ui_imagePicker.html
 //=============================================================================
 
-app.controller('ImagePickerController', ['$scope', 'Picasa', '$location', 'SharedInfos', 'FireStorage', function ($scope, Picasa, $location, SharedInfos, FireStorage) {
+app.controller('ImagePickerController', ['$scope', '$location', 'SharedInfos', 'FireStorage', function ($scope, $location, SharedInfos, FireStorage) {
 
   $scope.albums = [];
   $scope.images = [];

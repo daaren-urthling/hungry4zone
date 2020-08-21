@@ -2,7 +2,7 @@
 // MealsGalleryController - controller for ui_mealsGallery.html
 //=============================================================================
 
-app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', 'Picasa', '$modal', '$sessionStorage', 'MealTags', '$timeout', function ($scope, SharedInfos, Meals, Foods, $location, Picasa, $modal, $sessionStorage, MealTags, $timeout) {
+app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foods', '$location', '$modal', '$sessionStorage', 'MealTags', '$timeout', 'FireStorage', function ($scope, SharedInfos, Meals, Foods, $location, $modal, $sessionStorage, MealTags, $timeout, FireStorage) {
 
   $scope.noImage = 'images/no-image.png';
 
@@ -11,10 +11,12 @@ app.controller('MealsGalleryController', ['$scope', 'SharedInfos', 'Meals', 'Foo
       $scope.meals[idx].originalIdx = idx; // useful for delete
       Meals.reconnectFoods($scope.meals[idx]);
       if ($scope.meals[idx].imageCoord) {
-        Picasa.getImageURL($scope.meals[idx].imageCoord, [128, 200]).then(function(imageURLs) {
-          $scope.meals[idx].imageURL = imageURLs[0];
-          $scope.meals[idx].bigImageURL = imageURLs[1];
-        }) ;
+        FireStorage.getImageURL($scope.meals[idx].imageCoord, FireStorage.SZ_SMALL).then(function(imageURL) {
+          $scope.meals[idx].imageURL = imageURL;
+        });
+        FireStorage.getImageURL($scope.meals[idx].imageCoord, FireStorage.SZ_MEDIUM).then(function(imageURL) {
+          $scope.meals[idx].bigImageURL = imageURL;
+        });
       }
     });
   });

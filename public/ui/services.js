@@ -193,7 +193,6 @@ app.service('FireStorage', ['$q', function($q) {
           caption: item.name, 
           imageCoord : { albumId : album.id, imageId : item.name } 
         });
-        console.log(item.name);
       });
       defer.resolve(imageList);
     }, function (response) {
@@ -213,8 +212,9 @@ app.service('FireStorage', ['$q', function($q) {
 
     var image = firebase.storage().ref('recipes/' + imageCoord.albumId + '/' + imageName); 
     image.getDownloadURL().then(function(url) {
-      console.log(url);
       defer.resolve(url);
+    }, function (response) {
+      defer.reject(response);
     });
 
     return defer.promise;
