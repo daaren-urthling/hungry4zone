@@ -154,7 +154,7 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
 
   //-----------------------------------------------------------------------------
   $scope.onPickImageClicked = function(){
-    SharedInfos.set("imagePickerInfo", { returnTo : "/meal" });
+    SharedInfos.set("imagePickerInfo", { returnTo : "/meal", name: $scope.meal.name });
     $location.url('/imagePicker');
   };
 

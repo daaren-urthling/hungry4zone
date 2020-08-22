@@ -96,4 +96,10 @@ app.controller('ImagePickerController', ['$scope', '$location', 'SharedInfos', '
     $scope.alert = null;
   };
 
+  //-----------------------------------------------------------------------------
+  $scope.onImageLoad = function(){
+    SharedInfos.set("imagePickerInfo", imagePickerInfo);
+    $location.url('/imageLoader');
+  };
+
 }]);

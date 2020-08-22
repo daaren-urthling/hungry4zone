@@ -139,5 +139,22 @@ app.service('FireStorage', ['$q', function($q) {
     return defer.promise;
   };
 
+  //-----------------------------------------------------------------------------
+  fireStorage.uploadImage = function (albumName, imageName, fileName, file) {
+    var defer = $q.defer();
+
+    albumName = albumName.toLowerCase(albumName);
+    imageName = imageName.toLowerCase(imageName) + '.' + fileExt(fileName);
+    var imageRef = firebase.storage().ref().child('recipes/' + albumName + '/' + imageName);
+
+    imageRef.put(file).then(function(snapshot) {
+      defer.resolve({ albumId : albumName, imageId : imageName });
+    }, function (response) {
+      defer.reject(response);
+    });
+
+    return defer.promise;
+  }
+
   return fireStorage;
 }]);

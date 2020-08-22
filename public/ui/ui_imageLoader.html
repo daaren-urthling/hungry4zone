@@ -1,0 +1,32 @@
+<div class="container">
+  <h2>Carica una foto</h2>
+  <alert ng-show="alert" type="{{alert.type}}" close="onCloseAlert()">{{alert.msg}}</alert>
+  
+  <div class="col-sm-8">
+    <form role="form" class="form-horizontal">
+      <div class="form-group">
+        <label for="albumName" class="col-sm-4 control-label">Nome album</label>
+        <div class="col-sm-8">
+          <input id="albumName" type="text" class="form-control" ng-model="albumName"> <!-- onchange="angular.element(this).scope().onFoodNameChanged()" -->
+        </div>
+      </div>            
+      <div class="form-group">
+        <label for="imageName" class="col-sm-4 control-label">Titolo foto</label>
+        <div class="col-sm-8">
+          <input id="imageName" type="text" class="form-control" ng-model="imageName"> 
+        </div>
+      </div>            
+      <div class="form-group">
+        <label for="name" class="col-sm-4 control-label">Immagine</label>
+        <div class="col-sm-8">
+          <input type="file" onchange="angular.element(this).scope().onFileChanged(this)"/>
+        </div>
+      </div>            
+  <div class="col-lg-10 col-sm-10 col-xs-10">
+    <form class="form-inline" role="form">
+      <a role="button" class="btn btn-primary" ng-click="onUploadClicked()" ng-disabled="albumName =='' || imageName =='' || fileName == ''">Carica</a>
+      <a role="button" class="btn btn-default" ng-click="onCancelClicked()">Annulla</a>
+      <img class="h4z-wait" src="images/wait.gif" ng-style="{ 'display': wait ? 'initial' : 'none'}" />
+    </form>
+  </div>
+</div>

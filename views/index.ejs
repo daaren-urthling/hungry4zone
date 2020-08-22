@@ -143,6 +143,7 @@
     <script src="/ui/ui_mealsGallery.js"></script>
     <script src="/ui/ui_planner.js"></script>
     <script src="/ui/ui_imagePicker.js"></script>
+    <script src="/ui/ui_imageLoader.js"></script>
 
     <script>
       app.run(function($rootScope, $sessionStorage, $location, SharedInfos, Users) {
@@ -216,6 +217,10 @@
           .when('/imagePicker', {
             templateUrl: '/ui/ui_imagePicker.html',
             controller: 'ImagePickerController'
+          })
+          .when('/imageLoader', {
+            templateUrl: '/ui/ui_imageLoader.html',
+            controller: 'ImageLoaderController'
           })
       }]);
     </script>
