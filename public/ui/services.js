@@ -80,6 +80,11 @@ app.service('FireStorage', ['$q', function($q) {
   }
 
   //-----------------------------------------------------------------------------
+  fireStorage.fileExt = function(fileName) {
+    return fileExt(fileName).toLowerCase();
+  };
+
+  //-----------------------------------------------------------------------------
   fireStorage.getAlbumList = function () {
     var defer = $q.defer();
 
@@ -100,7 +105,7 @@ app.service('FireStorage', ['$q', function($q) {
   fireStorage.getImageList = function (album) {
     var defer = $q.defer();
 
-    firebase.storage().ref().child('recipes/' + album.id).listAll().then(function(res) {
+    firebase.storage().ref().child('recipes/' + album.id.toLowerCase()).listAll().then(function(res) {
       imageList = [];
       res.items.forEach(item => {
         var bn = baseName(item.name);
@@ -127,9 +132,9 @@ app.service('FireStorage', ['$q', function($q) {
       throw "bad requested size";
     var defer = $q.defer();
 
-    var imageName = baseName(imageCoord.imageId) + size + '.' + fileExt(imageCoord.imageId); 
+    var imageName = baseName(imageCoord.imageId.toLowerCase()) + size + '.' + fileExt(imageCoord.imageId).toLowerCase(); 
 
-    var image = firebase.storage().ref('recipes/' + imageCoord.albumId + '/' + imageName); 
+    var image = firebase.storage().ref('recipes/' + imageCoord.albumId.toLowerCase() + '/' + imageName); 
     image.getDownloadURL().then(function(url) {
       defer.resolve(url);
     }, function (response) {
@@ -144,7 +149,7 @@ app.service('FireStorage', ['$q', function($q) {
     var defer = $q.defer();
 
     albumName = albumName.toLowerCase(albumName);
-    imageName = imageName.toLowerCase(imageName) + '.' + fileExt(fileName);
+    imageName = imageName.toLowerCase(imageName) + '.' + fileExt(fileName).toLowerCase();
     var imageRef = firebase.storage().ref().child('recipes/' + albumName + '/' + imageName);
 
     imageRef.put(file).then(function(snapshot) {

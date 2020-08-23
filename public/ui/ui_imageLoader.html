@@ -7,13 +7,13 @@
       <div class="form-group">
         <label for="albumName" class="col-sm-4 control-label">Nome album</label>
         <div class="col-sm-8">
-          <input id="albumName" type="text" class="form-control" ng-model="albumName"> <!-- onchange="angular.element(this).scope().onFoodNameChanged()" -->
+          <input id="albumName" type="text" class="form-control" ng-model="albumName" ng-change="onAlbumNameChanged()" ng-model-options="{ updateOn: 'blur' }">
         </div>
       </div>            
       <div class="form-group">
         <label for="imageName" class="col-sm-4 control-label">Titolo foto</label>
         <div class="col-sm-8">
-          <input id="imageName" type="text" class="form-control" ng-model="imageName"> 
+          <input id="imageName" type="text" class="form-control" ng-model="imageName" ng-change="onImageNameChanged()" ng-model-options="{ updateOn: 'blur' }"> 
         </div>
       </div>            
       <div class="form-group">
