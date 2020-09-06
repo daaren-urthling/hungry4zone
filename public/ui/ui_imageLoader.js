@@ -14,8 +14,24 @@ app.controller('ImageLoaderController', ['$scope', '$location', 'SharedInfos', '
     $scope.imageName = imagePickerInfo.name;
   }
 
+  //-----------------------------------------------------------------------------
+  function checkExistingImage(){
+    if ($scope.imageName == '' || $scope.albumName == '' || !$scope.albums)
+      return;
+    var ext = '.JPG';
+    if ($scope.fileName)
+      ext = '.' + FireStorage.fileExt($scope.fileName);
+
+    FireStorage.getImageURL({ albumId : $scope.albumName, imageId : $scope.imageName + ext }, FireStorage.SZ_SMALL).then(function success(result) {
+      $scope.alert = { type : "warning", msg : "La foto esiste già, sarà sostituita."};
+    }, function failure (response) {
+      // image not found, correct
+    });
+  };
+
   FireStorage.getAlbumList().then(function success(albums) {
     $scope.albums = albums;
+    checkExistingImage();
   }, function failure (response) {
     $scope.alert = { type : "danger", msg :GetErrorMessage(response) };
   });  
@@ -73,18 +89,8 @@ app.controller('ImageLoaderController', ['$scope', '$location', 'SharedInfos', '
 
   //-----------------------------------------------------------------------------
   $scope.onImageNameChanged = function(){
-    if ($scope.imageName == '' || $scope.albumName == '' || !$scope.albums)
-      return;
-    var ext = '.JPG';
-    if ($scope.fileName)
-      ext = '.' + FireStorage.fileExt($scope.fileName);
-
-    FireStorage.getImageURL({ albumId : $scope.albumName, imageId : $scope.imageName + ext }, FireStorage.SZ_SMALL).then(function success(result) {
-      $scope.alert = { type : "warning", msg : "La foto esiste già, sarà sostituita."};
-    }, function failure (response) {
-      
-    });
-
+    $scope.alert = null;
+    checkExistingImage();
   };
     
   

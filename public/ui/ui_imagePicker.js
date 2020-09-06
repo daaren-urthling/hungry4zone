@@ -10,11 +10,13 @@ app.controller('ImagePickerController', ['$scope', '$location', 'SharedInfos', '
   $scope.albumIdx = -1;
   $scope.albumName = "";
   $scope.imageIdx = -1;
+  $scope.title = "";
 
   $scope.selectedImage = {};
 
   if (SharedInfos.has("imagePickerInfo"))  {
     imagePickerInfo = SharedInfos.get("imagePickerInfo");
+    $scope.title = imagePickerInfo.name;
   }
   else {
     imagePickerInfo = { returnTo : "/" };
