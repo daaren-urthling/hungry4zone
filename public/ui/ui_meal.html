@@ -11,7 +11,10 @@
   </div>
   <div class="row visible-xs">
     <a ng-show="!meal.imageCoord" class="h4z-hyperlink small" ng-click="onPickImageClicked()">Associa un'immagine</a>
-    <button ng-show="meal.imageCoord" class="btn btn-default btn-xs" ng-click="onRemoveImageClicked()"><span class="text-muted glyphicon glyphicon-remove"></span>&nbsp;&nbsp; Elimina immagine</button>
+    <div class="col-sm-12 pl-0" ng-show="meal.imageCoord">
+      <button class="btn btn-default btn-xs" ng-click="onRemoveImageClicked()"><span class="text-muted glyphicon glyphicon-remove"></span>&nbsp;&nbsp; Elimina immagine</button>
+      <button class="btn btn-default btn-xs" ng-click="onRefreshImageClicked()"><span class="text-muted glyphicon glyphicon-refresh"></span></button>
+    </div>
     <img ng-show="imageURL" class="thumbnail img-responsive" ng-src="{{imageURL}}"/>
   </div>
   <div class="row">
@@ -56,7 +59,10 @@
       </div>
     <div class="col-lg-6 col-md-6 col-sm-6 hidden-xs">
       <a ng-show="!meal.imageCoord" class="h4z-hyperlink small" ng-click="onPickImageClicked()">Associa un'immagine</a>
-      <button ng-show="meal.imageCoord" class="btn btn-default btn-xs" ng-click="onRemoveImageClicked()"><span class="text-muted glyphicon glyphicon-remove"></span>&nbsp;&nbsp; Elimina immagine</button>
+      <div class="col-sm-12 pl-0" ng-show="meal.imageCoord" >
+        <button class="btn btn-default btn-xs" ng-click="onRemoveImageClicked()"><span class="text-muted glyphicon glyphicon-remove"></span>&nbsp;&nbsp; Elimina immagine</button>
+        <button class="btn btn-default btn-xs" ng-click="onRefreshImageClicked()"><span class="text-muted glyphicon glyphicon-refresh"></span></button>
+      </div>
       <img class="thumbnail img-responsive" ng-src="{{(imageURL) ? imageURL : noImage}}"/>
       <form role="form" class="form">
         <label class="control-label col-xs-8">Link alla ricetta</label><a class="col-xs-2" style="text-align:right;" href="{{meal.recipeURL}}" target="_blank">vai</a>

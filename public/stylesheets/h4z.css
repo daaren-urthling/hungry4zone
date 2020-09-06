@@ -250,6 +250,10 @@ tags-input .host {
   margin-top: 20px;
 }
 
+.pl-0 {
+  padding-left: 0;
+}
+
 .h4z-wait {
   margin-left: 10px;
   width: 32px;

@@ -37,13 +37,17 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
     $scope.meal.imageCoord = imagePickerInfo.imageCoord;
   }
 
-  if ($scope.meal.imageCoord) {
-    FireStorage.getImageURL($scope.meal.imageCoord, FireStorage.SZ_LARGE).then(function success(imageUrl) {
-        $scope.imageURL = imageUrl;
-    }, function failure(response) {
-      console.log(response);
-    });
+  //-----------------------------------------------------------------------------
+  function showImage() {
+    if ($scope.meal.imageCoord) {
+      FireStorage.getImageURL($scope.meal.imageCoord, FireStorage.SZ_LARGE).then(function success(imageUrl) {
+          $scope.imageURL = imageUrl;
+      }, function failure(response) {
+        console.log(response);
+      });
+    }
   }
+  showImage();
 
   //-----------------------------------------------------------------------------
   $scope.sourceImage = function(food)  {
@@ -162,6 +166,11 @@ app.controller('MealController', ['$scope', 'SharedInfos', '$location', 'Meals',
   $scope.onRemoveImageClicked = function(){
     $scope.meal.imageCoord = null;
     $scope.imageURL = null;
+  };
+
+  //-----------------------------------------------------------------------------
+  $scope.onRefreshImageClicked = function(){
+    showImage();
   };
 
   //-----------------------------------------------------------------------------
