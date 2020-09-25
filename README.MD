@@ -1,11 +1,10 @@
 # Local development
-Local data are in `mmapv1` format, so it requires MongoDB 3.0.
 
 `SampleData` subfolder contains a sample data set, copy it to a working directory for use while development.
 
 To run the Local MongoDB:
 ```
-"C:\Program Files\MongoDB\Server\3.0\bin\mongod.exe" --dbpath C:\Users\rinaldi\Documents\working\h4z\SampleData --storageEngine=mmapv1
+"C:\Program Files\MongoDB\Server\4.4\bin\mongod.exe" --dbpath C:\Users\rinaldi\Documents\working\h4z\SampleData44
 ```
 Data can be inspected with MongoDB Compass Community, with the connection string: `mongodb://localhost/hungry4zone`
 
@@ -38,4 +37,15 @@ To use MongoDB Compass utility to access hosted DB, connect with the following c
 ```
 mongodb://h4zTemplate:hXfvyP46YPRH79yuPVi54okRyKs8VWO9eivlTlGZ8xY-@ds062797.mongolab.com:62797/h4zTemplate?authSource=h4zTemplate
 ```
+# ***DEPRECATED*** Local data in mmapv1 format
+
+*This refers to the old sample data, so that these notes are now __DEPRECATED__*
+
+Local data are in `mmapv1` format, so it requires MongoDB 3.0.
+
+`SampleData-3.0` subfolder contains a sample data set, copy it to a working directory for use while development.
+
+To run the Local MongoDB:
+
+"C:\Program Files\MongoDB\Server\3.0\bin\mongod.exe" --dbpath C:\Users\rinaldi\Documents\working\h4z\SampleData-3.0 --storageEngine=mmapv1
 
